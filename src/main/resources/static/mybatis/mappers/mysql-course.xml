@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Edu.Dao.CourseMapper">
+
+<!-- Course 쿼리 -->
+
+
+	<!-- 코스 정보 불러오기 -->
+	<select id="findCos" resultType="Course">
+		SELECT *
+		FROM course where cosno = #{cosno}
+	</select>
+	
+	<!-- 코스번호에 맞는 강좌들 불러오기 -->
+	<select id="findCos_lec" resultType="Lecture">
+		SELECT *
+		FROM lecture where cosno = #{cosno}
+	</select>
+	
+	<!-- 강좌번호에 맞는 강좌 불러오기 -->
+	<select id="findLecture" resultType="Lecture">
+		SELECT *
+		FROM lecture where lecno = #{lecno}
+	</select>
+	
+	<!-- 코스 리스트 가져오기 (코스이름과 카테고리 검색)-->
+	<select id="findCosList" resultType="Course">
+		SELECT *
+		FROM course 
+		<choose>
+	        <!-- 검색옵션이 전체 검색일 경우 -->
+	        <when test="searchOption == 'all'">
+	            WHERE coscategory1 like '%${keyword}%'
+	            OR coscategory2 like '%${keyword}%'
+	            OR cosname like '%${keyword}%'
+	        </when>
+	        <!-- 전체 검색이 아닐 경우 -->
+	        <otherwise>
+	            WHERE ${searchOption} like '%${keyword}%'
+	        </otherwise>
+    	</choose>
+		ORDER BY cosregtime desc LIMIT ${start}, 10;
+	</select>
+	
+	<!-- 시간순으로 코스 가져오기(9개) -->
+	<select id="findNewCosList" resultType="Course">
+		SELECT *
+		FROM course ORDER BY cosregtime desc LIMIT 9
+	</select>
+	
+	<!-- 인기 코스 가져오기 -->
+	<select id="findPopCosList" resultType="Course">
+		SELECT *
+		FROM course ORDER BY coseval desc LIMIT 9
+	</select>
+	
+	
+	<!-- 코스 등록하기 -->
+	<insert id="insertCourse">
+		INSERT INTO course (cosname, cosintro, cosintrovideo, coscategory1,coscategory2,cospicture) 
+		VALUES (#{cosname}, #{cosintro}, #{cosintrovideo}, #{coscategory1}, #{coscategory2}, #{cospicture})
+	</insert>
+		
+	<!-- 강좌 등록하기 -->
+	<insert id="insertLecture">
+		INSERT INTO lecture (cosno, lectime, lecname, lecvideo) 
+		VALUES (#{cosno}, #{lectime}, #{lecname}, #{lecvideo})
+	</insert>	
+	
+	<!-- 코스 대표 카테고리 가져오기 -->
+	<select id="findCosCategory1" resultType="Course">
+		SELECT DISTINCT coscategory1 FROM course 
+	</select>
+	<!-- 코스 상세 카테고리 가져오기 -->
+	<select id="findCosCategory2" resultType="Course">
+		SELECT DISTINCT coscategory2 FROM course 
+	</select>
+	
+	<!-- 프로그래밍 상세 카테고리 가져오기 -->
+	<select id="findProgrammingCategory" resultType="Course">
+		SELECT DISTINCT coscategory2 FROM course where coscategory1 = '프로그래밍'
+	</select>
+	<!-- 디자인 상세 카테고리 가져오기 -->
+	<select id="findDesignCategory" resultType="Course">
+		SELECT DISTINCT coscategory2 FROM course where coscategory1 = '디자인/CG'
+	</select>
+	<!-- 비즈니스 카테고리 가져오기 -->
+	<select id="findBusinessCategory" resultType="Course">
+		SELECT DISTINCT coscategory2 FROM course where coscategory1 = 'IT비즈니스'
+	</select>
+	
+	
+	<!-- 코스 수정하기 -->
+	<update id="updateCourse">
+		UPDATE course 
+		SET
+			cosname = #{cosname},
+			cosintro = #{cosintro},
+			cosintrovideo = #{cosintrovideo},
+			coscategory1 = #{coscategory1},
+			coscategory2 = #{coscategory2},
+			cospicture = #{cospicture}
+		WHERE cosno = #{cosno}
+	</update>
+	
+	<!-- 강좌 수정하기 -->
+	<update id="updateLecture">
+		UPDATE lecture 
+		SET
+			cosno = #{cosno},
+			lecname = #{lecname},
+			lectime = #{lectime},
+			lecvideo = #{lecvideo}
+			
+		WHERE lecno = #{lecno}
+	</update>
+	
+	<select id="countCourse" resultType="Integer">
+		SELECT COUNT(*) FROM course
+		<choose>
+	        <!-- 검색옵션이 전체 검색일 경우 -->
+	        <when test="searchOption == 'all'">
+	            WHERE coscategory1 like '%${keyword}%'
+	            OR coscategory2 like '%${keyword}%'
+	            OR cosname like '%${keyword}%'
+	        </when>
+	        <!-- 전체 검색이 아닐 경우 -->
+	        <otherwise>
+	            WHERE ${searchOption} like '%${keyword}%'
+	        </otherwise>
+    	</choose>
+	
+	</select>
+	
+	<!-- 기본적인 코스리스트 불러오기 -->
+	<select id="AllfindCosList" resultType="Course">
+		SELECT *
+		FROM course
+	</select>
+	
+	<!-- 수강하기 -->
+	<insert id="subscribe">
+		INSERT INTO subscribe (cosno, id) 
+		VALUES(#{cosno}, #{id})
+	</insert>
+	
+	<!-- 내 강좌 조회 -->
+	<select id="mycourse" resultType="Course">
+		SELECT * FROM course c, subscribe s 
+		WHERE c.cosno = s.cosno AND id = #{id}
+	</select>
+	
+	
+	<!-- 강좌 체크하기  -->
+	<select id="ajaxchecksubscribe" resultType="Subscribe">
+		SELECT * FROM subscribe 
+		WHERE cosno = #{cosno} AND id = #{id}
+	</select>
+	
+	<!-- 수강 취소 -->
+	<delete id="subscribecancel" >
+		DELETE FROM subscribe
+		WHERE cosno = #{cosno} AND id = #{id}
+	
+	</delete>
+	
+	<select id="findCosName" resultType="String">
+		SELECT cosname
+		FROM course where cosno = #{cosno}
+	</select>
+	
+	<!-- 코스스코어 등록 -->
+	<insert id="insertCourseScore">
+		INSERT INTO course_score (cosno) 
+		VALUES (#{cosno})
+	</insert>
+	
+	<select id="dataUpdate">
+		SELECT * FROM recommend_coursedata
+		INTO OUTFILE 'C:/MySqlOutputData/test.csv'
+		CHARACTER SET euckr
+		FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
+		ESCAPED BY '\\'
+		LINES TERMINATED BY '\n'
+	</select>
+	
+</mapper>

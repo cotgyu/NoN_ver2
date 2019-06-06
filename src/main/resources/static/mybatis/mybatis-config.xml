@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration> 
+	<settings>
+		<setting name="cacheEnabled" value="false" />
+		<setting name="useGeneratedKeys" value="true" />
+		<setting name="defaultExecutorType" value="REUSE" />
+	</settings>
+	<typeAliases>
+		<typeAlias type="com.Edu.Domain.Board" alias="Board" />
+		<typeAlias type="com.Edu.Domain.Member" alias="Member"/>
+<!-- 		<typeAlias type="com.Edu.Domain.Book" alias="Book" /> -->
+<!-- 		<typeAlias type="com.Edu.Domain.Content" alias="Content" /> -->
+<!-- 		<typeAlias type="com.Edu.Domain.Dto" alias="Dto" /> -->
+<!-- 		<typeAlias type="com.Edu.Domain.SearchResult" alias="SearchResult" /> -->
+<!-- 		<typeAlias type="com.Edu.Domain.Sms" alias="Sms" /> -->
+		<typeAlias type="com.Edu.Domain.Code" alias="Code" />
+<!-- 		<typeAlias type="com.Edu.Domain.ItDamage" alias="ItDamage" /> -->
+<!-- 		<typeAlias type="com.Edu.Domain.Approval" alias="Approval" /> -->
+
+
+<!-- course -->
+<typeAlias type="com.Edu.Domain.Course" alias="Course" />
+<typeAlias type="com.Edu.Domain.Lecture" alias="Lecture" />
+<typeAlias type="com.Edu.Domain.CommentVO" alias="CommentVO"/>
+<typeAlias type="com.Edu.Domain.Subscribe" alias="Subscribe" />
+
+	</typeAliases>
+</configuration>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mabatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- <mapper namespace="com.example.demo.board.mapper.CommentMapper"> -->
+<mapper namespace="com.Edu.Dao.CommentMapper">	
+	
+	<select id="commentCount" resultType="int">
+		SELECT
+			COUNT(*)
+		<!-- FROM COMMENT -->
+		FROM comment	
+	</select>
+	
+	<!-- <select id="commentList" resultType="com.example.demo.board.domain.CommentVO"> -->
+	<select id="commentList" resultType="CommentVO">	
+		SELECT
+			*
+		<!-- FROM COMMENT -->
+		FROM comment
+		WHERE cosno=#{cosno}
+	</select>
+	
+	<!-- <insert id="commentInsert" parameterType="com.example.demo.board.domain.CommentVO"> -->
+	<insert id="commentInsert" parameterType="CommentVO">
+		INSERT INTO
+		<!-- COMMENT (CNO,COSNO,CONTENT,WRITER,REG_DATE)  -->
+		comment (cno,cosno,content,writer,reg_date,eva_count) 
+		VALUES(#{cno},#{cosno},#{content},#{writer},now(),#{eva_count})
+	</insert>
+	
+	<!-- <update id="commentUpdate" parameterType="com.example.demo.board.domain.CommentVO"> -->
+	<update id="commentUpdate" parameterType="CommentVO">
+		<!-- UPDATE COMMENT -->
+		UPDATE comment
+		SET
+		<!-- CONTENT=#{content} -->
+		content=#{content},eva_count=#{eva_count}
+		<!-- WHERE CNO=#{cno} -->
+		WHERE cno=#{cno}
+	</update>
+	
+	<delete id="commentDelete" parameterType="int">
+		<!-- DELETE FROM COMMENT WHERE CNO=#{cno} -->
+		DELETE FROM comment WHERE CNO=#{cno}
+	</delete>
+	
+	<!--페이지 내에 평점   -->
+	<!-- <select id="commentEva" resultType="double">
+		SELECT truncate(sum(eva_count)/count(eva_count),2) avg
+		FROM comment
+		WHERE cosno=#{cosno}
+	</select> -->
+	<select id="commentEva" resultType="CommentVO">
+		SELECT eva_count
+		FROM comment
+		WHERE cosno=#{cosno}
+	</select>
+	
+	
+	
+	<update id="commentScoreAdd" parameterType="CommentVO">
+		UPDATE course_score
+		SET totalscore = totalscore + #{eva_count}
+			,totalcnt = totalcnt + 1 
+			,score = round(totalscore / totalcnt , 2)  
+		WHERE cosno=#{cosno}		 
+	</update>
+	
+	
+	
+	<update id="commentScoreUpdate" parameterType="CommentVO">
+		UPDATE course
+		SET coseval = round( (select score from course_score where cosno = #{cosno}) )
+		WHERE cosno=#{cosno}		 
+	</update>
+	
+
+	<insert id="recommendCourseDataInsert">
+		INSERT INTO
+		recommend_coursedata (userno,cosno,userscore) 
+		VALUES(#{userno},#{cosno},#{eva_count})
+	</insert>
+	
+</mapper>

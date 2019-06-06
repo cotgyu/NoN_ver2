@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.Edu.Dao.smsMapper">
+
+	<insert id="notifiRent" parameterType="Sms">
+		INSERT INTO
+		SC_TRAN
+		(TR_SENDDATE , TR_SENDSTAT ,TR_MSGTYPE
+		,TR_PHONE
+		,TR_CALLBACK ,
+		TR_MSG)
+		VALUES(GETDATE(), '0', '0', #{phone},
+		'031-8047-4328',
+		'[ '+ #{title} + ' ]의 대여요청이 승인되었습니다' )
+
+	</insert>
+
+	<insert id="notifiReser" parameterType="Sms">
+		INSERT INTO
+		SC_TRAN
+		(TR_SENDDATE , TR_SENDSTAT ,TR_MSGTYPE ,TR_PHONE
+		,TR_CALLBACK ,
+		TR_MSG)
+		VALUES(GETDATE(), '0', '0', #{phone},
+		'031-8047-4328',
+		'예약하신 도서 [ '+#{title}+' ] 대여가능합니다.' )
+
+	</insert>
+	<insert id="returnConfirm" parameterType="Sms">
+		INSERT INTO
+		SC_TRAN
+		(TR_SENDDATE , TR_SENDSTAT ,TR_MSGTYPE ,TR_PHONE
+		,TR_CALLBACK ,
+		TR_MSG)
+		VALUES(GETDATE(), '0', '0', #{phone},
+		'031-8047-4328',
+		'[ '+#{title}+' ] 도서가 반납처리 되었습니다.' )
+
+	</insert>
+
+	<insert id="notifiReturn" parameterType="Sms">
+		INSERT INTO
+		SC_TRAN
+		(TR_SENDDATE , TR_SENDSTAT ,TR_MSGTYPE ,TR_PHONE
+		,TR_CALLBACK ,
+		TR_MSG)
+		VALUES(GETDATE(), '0', '0', #{phone},
+		'031-8047-4328',
+		'[ '+#{title} + ' ] 의 반납일은 '+ CONVERT(CHAR(10),
+		DATEADD(DAY, 5,
+		GETDATE()),
+		23) + ' 입니다.' )
+
+
+	</insert>
+
+	<insert id="notifiReq" parameterType="Sms">
+		INSERT INTO
+		SC_TRAN
+		(TR_SENDDATE , TR_SENDSTAT ,TR_MSGTYPE ,TR_PHONE
+		,TR_CALLBACK ,
+		TR_MSG)
+		VALUES(GETDATE(), '0', '0', #{phone},
+		'031-8047-4328',
+		'구매요청도서 [ ' + #{title} + ' ] 구매 신청 완료되었습니다.' )
+
+
+	</insert>
+	<insert id="notifiExtend" parameterType="Sms">
+		INSERT INTO
+		SC_TRAN
+		(TR_SENDDATE , TR_SENDSTAT ,TR_MSGTYPE ,TR_PHONE
+		,TR_CALLBACK ,
+		TR_MSG)
+		VALUES(GETDATE(), '0', '0', #{phone},
+		'031-8047-4328',
+		'[ ' + #{title} + ' ] 도서가 연장되었습니다.' )
+
+
+	</insert>
+</mapper>

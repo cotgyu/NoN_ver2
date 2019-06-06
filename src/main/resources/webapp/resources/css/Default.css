@@ -1,0 +1,108 @@
+@charset "utf-8"; 
+/* JIS Web Standardization Team (http://www.jisman.co.kr) 권미영 */
+/* 공통 */
+@font-face {
+	font-family: NanumGothic;
+	font-style: normal;
+	font-weight: normal;
+	src: url('/Font/NanumGothic.eot');
+	src: local('?'),
+		url('/Font/NanumGothic.eot?#iefix') format('embedded-opentype'), 
+		url('/Font/NanumGothic.ttf') format('truetype'),
+		url('/Font/NanumGothic.otf') format('opentype'),
+		url('/Font/NanumGothic.woff') format('woff'),
+		url('/Font/NanumGothic.svg#NanumGothic') format('svg');
+}
+@font-face {
+	font-family: NanumGothicBold;
+	font-style: normal;
+	font-weight: normal;
+	src: url('/Font/NanumGothicBold.eot');
+	src: local('?'),
+		url('/Font/NanumGothicBold.eot?#iefix') format('embedded-opentype'), 
+		url('/Font/NanumGothicBold.ttf') format('truetype'),
+		url('/Font/NanumGothicBold.otf') format('opentype'),
+		url('/Font/NanumGothicBold.woff') format('woff'),
+		url('/Font/NanumGothicBold.svg#NanumGothicBold') format('svg');
+}
+@font-face {
+	font-family: BebasNeue;
+	font-style: normal;
+	font-weight: normal;
+	src: url('/Font/BebasNeue.eot');
+	src: local('?'), 
+		url('/Font/BebasNeue.eot?#iefix') format('embedded-opentype'),
+		url('/Font/BebasNeue.ttf') format('truetype'),
+		url('/Font/BebasNeue.otf') format('opentype'),
+		url('/Font/BebasNeue.woff') format('woff'),
+		url('/Font/BebasNeue.svg#BebasNeue') format('svg');
+}
+html, body {wdith: 100%; height: 100%;}
+#wrapper {position: relative;}
+* {
+	margin: 0px; padding: 0px;
+	font-family: NanumGothicBold, 나눔고딕볼드, Dotum, 돋움, Gulim, 굴림, AppleGothic, Sans-serif; font-size: 13px; color: #303030; line-height: 18px;
+	word-break: keep-all;
+}
+table {border-collapse: collapse;}
+
+td .td-title{ text-align:left; }
+img, button, fieldset, iframe {border: none;}
+img, input, select {vertical-align: middle;}
+hr, button img {display: none;}
+fieldset {_display: inline;}
+address {font-style: normal;}
+ul, ul li {list-style: none;}
+ul.vertical li {clear: both;}
+ul.horizontal li {float: left;}
+ul.list_01 li {position: relative; padding-left: 7px; background: url(/pilot/Main.nsf/icon_list_01.gif); background-position: left 9px; background-repeat: no-repeat;}
+ol, ol li {list-style: none;}
+ol.vertical li {clear: both;}
+ol.horizontal li {float: left;}
+.group_horizontal {_float: left; overflow: hidden;}
+.para_group {margin-bottom: 50px;}
+.para {margin-bottom: 40px;}
+.para_s {margin-bottom: 30px;}
+.para_ss {margin-bottom: 10px;}
+.object {margin-bottom: 10px;}
+.inline {display: inline;}
+.none {display: none;}
+.clear {clear: both;}
+.cursor {cursor: pointer;}
+.left {float: left;}
+.center {margin: 0 auto; display: block;} /* 해당 width입력 필(이미지 제외) */
+.right {float: right;}
+.top {vertical-align: top;}
+.middle {position: relative; top: 50%;} /* 상위 wrapper에 hieght입력 필, 해당 margin-top:해당 객체 높이의 반px입력 필 */
+.bottom {position: absolute; bottom: 0px;} /* 상위 wrapper에 position:relative입력 필 */
+.text_left {text-align: left;}
+.text_center {text-align: center;}
+.text_right {text-align: right;}
+.text_top {vertical-align: top;}
+.text_middle {vertical-align: middle;}
+.text_bottom {vertical-align: bottom;}
+.onmouse a img {display: inline;}
+.onmouse a img.over {display: none;}
+.onmouse a:hover {position: relative;}
+.onmouse a:hover img {display: none;}
+.onmouse a:hover img.over {display: inline;}
+a {text-decoration: none; cursor: pointer;}
+a:hover {color: #FF5A00;}
+.png24 {tmp:expression(setPng24(this));}
+input {width: 128px; height: 18px; border: 1px solid #C3C3C3; background: #FFFFFF;}
+input.readonly {background: #F5F5F5;}
+textarea {width: 100%; height: 98px; overflow: auto; border: 1px solid #C3C3C3; background: #FFFFFF;}
+select {width: 130px; height: 20px; border: 1px solid #C3C3C3; background: #FFFFFF;}
+span input {width: 13px; border: none; background: none;}
+html:first-child select {height: 20px; padding-right: 6px;} /* Opera 9 & Below Fix */ 
+option {padding-right: 6px;} /* Firefox Fix */
+legend {position: absolute; top: 0; left: 0; width: 0; height: 0; overflow: hidden; visibility: hidden; font-size: 0; line-height: 0;} /* Screen Reader */
+/* 특정 */
+.point_01 {color: #2F6EBE;}
+.point_02 {color: #FF7373;}
+#main_body h3 {font-size: 12px; color: #000000; line-height: 12px; padding-left: 8px; margin-bottom: 10px; font-weight: bold; background: url(/pilot/Main.nsf/icon_h3.gif); background-position: left 50%; background-repeat: no-repeat;}
+#main_body h3 span {font-size: 12px; color: #2F6EBE;}
+.locationEl a:active {padding:0px 5px 0px 15px; background: url(/pilot/Main.nsf/icon_top_menu.gif?OpenImageResource); background-position:top left; background-repeat:no-repeat;}
+.locationEl a:link {padding:0px 5px 0px 15px; background: url(/pilot/Main.nsf/icon_top_menu.gif?OpenImageResource); background-position:top left; background-repeat:no-repeat;}
+.locationEl a:visited {padding:0px 5px 0px 15px; background: url(/pilot/Main.nsf/icon_top_menu.gif?OpenImageResource); background-position:top left; background-repeat:no-repeat;}
+.locationEl a:hover {padding:0px 5px 0px 15px; background: url(/pilot/Main.nsf/icon_top_menu.gif?OpenImageResource); background-position:top left; background-repeat:no-repeat;}

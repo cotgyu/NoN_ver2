@@ -1,0 +1,176 @@
+body .main {
+	padding-top: 70px;
+	/* Required padding for .navbar-fixed-top. Remove if using .navbar-static-top. Change if height of navigation changes. */
+}
+
+footer {
+	margin: 50px 0;
+}
+
+.noborder {
+	border-width: 0px;
+}
+
+.ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis; 
+	-o-text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 5;
+	-webkit-box-orient: vertical;
+}
+
+.href{
+	display: block; 
+	font-weight: bold;
+}
+#nav-input {
+	margin-top: 5px;
+	margin-right: 5px;
+	vertical-align: middle;
+}
+
+div .left {
+	float: left;
+	width: 60%;
+	margin-bottom: 10px;
+}
+
+.page {
+	font-size: large;
+}
+
+div .right {
+	float: right;
+	width: 40%;
+	margin-bottom: 10px;
+}
+
+div .title {
+	width: 100%;
+/* 	text-align: center; */
+	font-size: xx-large;
+}
+
+div #center {
+	width: 100%;
+	text-align: center;
+	font-size: xx-large;
+}
+
+div .right-end {
+	margin-top: 20px;
+	text-align: right;
+	vertical-align: bottom;
+	height: 100%;
+}
+
+table .table .table-bordered {
+	margin-right: 10px;
+	padding-right: 10px;
+}
+
+table .title {
+	font-size: 15px;
+	font-weight: bold;
+	text-transform: capitalize;
+} 
+table th {
+	text-align: center;
+}
+
+table .author {
+	width:15%;  
+	text-overflow:ellipsis; 
+	overflow:hidden;
+	word-break:keep-all;
+} 
+
+table  .midlen {
+	width: 100px;
+	word-break:keep-all; 
+}
+table  .shortlen {
+	width: 60px;
+	word-break:keep-all; 
+}
+
+table  .longlen {
+	width: 130px;
+	word-break:keep-all; 
+}
+table   .genre {
+	width: 10%;
+	word-break:keep-all; 
+}
+
+table   .td-date {
+	width: 80px;
+	word-break:keep-all; 
+}
+
+table thead .td-chk {
+	width: 30px;
+}
+table .td-count {
+	width: 80px;
+	text-align: right; 
+}
+
+
+.table-admin {
+	font-size: 16px;
+	cellspacing: 2px;
+}
+
+#btn_bookList {
+	width: 30%;
+}
+
+#insertBook {
+	width: 30%;
+}
+
+div .right>h4 {
+	text-indent: 12px;
+}
+
+.table .table-striped .table-bordered {
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+}
+
+.ok {
+	color: #00ff00;
+}
+
+.no {
+	color: red;
+}
+
+.hide {
+	visibility: hidden;
+}
+
+.row {
+	padding: 10px;
+}
+
+#page {
+	text-align: center;
+	font-size: 20px;
+}
+
+
+#nav-input {
+	margin-top: 5px;
+	vertical-align: middle;
+}
+
+.big {
+	font-size: xx-large;
+}
+
+.middle {
+	font-size: large;
+}

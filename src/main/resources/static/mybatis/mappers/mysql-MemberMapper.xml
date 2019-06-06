@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.Edu.Dao.MemberDaoMapper">
+
+	<select id="loginCheck" resultType="Member">
+		SELECT * FROM member WHERE id=#{id}
+		<!-- SELECT COUNT(*) FROM member WHERE id=#{id} -->
+	</select>
+	
+	<select id="idCheck" resultType="Member">
+		SELECT * FROM member WHERE id=#{id}
+	</select>
+	
+	<insert id="joinMember" parameterType="Member" useGeneratedKeys="true" keyProperty="no">
+		INSERT INTO member 
+		VALUES(#{id}, #{pass}, #{name}, #{nick}, #{birth}, #{email}, #{mobile}, #{zipcode},
+		#{address1}, #{address2}, #{phone}, #{emailGet}, SYSDATE(), #{gender},#{profile_image},#{grade})
+	</insert>
+	
+	<select id="login" resultType="Member">
+		SELECT * FROM member WHERE id=#{id}
+	</select>
+
+	<select id="forgotPassword" resultType="Member">
+		SELECT * FROM member WHERE id=#{id}
+	</select>
+
+	<update id="updateMember" parameterType="Member" useGeneratedKeys="true" keyProperty="no">
+		UPDATE member
+		SET name=#{name},nick=#{nick},email=#{email},birth=#{birth},zipCode=#{zipCode},address1=#{address1},address2=#{address2},
+		mobile=#{mobile},phone=#{phone},email_get=#{emailGet},gender=#{gender}
+	</update>
+
+	<update id="updatePass" parameterType="Member" useGeneratedKeys="true" keyProperty="no">
+		UPDATE member
+		SET pass=#{pass}
+		WHERE id=#{id}
+	</update>
+
+	<insert id="kakaologin" parameterType="Member" useGeneratedKeys="true" keyProperty="no">
+		<!-- INSERT INTO member (id,nick,email,reg_date)
+		VALUES(#{id}, #{nick}, #{email}, SYSDATE()) -->
+		INSERT INTO member (id,nick,email,reg_date)
+		VALUES(#{id}, #{nick}, #{email}, SYSDATE())
+	</insert>
+	
+	<insert id="naverlogin" parameterType="Member" useGeneratedKeys="true" keyProperty="no">
+		INSERT INTO member (id,email,nick,gender,birth,name,profile_image,reg_date)
+		VALUES(#{id},#{email},#{nick},#{gender},#{birth},#{name},#{profile_image},SYSDATE())
+	</insert>
+	
+</mapper>	
+
+
+
