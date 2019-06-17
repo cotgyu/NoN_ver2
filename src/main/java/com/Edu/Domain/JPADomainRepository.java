@@ -15,8 +15,8 @@ public interface JPADomainRepository extends JpaRepository<JPADomain, Long> {
 
 
     @Query(value = "SELECT p " +
-            "FROM jpadomain p WHERE id = 1"
-            ,nativeQuery = true)
+            "FROM JPADomain p WHERE id = 1"
+            )
     JPADomain QueryTest();
 
     @Modifying
