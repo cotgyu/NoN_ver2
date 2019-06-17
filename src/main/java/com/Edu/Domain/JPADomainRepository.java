@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 //DB Layer 접근자(DAO), JpaRepository<Entity, PK타입 > 을 상속하면 기본적인 CRUD 메소드가 자동 생성됨.
-@Component
 @Transactional
 public interface JPADomainRepository extends JpaRepository<JPADomain, Long> {
 
