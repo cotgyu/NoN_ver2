@@ -49,13 +49,14 @@ class eduDataSourceConfig extends DatabaseConfig {
 		return dataSource;
 	}
 
-	// 트랜잭션
-	@Bean
-	public DataSourceTransactionManager transactionManager(@Qualifier("eduDataSource") DataSource dataSource) {
-		DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
-		transactionManager.setGlobalRollbackOnParticipationFailure(false);
-		return transactionManager;
-	}
+// JPA 테스트로 인한 트랜잭션매니저 부분 주석
+//	// 트랜잭션
+//	@Bean
+//	public DataSourceTransactionManager transactionManager(@Qualifier("eduDataSource") DataSource dataSource) {
+//		DataSourceTransactionManager transactionManager = new DataSourceTransactionManager(dataSource);
+//		transactionManager.setGlobalRollbackOnParticipationFailure(false);
+//		return transactionManager;
+//	}
 
 	@Bean
 	@ConfigurationProperties(prefix = "mybatis")
