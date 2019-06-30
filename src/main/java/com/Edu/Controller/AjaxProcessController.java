@@ -26,39 +26,30 @@ public class AjaxProcessController {
 	*/
 	
 	@RequestMapping("/dupleCheck.ajax")
-	@ResponseBody//ajax를 쓰기위해 써준다.리턴값은 view를 통하지 않고, http 응답데이터로사용되어 직접 전달되는 것입니다.
-	public Map<String,Boolean> dupleCheck(String id,String nick) throws Exception {
-		Member member = null;//빈 멤버를 설정해줌
-		System.out.println("ajaxController로 넘어왔습니다.id="+id+"nick="+nick);
-		Map<String,Boolean> map = new HashMap<String,Boolean>();
-		
+	@ResponseBody
+	public String dupleCheck(String id,String nick) throws Exception {
+		Member member = null;
+
+		String checkResult = "false";
+
+
 		if(id != null && nick == null) {
-			System.out.println("정상적으로 id 트루에 옵니다.");
-			member = memberService.loginCheck(id); //member형태 그대로 가져옴.
-			System.out.println("에이작스받아왔어.");
-			if(member == null) {//멤버가 비어있으면...
-				map.put("result", true);//사용가능
-			}
-			else {
-				map.put("result", false);//불가
+
+			member = memberService.loginCheck(id);
+
+			if(member == null) {
+				checkResult = "true";
 			}
 		}
 		else if(id == null && nick != null) {
 			member = memberService.idCheck(nick);
 			if(member == null) {
-				map.put("result", true);//사용가능
+				checkResult = "true";
 			}
-			else {
-				map.put("result", false);//불가
-			
-			}
+
 		}
-		else {
-			System.out.println("dupleCheck.ajax에서 에러");
-		}
-		System.out.println("ajaxController map을 리턴하기 전입니다.");
-		System.out.println("map에 들어있는 값"+map);
-		return map;
+
+		return checkResult;
 		
 	}
 	

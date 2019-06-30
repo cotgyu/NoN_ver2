@@ -22,39 +22,30 @@ import com.Edu.Service.MemberService;
 import com.fasterxml.jackson.databind.JsonNode;
 
 @Controller
-// @SessionAttributes({"member","m"})
 public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
-	
-/*	@Autowired
-	private NaverLoginBO naverLoginBO;
-	
-	private String apiResult = null;
-*/
-	
-	public void setMemberService(MemberService memberService) {
-		this.memberService = memberService;
-	}
 
+
+	// 회원가입 폼 이동
 	@RequestMapping(value ="/m_register")
 	public String register() {
-		
 		return "member/register";
 	}
-	
-	@RequestMapping(value="/login")//로그인 페이지로 이동
+
+	//로그인 페이지로 이동
+	@RequestMapping(value="/login")
 	public String login(Model model,HttpSession session) {
 		String state = UUID.randomUUID().toString();
-		System.out.println("FIRST uuid"+state);
+
 		model.addAttribute("state", state);
 		session.setAttribute("state", state);
 		
-		System.out.println("modelAtt"+state);
-		System.out.println("sessionAtt"+state);
+
 		return "member/login";
 	}
+
 	@RequestMapping("/logout")
 	public String logout(SessionStatus sessionStatus, HttpSession session) {
 		session.removeAttribute("member");
@@ -66,36 +57,27 @@ public class MemberController {
 	public String update() {
 		return "member/m_update";
 	}
+
 	@RequestMapping(value="/forgotPasswordForm")
 	public String forgot() {
 		return "member/forgotPasswordForm";
 	}
+
 	@RequestMapping(value="/main")
 	public String goMain() {
 		return "main";
 	}
-	@RequestMapping(value = "/joinResult")//회원가입시...
-	public String joinResult(Model model, Member member, String id, String pass, String name, String nick,
-			String email1, String email2, String birth1, String birth2, String birth3, String zipCode, String address1,
-			String address2, String mobile1, String mobile2, String mobile3, String gender, String emailGet,
-			String phone1, String phone2, String phone3) {
 
-		member.setId(id);
-		member.setName(name);
-		member.setNick(nick);
-		member.setPass(pass);
+	@RequestMapping(value = "/joinResult")
+	public String joinResult(Member member, String email1, String email2, HttpSession session) {
+
+
 		member.setEmail(email1 + "@" + email2);
-		member.setBirth(birth1 + "/" + birth2 + "/" + birth3);
-		member.setZipcode(zipCode);
-		member.setAddress1(address1);
-		member.setAddress2(address2);
-		member.setMobile(mobile1 + "-" + mobile2 + "-" + mobile3);
-		member.setGender(gender);
-		member.setPhone(phone1 + "-" + phone2 + "-" + phone3);
-		member.setEmailGet(Boolean.valueOf(emailGet));
-		member.setRegDate(new Timestamp(System.currentTimeMillis()));
-
 		memberService.joinMember(member);
+
+		// 회원 가입 후 자동로그인
+		session.setAttribute("member", member);
+
 		return "redirect:/";
 	}
 
@@ -139,29 +121,7 @@ public class MemberController {
 			RequestMethod.POST })
 	public String kakaoLogin(@RequestParam("code") String code, HttpServletRequest request,
 		HttpServletResponse response, HttpSession session) throws Exception {
-		
-		/*JsonNode token = KakaoLogin.getAccessToken(code);//토큰정보 갖고오는??
-		JsonNode profile = KakaoLogin.getKakaoUserInfo(token.path("access_token").toString());//프로필정보 갖고온다??
-		Member member = KakaoLogin.changeData(profile);
-		Member member1 = null;
-		
-		member.setId("kakao_" + member.getId());//
-		member.setNick("kakao_" + member.getNick());
 
-		session.setAttribute("member", member);
-		session.setAttribute("isLogin", true);
-		session.setAttribute("nick", member.getNick());
-		session.setAttribute("isSns", true);
-		String nick = (String) session.getAttribute("nick");
-		
-		
-		member1 = memberService.nickCheck(nick);
-		if(member1 != null) {
-			System.out.println("중복된 사용자");
-			memberService.kakaologin(member);
-		}
-		return "redirect:member/kakaoLogin";
-*/	
 		JsonNode token = KakaoLogin.getAccessToken(code);//토큰정보 갖고오는??
 		JsonNode profile = KakaoLogin.getKakaoUserInfo(token.path("access_token").toString());//프로필정보 갖고온다??
 		Member member = KakaoLogin.changeData(profile);
@@ -178,7 +138,7 @@ public class MemberController {
 		
 		member1 = memberService.idCheck(id);//
 		if(member1 != null) {
-			System.out.println("중복된 사용자");			
+			System.out.println("중복된 사용자");
 			return "redirect:/";
 		}
 		memberService.kakaologin(member);
@@ -187,8 +147,7 @@ public class MemberController {
 	
 
 	
-	@RequestMapping(value = "/naverlogin", produces = "application/json", method = { RequestMethod.GET,
-			RequestMethod.POST })
+	@RequestMapping(value = "/naverlogin", produces = "application/json", method = { RequestMethod.GET, RequestMethod.POST })
 	public String naverLogin(@RequestParam("code") String code,String state, HttpServletRequest request,
 			HttpServletResponse response, HttpSession session) throws Exception {
 			
@@ -222,73 +181,4 @@ public class MemberController {
 	}
 
 
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-/*	@RequestMapping(value="/naverlogin",method= {RequestMethod.GET,RequestMethod.POST})
-	public String naverLogin(Model model,HttpSession session) {
-		네이버 아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출
-		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
-		System.out.println("네이버 : " + naverAuthUrl);
-		//네이버
-		model.addAttribute("url",naverAuthUrl);
-		생성한 인증 URL을 view로 전달
-		return "naverLogin";
-	}
-	
-	//네이버 로그인 성공시 callback호출 메서드
-	@RequestMapping(value="/callback",method= {RequestMethod.GET,RequestMethod.POST})
-	public String callback(Model model,@RequestParam String code,@RequestParam String state,HttpSession session) 
-	throws IOException, InterruptedException, ExecutionException{
-		System.out.println("여기는 callback");
-		OAuth2AccessToken oauthToken;
-		oauthToken = naverLoginBO.getAccessToken(session, code, state);
-		//로그인 사용자 정보를 읽어온다.
-		Member member = naverLoginBO.getUserProfile(oauthToken);
-		model.addAttribute("result", apiResult);
-		
-		네이버 로그인 성공 페이지 view 호출
-		return "naverSuccess";
-		
-	}
-	*/
-/*	
-	@RequestMapping(value = "/facelogin", produces = "application/json", method = { RequestMethod.GET,
-			RequestMethod.POST })
-	public String faceLogin(@RequestParam("code") String code, HttpServletRequest request,
-			HttpServletResponse response, HttpSession session) throws Exception {
-		System.out.println("여기를 오긴 오는거야??");
-		
-		JsonNode token = KakaoLogin.getAccessToken(code);
-		JsonNode profile = KakaoLogin.getKakaoUserInfo(token.path("access_token").toString());
-		System.out.println(profile);
-		Member member = KakaoLogin.changeData(profile);
-		Member member1 = null;
-		System.out.println(member.getId());
-		member.setId("kakao_" + member.getId());
-		member.setNick("kakao_" + member.getNick());
-
-		session.setAttribute("memeber", member);
-		session.setAttribute("isLogin", true);
-		session.setAttribute("nick", member.getNick());
-		String nick = (String) session.getAttribute("nick");
-		System.out.println(nick);
-		member1 = memberService.nickCheck(nick);
-		if(member1 == null) {
-			memberService.kakaologin(member);
-		}
-		
-		return "redirect:main";
-	}*/
 }

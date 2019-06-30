@@ -15,7 +15,7 @@ public interface MemberDaoMapper {
 	public ArrayList<Member> getMemberList();
 
 	// 회원가입
-	public void joinMember(Member member); //여기서 에러나는데..........................
+	public void joinMember(Member member);
 
 	// 정보수정
 	public void Update(Member member);
