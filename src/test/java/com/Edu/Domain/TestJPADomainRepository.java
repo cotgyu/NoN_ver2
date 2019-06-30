@@ -4,11 +4,14 @@ package com.Edu.Domain;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -20,6 +23,9 @@ public class TestJPADomainRepository {
 
     @Autowired
     JPADomainRepository jpaDomainRepository;
+
+
+    private static final Logger logger = LoggerFactory.getLogger(TestJPADomainRepository.class);
 
     @After
     public void cleanup(){
@@ -61,6 +67,18 @@ public class TestJPADomainRepository {
         assertThat(posts.getTitle(), is("2"));
         assertThat(posts.getContent(), is("2"));
 
+
+    }
+
+    //log 테스트
+    @Test
+    public void loggingTest(){
+
+        logger.error("error log");
+        logger.warn("warn log");
+        logger.info("info log");
+        logger.debug("debug log");
+        logger.trace("trace log");
 
     }
 
