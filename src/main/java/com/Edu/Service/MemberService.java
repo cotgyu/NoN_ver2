@@ -1,6 +1,7 @@
 package com.Edu.Service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.Edu.Domain.Member;
 
@@ -33,7 +34,12 @@ public interface MemberService {
 	//네이버로그인
 	public void naverlogin(Member member);
 
-	
+
+	// Id 체크
+	boolean checkUserByUserId(String id);
+
+	//사용자등록
+	public void registerMember(Map userinfoMap, String loginType);
 	
 	/*//페이스북 로그인
 	public void onAuthenticationBinding(Member member, User facebookUser);*/

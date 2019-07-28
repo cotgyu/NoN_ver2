@@ -9,7 +9,8 @@ public class Member {
 	private int grade;
 	private Timestamp regDate;
 	private int userno;
-	
+	private String logintype;
+
 	public Member() {}
 
 	public String getGender() {
@@ -123,6 +124,14 @@ public class Member {
 
 	public void setUserno(int userno) {
 		this.userno = userno;
+	}
+
+	public String getLogintype() {
+		return logintype;
+	}
+
+	public void setLogintype(String logintype) {
+		this.logintype = logintype;
 	}
 
 	@Override

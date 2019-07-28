@@ -13,8 +13,8 @@
 	</select>
 	
 	<insert id="joinMember" parameterType="Member" useGeneratedKeys="true" keyProperty="no">
-		INSERT INTO member (id, pass, nick, email)
-		VALUES(#{id}, #{pass},  #{nick},  #{email} )
+		INSERT INTO member (id, pass, nick, email, logintype)
+		VALUES(#{id}, #{pass},  #{nick},  #{email}, #{logintype} )
 	</insert>
 	
 	<select id="login" resultType="Member">

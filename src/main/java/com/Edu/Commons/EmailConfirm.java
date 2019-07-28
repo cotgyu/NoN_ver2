@@ -1,4 +1,4 @@
-package com.Edu.Function;
+package com.Edu.Commons;
 
 import java.util.Properties;
 import javax.mail.*;

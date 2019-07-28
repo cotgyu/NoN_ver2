@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.Edu.Domain.Member;
-import com.Edu.Function.EmailConfirm;
+import com.Edu.Commons.EmailConfirm;
 import com.Edu.Service.MemberService;
 
 @Controller

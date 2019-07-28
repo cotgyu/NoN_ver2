@@ -1,6 +1,7 @@
 package com.Edu.Service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,7 +50,6 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Member login(String id) {
-		System.out.println("ajaxprocess에서 서비스 임플 까지 id pass 넘어옴"+id);
 		return memberDaoMapper.login(id);
 	}
 
@@ -70,6 +70,45 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+	@Override
+	public boolean checkUserByUserId(String id) {
+
+		if (memberDaoMapper.idCheck((id)) != null) {
+			return true;
+		}
+
+		return false;
+
+	}
+
+	@Override
+	public void registerMember(Map userInfoMap, String loginType) {
+
+		Member member = new Member();
+
+		if(loginType != null && loginType.length() != 0){
+			member.setLogintype(loginType);
+		}
+
+		if (loginType.equals("GOOGLE")) {
+			member.setId("google_"+(String)userInfoMap.get("sub"));
+			member.setNick((String)userInfoMap.get("name"));
+
+		} else if (loginType.equals("KAKAO")) {
+			// 닉네임 받기
+			Map KakaoProfile = (Map)userInfoMap.get("properties");
+			String nickName = (String)KakaoProfile.get("nickname");
+
+			member.setId("kakao_"+userInfoMap.get("id").toString());
+			member.setNick(nickName);
+
+		}
+
+		memberDaoMapper.joinMember(member);
+
+
+
+	}
 
 
 }

@@ -1,10 +1,10 @@
 package com.Edu.Config;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.mobile.device.DeviceResolverHandlerInterceptor;
+import org.springframework.context.annotation.PropertySource;
 
 @Configuration
+@PropertySource({"classpath:application.properties", "classpath:socialInfo.properties"})
 public class AppConfig {
 
 	/*
