@@ -1,15 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>index page</title>
+<title>NoN 회원가입</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>edu pjt_3-Col </title>
 
   <link href="resources/indexresource/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
    
@@ -52,9 +51,6 @@
                     $("#idFlag").css({color : "red"});
                     $('<i class="fa fa-times"></i>').prependTo('#idFlag');
                     $("#joinId").focus().val("");
-                    $(".modal-header").text("아이디 형식 오류" );
-                    $(".modal-body").text("한글,영어,숫자를 이용해서 5~20자 이내로 입력하세요." );
-                    $('#exampleModal').modal('show');
 
                     return;
                 }
@@ -72,10 +68,6 @@
                             idBoolean = true;
                         }
                         else {
-                            $(".modal-header").text("ID 입력 실패" );
-                            $(".modal-body").text("[ "+id+" ]"+" "+ "는 중복된 ID 입니다." );
-                            $('#exampleModal').modal('show');
-
                             $("#idFlag").text("[ "+id+" ]"+" "+ "는 중복된 ID입니다.");
                             $("#idFlag").css({color : "red"});
                             $('<i class="fa fa-times"></i>').prependTo('#idFlag');
@@ -101,9 +93,6 @@
                     $("#nickFlag").css({color : "red"});
                     $('<i class="fa fa-times"></i>').prependTo('#nickFlag');
                     $("#nick").focus().val("");
-                    $(".modal-header").text("닉네임 형식 오류" );
-                    $(".modal-body").text("한글,영어,숫자를 이용해서 5~20자 이내로 입력하세요." );
-                    $('#exampleModal').modal('show');
 
                     return;
                 }
@@ -120,9 +109,6 @@
                             nickBoolean = true;
                         }
                         else {
-                            $(".modal-header").text("닉네임 중복 오류" );
-                            $(".modal-body").text("[ "+nick+" ]"+" "+ "는 중복된 닉네임입니다.");
-                            $('#exampleModal').modal('show');
 
                             $("#nickFlag").text("[ "+nick+" ]"+" "+ "는 중복된 닉네임입니다.");
                             $("#nickFlag").css({color : "red"});
@@ -154,9 +140,6 @@
                 var email1 = document.getElementById("email1").value;
 
                 if (email1.length == 0) {
-                    $(".modal-header").text("이메일 입력 오류" );
-                    $(".modal-body").text("이메일이 비었습니다 입력해주세요.");
-                    $('#exampleModal').modal('show');
 
                     $("#emailFlag").text(' 이메일이 비었습니다 입력해주세요.');
                     $("#emailFlag").css({color : "red"});
@@ -177,9 +160,6 @@
                 var $parent = $(this).parent();
 
                 if (email1.length == 0|| email2.length == 0) {
-                    $(".modal-header").text("이메일 입력 오류" );
-                    $(".modal-body").text("이메일이 비었습니다 입력해주세요.");
-                    $('#exampleModal').modal('show');
 
                     $("#emailFlag").text(' 이메일이 비었습니다 입력해주세요.');
                     $("#emailFlag").css({color : "red"});
@@ -189,10 +169,6 @@
                 }
 
                 if (!regEmail.test(email2)) {
-                    $(".modal-header").text("이메일 도메인 입력 오류" );
-                    $(".modal-body").text("잘못된 형식입니다. 도메인부분은 소문자와 (.)로 입력해야 합니다.");
-                    $('#exampleModal').modal('show');
-
                     $("#emailFlag").text('잘못된 형식입니다. 도메인부분은 소문자와 (.)을 입력해야 합니다.');
                     $("#emailFlag").css({color : "red"});
                     $('<i class="fa fa-times"></i>').prependTo('#emailFlag');
@@ -216,32 +192,10 @@
                 if(regPass.test(pass)){ //regPass에 문자열이 있는지 판단할떄 true or false 리턴.입력값이 소문자가 존재하고..
 					if(pass.length>=8&&pass.length<20){		//입력받은 문자열이 8이상 20미만일때
 						$("#cpassFlag").text('비밀번호 확인을 하세요.');
+                        $("#cpassFlag").css({color : "red"});
 						$("#cpass").focus().val("");
-						$("#cpass").change(function(){
-							var cpass = $("#cpass").val();
-							if(pass==cpass){
-
-								$("#cpassFlag").text("패스워드 입력이 성공적으로 이루어졌습니다.");
-								$("#cpassFlag").css({color : "green"});
-								$('<i class="fa fa-circle-o"></i>').prependTo('#cpassFlag');
-								passBoolean = true;
-							}
-							else{
-								$(".modal-header").text("비밀번호 확인 실패" );
-								$(".modal-body").text("비밀번호 확인이 맞지 않습니다. 다시 입력해주세요.");
-								$('#exampleModal').modal('show');
-
-								$("#cpassFlag").text("비밀번호 확인이 맞지 않습니다. 다시 입력해주세요.");
-								$("#cpass").focus().val("");
-								passBoolean = false;
-							}
-						});
-
 					}
 					else{
-						$(".modal-header").text("비밀번호 형식 오류" );
-						$(".modal-body").text("잘못된 형식입니다. 비밀번호는 8~20자 로 만들어야 합니다.");
-						$('#exampleModal').modal('show');
 
 						$("#cpassFlag").text(' 잘못된 형식입니다. 비밀번호는 8~20자 로 만들어야 합니다.');
 						$("#cpassFlag").css({color : "red"});
@@ -252,48 +206,53 @@
 
 				}
 
-            });//비밀번호 유효성 검사끝
+            });
+
+            $("#cpass").change(function(){
+                var cpass = $("#cpass").val();
+                var pass = $("#pass").val();
+
+                if(pass==cpass){
+
+                    $("#cpassFlag").text("패스워드 입력이 성공적으로 이루어졌습니다.");
+                    $("#cpassFlag").css({color : "green"});
+                    $('<i class="fa fa-circle-o"></i>').prependTo('#cpassFlag');
+                    passBoolean = true;
+                }
+                else{
+
+                    $("#cpassFlag").text("비밀번호 확인이 맞지 않습니다. 다시 입력해주세요.");
+                    $("#cpassFlag").css({color : "red"});
+                    $("#cpass").focus().val("");
+                    passBoolean = false;
+                }
+            });
 
 
 			//조인폼 서브밋 클릭시 이벤트, 모바일 공백검사 후, 서비스 넘기기
             $("#btnJoinSubmit").click(function(){
                 if(idBoolean){
 					if(nickBoolean){
-						if(emailBoolean){
 							if(passBoolean){
-								$(".modal-header").text(" 회원 가입 완료  " );
-								$(".modal-body").text("회원가입이 정상적으로 처리되었습니다. 로그인해주세요.");
-								$('#exampleModal').modal('show');
-
+								alert("회원가입이 정상적으로 처리되었습니다.");
 
 								document.joinC.action = "joinResult.mvc";
 								document.joinC.submit();
 							}
 							else{
-								$(".modal-header").text(" 필수 입력 요소 누락 " );
-								$(".modal-body").text("비밀번호는 반드시 입력되어야 합니다.");
-								$('#exampleModal').modal('show');
+                                alert("비밀번호를 확인해주세요");
 								return false;
 							}
-						}
-						else{
-							$(".modal-header").text(" 필수 입력 요소 누락 " );
-							$(".modal-body").text("이메일 인증은 반드시 완료되어야 합니다.");
-							$('#exampleModal').modal('show');
-							return false;
-						}
 					}
 					else{
-						$(".modal-header").text(" 필수 입력 요소 누락 " );
-						$(".modal-body").text("닉네임은 반드시 입력되어야 합니다.");
-						$('#exampleModal').modal('show');
+                        alert("닉네임은 반드시 입력되어야 합니다.");
+
 						return false;
 					}
                 }
                 else{
-                    $(".modal-header").text(" 필수 입력 요소 누락 " );
-                    $(".modal-body").text("아이디는 반드시 입력되어야 합니다.");
-                    $('#exampleModal').modal('show');
+                    alert("아이디는 반드시 입력되어야 합니다.");
+
                     return false;
                 }
             });
@@ -303,18 +262,22 @@
 	</script>
 </head>
 <body>
+
+<div id="wrapper">
+	<jsp:include page="/WEB-INF/jsp/fixedIndex/nav.jsp" />
+	<br><br><br><br>
  
-	<div class="container">
+	<div class="container" style="width: 60%;">
 		<div class="row">
 			<div class="col-md-12">
 				<h3>
-					<span>회원 가입</span>
+					<span>NoN 회원 가입</span>
 				</h3>
 				<hr>
 				<form class="form-horizontal" method="post" name="joinC" id="signup" action="joinResult"><!--액션추가  -->
 					<div class="form-group">
 						<label class="control-label col-sm-3">ID<span class="text-danger">*</span></label>
-						<!-- id 입력부분 -->	
+						<!-- id 입력부분 -->
 						<div class="col-md-7 col-sm-7">
 							<div class="input-group">
 								<input type="text" class="form-control" name="id" id="joinId" placeholder="한글,영어,숫자를 이용해서 5~20자 이내로 입력하세요." value="${sessionScope.member.id }">
@@ -406,6 +369,7 @@
 							</div>
 						</div>
 					</div>
+					<br><br>
 
 					<div class="form-group" id="join14" style="">
 						<div class="col-xs-offset-3 col-xs-10">
@@ -418,24 +382,10 @@
 		</div>
 	</div>
 
-<!-- Modal -->
-  <div class="modal" id="exampleModal" role="dialog">
-    <div class="modal-dialog">
-    
-      Modal content
-      <div class="modal-content">
-        <div class="modal-header">
-        </div>
-        <div class="modal-body">
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger btn-md" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
+	<br><br>
+	<%@ include file="/WEB-INF/jsp/fixedIndex/footer.jsp" %>
 
+</div>
 
 </body>
 </html>

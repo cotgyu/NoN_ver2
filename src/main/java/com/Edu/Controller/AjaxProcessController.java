@@ -20,10 +20,7 @@ public class AjaxProcessController {
 	
 	@Autowired
 	private MemberService memberService;
-	
-	/*@Autowired
-	public Member member;
-	*/
+
 	
 	@RequestMapping("/dupleCheck.ajax")
 	@ResponseBody
@@ -53,50 +50,69 @@ public class AjaxProcessController {
 		
 	}
 	
-	@RequestMapping("/emailCheck.ajax")
+	@RequestMapping("/resetPassword.ajax")
 	@ResponseBody
-	public Map<String,String> emailCheck(String email1,String email2){
+	public Map<String,String> resetPassword(String email1,String email2, String id){
 		String email = null;
 		Map<String,String> map = new HashMap<String,String>();
 		if(!email1.equals("")||!email2.equals("")) {//email1이 null이 아니거나 email2가 null이 아닐경우
 			email = email1+"@"+email2;
 		}
 		else {
-			System.out.println("ajax EmailCheck error");
+			System.out.println("ajax resetPassword error");
 		}
 		EmailConfirm emailconfirm = new EmailConfirm();
-		String authNum=emailconfirm.connectEmail(email);
-		map.put("authNum", authNum);
-		System.out.println("이메일 인증 발송 완료  key값 : " + authNum);
+		String authNum = emailconfirm.connectEmail(email);
+
+		Member member = memberService.login(id);
+
+		member.setPass(authNum);
+
+		memberService.resetPassword(member);
+
 		return map;
 	}
-	
-	//용도:비밀번호찾기,로그인ajax부분
-	@RequestMapping("/forgotPass.ajax")
+
+	@RequestMapping("/memberEmailCheck.ajax")
 	@ResponseBody
-	public Member forgotPass(String id,String pass, HttpSession session,HttpServletResponse repsonse){
-		Member member = null;
-		System.out.println("여길오긴오나??");
-		
-		member = memberService.login(id);
-		if(member !=null) {
-			if(member.getId().equals(id)&&member.getPass().equals(pass)) {
-				
-				//session.setAttribute("isLogin", true);
-				session.setAttribute("member", member);
-				session.setAttribute("id", member.getId());			
-				session.setAttribute("nick", member.getNick());
-				session.setAttribute("grade", member.getGrade());
-				//System.out.println("로그인성공 id = "+ id + "비밀번호 = " + pass);
-				//System.out.println(session.getAttribute("isLogin"));
-				//System.out.println(session.getAttribute("nick"));
-				System.out.println("AJAXPROCE"+session.getAttribute("state"));
+	public Boolean memberEmailCheck(String id,String email, HttpSession session,HttpServletResponse repsonse){
+		boolean checkMember = false;
+
+		Member member = memberService.login(id);
+		if(member != null) {
+			if(member.getEmail().equals(email)) {
+
+				checkMember = true;
+
 			}
 		}
-		else {
-			System.out.println("포갓패스 실패");
+		return checkMember;
+	}
+
+
+	// 로그인 체크 후 로그인
+	@RequestMapping("/loginCheck.ajax")
+	@ResponseBody
+	public Boolean loginCheck(String id,String password, HttpSession session){
+		boolean checkMember = false;
+
+		Member member = null;
+
+		member = memberService.login(id);
+
+		if(member != null) {
+			if(member.getId().equals(id)&&member.getPass().equals(password)) {
+
+				session.setAttribute("member", member);
+				session.setAttribute("loginId", member.getId());
+				session.setAttribute("nickName", member.getNick());
+				session.setAttribute("grade", member.getGrade());
+
+				checkMember = true;
+			}
 		}
-		return member;
+
+		return checkMember;
 	}
 	
 	

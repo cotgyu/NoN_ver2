@@ -24,7 +24,7 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public Member loginCheck(String id) throws Exception {
-		System.out.println("서비스에 로긴첵 id = " + id);
+
 		return memberDaoMapper.loginCheck(id);
 	}
 
@@ -44,9 +44,15 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void Update(Member member) {
-		memberDaoMapper.Update(member);
+	public void updateMember(Member member) {
+		memberDaoMapper.updateMember(member);
 	}
+
+	@Override
+	public void resetPassword(Member member) {
+		memberDaoMapper.resetPassword(member);
+	}
+
 
 	@Override
 	public Member login(String id) {

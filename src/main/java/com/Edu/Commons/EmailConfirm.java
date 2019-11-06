@@ -7,15 +7,18 @@ import javax.mail.internet.*;
 public class EmailConfirm {
 	
 	public String connectEmail(String email) {
-		
-		String to1=email; //인증위해 사용자가 입력한 이메일주소
-		String host="smtp.gmail.com";    //smtp 서버(네이버던,구글이던 설정해서 쓰면돼
-		String subject="edu 가입 인증 메일";		 //보내는 제목 설정
-		String fromName="edu";		 //보내는 이름 설정
-		final String from="hyodg90@gmail.com";	//보내는 사람(구글계정)
-		String authNum=ranEmail(); //난 여기서 내가만든 이메일 난수 를 썼어.
-		String content="EduProject 가입인증 번호  : [ " +authNum+ "] 를 입력하세요"; //난수 생선된걸 content에 입력
-		final String password = "dlwjd123";//이메일 패스워드
+
+		final String from="v12v12rb@gmail.com";	//보내는 메일 계정
+		final String password = "cotpr123";
+		String to1=email;
+		String host="smtp.gmail.com";    //smtp 서버
+
+
+		String subject="NoN 비밀번호 찾기";
+		String fromName="NoN";		 //보내는 이름 설정
+		String authNum=ranEmail(); // 초기화 비밀번호
+		String content="NoN 초기화 비밀번호  :  " +authNum+ " "; // 초기화될 비밀번호 발송
+
 		System.out.println(email); //회원가입 사용자 이메일
 		System.out.println(from); //보내는사람이메일
 		

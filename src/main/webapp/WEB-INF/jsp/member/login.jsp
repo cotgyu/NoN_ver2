@@ -73,7 +73,7 @@
 			</div>
 			<div class="etc-login-form">
 				<p>
-					forgot your password? <a href="forgotPasswordForm">click here</a>
+					forgot your password? <a href="resetPassword">click here</a>
 				</p>
 				<p>
 					new user? <a href="register">create new account</a>

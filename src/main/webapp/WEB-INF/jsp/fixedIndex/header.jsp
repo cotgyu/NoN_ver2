@@ -4,7 +4,7 @@
  <!--header-->
     <header class="bg-primary text-white" style="padding: 154px 0 100px; background-image: url('/resources/img/header.png')">
       <div class="container text-center">
-        <h1>Edu Project</h1>
-        <p class="lead">E_P에서 쉽고 빠르게 IT분야를 학습할 수 있습니다!</p>
+        <h1>Now or Never</h1>
+        <p class="lead">NoN에서 쉽고 빠르게 IT분야를 학습할 수 있습니다!</p>
       </div>
     </header>

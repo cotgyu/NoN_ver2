@@ -27,8 +27,15 @@
 
 	<update id="updateMember" parameterType="Member" useGeneratedKeys="true" keyProperty="no">
 		UPDATE member
-		SET name=#{name},nick=#{nick},email=#{email},birth=#{birth},zipCode=#{zipCode},address1=#{address1},address2=#{address2},
-		mobile=#{mobile},phone=#{phone},email_get=#{emailGet},gender=#{gender}
+		SET nick=#{nick},email=#{email}
+		WHERE id =#{id}
+	</update>
+
+	<update id="resetPassword" >
+
+		UPDATE member
+		SET pass=#{pass}
+		WHERE id =#{id}
 	</update>
 
 	<update id="updatePass" parameterType="Member" useGeneratedKeys="true" keyProperty="no">

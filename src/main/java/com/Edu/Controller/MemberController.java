@@ -38,10 +38,10 @@ public class MemberController {
 
 	private static Logger logger = LoggerFactory.getLogger(MemberController.class);
 
-	// 회원가입 폼 이동
-	@RequestMapping(value ="/m_register")
-	public String register() {
-		return "member/register";
+	// 회원가입 페이지 이동
+	@RequestMapping(value ="/memberRegister")
+	public String memberRegister() {
+		return "member/memberRegister";
 	}
 
 	//로그인 페이지로 이동
@@ -67,28 +67,61 @@ public class MemberController {
 		return "member/login";
 	}
 
+	// 로그아웃
 	@RequestMapping("/logout")
 	public String logout(SessionStatus sessionStatus, HttpSession session) {
 		session.removeAttribute("member");
 		session.invalidate();
 		return "redirect:/";
 	}
-	
-	@RequestMapping(value="/m_update")
-	public String update() {
-		return "member/m_update";
+
+	// 회원 수정창 이동
+	@RequestMapping(value="/memberUpdateForm")
+	public String memberUpdateForm(Model model, HttpSession session) {
+
+		String loginId = (String)session.getAttribute("loginId");
+
+		//사용자 
+		Member loginMember = memberService.login(loginId);
+
+		model.addAttribute("member",loginMember);
+
+		return "member/memberUpdate";
 	}
 
-	@RequestMapping(value="/forgotPasswordForm")
+	// 회원 수정
+	@RequestMapping("/memberUpdate")
+	public String memberUpdate(String u_nick, String u_email1, String u_email2, HttpSession session) {
+
+		String loginId = (String)session.getAttribute("loginId");
+
+		//사용자
+		Member loginMember = memberService.login(loginId);
+
+		loginMember.setNick(u_nick);
+		loginMember.setEmail(u_email1 + "@" + u_email2);
+
+		try {
+			memberService.updateMember(loginMember);
+		} catch (Exception e){
+
+		}
+
+		// 회원 수정 후 세션에 반영
+		session.setAttribute("member", loginMember);
+		session.setAttribute("nickName", loginMember.getNick());
+
+		return "redirect:/";
+	}
+
+	// 비밀번호 초기화 페이지 이동
+	@RequestMapping(value="/resetPassword")
 	public String forgot() {
-		return "member/forgotPasswordForm";
+		return "member/resetPassword";
 	}
 
-	@RequestMapping(value="/main")
-	public String goMain() {
-		return "main";
-	}
 
+	// 회원가입 처리
 	@RequestMapping(value = "/joinResult")
 	public String joinResult(Member member, String email1, String email2, HttpSession session) {
 
@@ -98,45 +131,13 @@ public class MemberController {
 
 		// 회원 가입 후 자동로그인
 		session.setAttribute("member", member);
+		session.setAttribute("loginId", member.getId());
+		session.setAttribute("nickName", member.getNick());
+		session.setAttribute("grade", member.getGrade());
 
 		return "redirect:/";
 	}
 
-
-	@RequestMapping("/updateResult")
-	public String m_update(Member member, String u_name, String u_nick, String u_email1, String u_email2,
-			String u_birth1, String u_birth2, String u_birth3, String u_zipCode, String u_address1, String u_address2,
-			String u_mobile1, String u_mobile2, String u_mobile3, String u_gender, String u_emailGet, String u_phone1,
-			String u_phone2, String u_phone3, HttpSession session) {
-
-		Member s_member = null;
-		s_member = (Member) session.getAttribute("member");
-
-		member.setId(s_member.getId());
-		member.setName(u_name);
-		member.setNick(u_nick);
-		member.setEmail(u_email1 + "@" + u_email2);
-		member.setBirth(u_birth1 + "/" + u_birth2 + "/" + u_birth3);
-		member.setZipcode(u_zipCode);
-		member.setAddress1(u_address1);
-		member.setAddress2(u_address2);
-		member.setMobile(u_mobile1 + "-" + u_mobile2 + "-" + u_mobile3);
-		member.setGender(u_gender);
-		member.setPhone(u_phone1 + "-" + u_phone2 + "-" + u_phone3);
-		member.setEmailGet(Boolean.valueOf(u_emailGet));
-
-		System.out.println(member.getId() + member.getName() + member.getNick() + member.getNick());
-		memberService.Update(member);
-		return "redirect:main";
-	}
-
-	@RequestMapping("/ForgotPasswordResult")
-	public String ForgotPassword(Member member, String id, String pass) {
-		member.setId(id);
-		member.setPass(pass);
-		memberService.forgotPass(member);
-		return "redirect:main";
-	}
 
 	// 카카오 로그인
 	@RequestMapping(value = "/login/kakaoOauth")
@@ -182,7 +183,7 @@ public class MemberController {
 
 		}
 
-		return "redirect:/";
+		return "member/socialLoginPopup";
 	}
 
 
@@ -221,7 +222,7 @@ public class MemberController {
 			session.setAttribute("nickName", loginMember.getNick());
 
 		} else {
-			Member loginMember = memberService.loginCheck(userId);
+			Member loginMember = memberService.login(userId);
 
 			//기존에 있는 회원이므로 바로 로그인 진행
 			logger.info("기존의 구글 회원정보가 존재합니다. userID: " + userId);
@@ -232,7 +233,7 @@ public class MemberController {
 
 		}
 
-		return "redirect:/";
+		return "member/socialLoginPopup";
 
 	}
 

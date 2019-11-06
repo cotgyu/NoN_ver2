@@ -19,9 +19,12 @@ public interface MemberService {
 	public void joinMember(Member member);
 	
 	//정보수정
-	public void Update(Member member);
-	
-	//비밀번호찾기에서 id값 받아서 이메일인증하기 로그인할때도 이거쓰자... ajax이용.
+	public void updateMember(Member member);
+
+	//비밀번호 초기화
+	public void resetPassword(Member member);
+
+
 	public Member login(String id);
 	
 	//비밀번호 찾기
