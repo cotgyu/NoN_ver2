@@ -58,14 +58,12 @@ public class AjaxProcessController {
 		if(!email1.equals("")||!email2.equals("")) {//email1이 null이 아니거나 email2가 null이 아닐경우
 			email = email1+"@"+email2;
 		}
-		else {
-			System.out.println("ajax resetPassword error");
-		}
+
 		EmailConfirm emailconfirm = new EmailConfirm();
 		String authNum = emailconfirm.connectEmail(email);
 
+		// 발송된 비밀번호로 초기화
 		Member member = memberService.login(id);
-
 		member.setPass(authNum);
 
 		memberService.resetPassword(member);
@@ -101,6 +99,8 @@ public class AjaxProcessController {
 		member = memberService.login(id);
 
 		if(member != null) {
+
+		    // 패스워드 비교 수정 필요
 			if(member.getId().equals(id)&&member.getPass().equals(password)) {
 
 				session.setAttribute("member", member);
