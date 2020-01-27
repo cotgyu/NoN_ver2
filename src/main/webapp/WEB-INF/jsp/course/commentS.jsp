@@ -6,7 +6,7 @@
 var cosno = '${course.cosno}'; 
  
 $('[name=commentInsertBtn]').click(function(){ //댓글 등록 버튼 클릭
-    var insertData = $('[name=commentInsertForm]').serialize(); //cosno=50&inlineRadioOptions=option5&content=dsadsad
+    var insertData = $('[name=commentInsertForm]').serialize();
     commentInsert(insertData); 
 	console.log(insertData);
 	
@@ -19,55 +19,39 @@ function commentList(){
         type : 'get',
         data : {'cosno':cosno},
         success : function(data){
-        	console.log(data+"commentList data값");
+
             var a =''; 	
-            /*  $.each(data, function(key, value){ //jquery반복문 
-            
-            	a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';   //댓글 한줄전체
-                a += '<div class="commentInfo'+value.cno+'">'+'댓글번호 : '+value.cno+' / 작성자 : '+value.writer; //댓글 정보
-              	a += '<a onclick="commentUpdate('+value.cno+',\''+value.content+'\');"> 수정 </a>'; //댓글 수정
-              	//a += '<a onclick="commentUpdate(value.cno, value.content);"> 수정 </a>'; //댓글 수정 이부분 이해 잘안감...
-                a += '<a onclick="commentDelete('+value.cno+');"> 삭제 </a> </div>'; //댓글 삭제
-                a += '<div class="commentContent'+value.cno+'"> <p> 내용 : '+value.content +'</p>'; //댓글 내용
-                a += '</div></div>';
-            }); 
-            */
-             $.each(data, function(key, value){ //jquery반복문 
+
+             $.each(data, function(key, value){
                 
-            	a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';   //댓글 한줄전체
-                /* a += '<div class="commentInfo'+value.cno+'">'+'댓글번호 : '+value.cno+' / 작성자 : '+value.writer; //댓글 정보 */
-                a += '<div class="commentInfo'+value.cno+'">'+'댓글번호 : '+value.cno+' / 작성자 : '+value.writer+'/날짜 : '+value.reg_date; //댓글 정보 new 2
-                /* a += '<fmt:formatDate value="${'+value.reg_date+'}" pattern="yyyy.MM.dd HH:mm:ss"/>; //test날짜포맷 */
-              	/*  a += '<a onclick="commentUpdate('+value.cno+',\''+value.content+'\');"> 수정 </a>'; //댓글 수정 */ 
-              	 /* a += '<a onclick="commentUpdate('+value.cno+',\''+value.content+'\','+value.eva_count+');"> 수정 </a>'; //댓글 수정 new  */ 
-              	if(value.writer == "<%=(String)session.getAttribute("nick")%>"){
-              	a += '<a onclick="commentUpdate('+value.cno+',\''+value.content+'\','+value.eva_count+');"> 수정 </a>'; //댓글 수정 new 2
-              	 //a += '<a onclick="commentUpdate(value.cno, value.content);"> 수정 </a>'; //댓글 수정 이부분 이해 잘안감...
-                a += '<a onclick="commentDelete('+value.cno+');"> 삭제 </a> </div>'; //댓글 삭제
+            	a += '<div style="border-bottom:2px solid darkgray; class="commentInfo'+value.cno+'">'+'댓글번호 : '+value.cno+' / 작성자 : '+value.writer+'/날짜 : '+value.reg_date; //댓글 정보 new 2
+
+                 if(value.writer == "<%=(String)session.getAttribute("nickName")%>"){
+                    a += '<a onclick="commentUpdate('+value.cno+',\''+value.content+'\','+value.eva_count+');"> 수정 </a>'; //댓글 수정 new 2
+                    a += '<a onclick="commentDelete('+value.cno+');"> 삭제 </a> '; //댓글 삭제
               	}
-                a += '<div class="commentContent'+value.cno+'"> <p> 내용 : '+value.content +'</p><p>평점 :'+value.eva_count+'</p>'; //댓글평점 추가 내용 */
-                /* a += '<div class="commentContent'+value.cno+'"> <p> 내용 : '+value.content +'</p>'; //댓글 내용 */
+
+              	a += '<div class="commentContent'+value.cno+'"> <p> 내용 : '+value.content +'</p><p>평점 :'+value.eva_count+'</p>'; //댓글평점 추가 내용 */
                 a += '</div></div>';
             }); 
-            $(".commentList").html(a); //commentList에 출력결과를 뿌려준다????
+            $(".commentList").html(a);
         }
     });
 }
  
 //댓글 등록
-function commentInsert(insertData){ /* //url형식 */
+function commentInsert(insertData){
 	console.log("ajax error?");
     $.ajax({
         url : '/comment/insert', 
         type : 'post',  
         data : insertData, 
-        success : function(data){  //요청에 성공할 경우호출
+        success : function(data){
         	console.log("check1");
             if(data == 1) {
             	console.log(data);
                 commentList(); //댓글 목록 reload
-                $('[name=content]').val(''); //content의 값을 초기화,and 댓글다시 쓸수있게 보여줌.???
-                /* $('[name=eva_count]').val('1');    */		
+                $('[name=content]').val(''); //content의 값을 초기화
             }else{
             	console.log("error");
             }
@@ -107,10 +91,7 @@ function commentUpdate(cno, content, eva_count){
     
     
     $('.commentContent'+cno).html(a); 
-   
-    /* $("#inlineRadio"+eva_count).attr("checked","checked"); */
-    console.log("check1");
-    /* $("body").attr("isuse","o kay");  */
+
 }
 
 
@@ -143,12 +124,12 @@ function commentDelete(cno){
 
 //댓글 평점 매기는 함수
 function commentEva(){
-	/* var eva_count = $('[name=eva_count]').val(); */
+
 	$.ajax({		
 		url : '/comment/eva',
 		type:'get',
-		data : {'cosno':cosno},  //url에 전달할 인자값.
-		/* dataType: 'json', */ //쓰나안쓰나 다를게없음.
+		data : {'cosno':cosno},
+		
 		success : function(data){
 				var a=0;
 				var c=0;

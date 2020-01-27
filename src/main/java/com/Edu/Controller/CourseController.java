@@ -45,7 +45,7 @@ public class CourseController {
 		List<Lecture> lecture = courseService.findCos_lec(cosno);
 		
 		//세션에서 아이디 받아오기
-		String id = (String) session.getAttribute("id");
+		String id = (String) session.getAttribute("loginId");
 		
 		//수강여부 체크
 		boolean checkstate = courseService.ajaxchecksubscribe(id,cosno);
@@ -451,7 +451,7 @@ public class CourseController {
 		//수강
 		@RequestMapping(value="/subscribe/{cosno}", method=RequestMethod.GET)
 		public String SubscribeCourse(@PathVariable("cosno") int cosno, HttpSession session){
-			String id = (String) session.getAttribute("id");
+			String id = (String) session.getAttribute("loginId");
 			   
 			courseService.subscribe(id,cosno);
 			
@@ -461,7 +461,7 @@ public class CourseController {
 		//수강취소
 		@RequestMapping(value="/subscribecancel/{cosno}", method=RequestMethod.GET)
 		public String SubscribeCancel(@PathVariable("cosno") int cosno, HttpSession session){
-			String id = (String) session.getAttribute("id");
+			String id = (String) session.getAttribute("loginId");
 					   
 			courseService.subscribecancel(id,cosno);
 					
@@ -473,7 +473,7 @@ public class CourseController {
 		@RequestMapping(value = "/mycourse", method = RequestMethod.GET)
 		public ModelAndView MyCourse( ModelAndView mav, HttpSession session){
 			
-			String id = (String) session.getAttribute("id");
+			String id = (String) session.getAttribute("loginId");
 			
 			List<Course> course = courseService.mycourse(id);
 			
