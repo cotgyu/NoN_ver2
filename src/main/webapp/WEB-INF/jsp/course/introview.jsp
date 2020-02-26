@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>${course.cosname}코스</title>
+<title>${course.cosname} 코스</title>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script>
 </script>
@@ -21,7 +21,7 @@
 			<!-- 수강버튼 부분
 			todo 수강했을때 성공했다고 알람창 띄우기 -->
 			<div id="subcheck">
-			<c:if test="${not empty sessionScope.id}">	
+			<c:if test="${not empty sessionScope.member}">
 					<c:choose>
 						<c:when test="${checkstate == false}">					
 							<button type="button" class="btn btn-default" onClick="location.href='/course/subscribe/${course.cosno}'">수강하기</button>
@@ -70,7 +70,7 @@
 			<br><br><br><br><br><br>
 			
 			<h4>수강평</h4>
-			<c:if test="${not empty sessionScope.id}">
+			<c:if test="${not empty sessionScope.member}">
 			<section id="eval">
 				<h1><span class="evaPrint"></span></h1>
 				<!-- 댓글부분 -->
@@ -106,7 +106,7 @@
 							</div>
 						</form>
 					</div>
-			</section>
+			</section><br><br>
 			</c:if>
 			<div class="container">
 				<div class="commentList"></div>

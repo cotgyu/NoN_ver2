@@ -9,25 +9,23 @@
 <script>
 </script>
   <!-- Bootstrap core CSS --> <!--toggle-->
-  <link href="/resources/indexresource/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">  
+  <link href="/resources/indexresource/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom styles for this template -->
   <link href="/resources/indexresource/css/simple-sidebar.css?ver=1.1" rel="stylesheet">
   <!-- Bootstrap core JavaScript -->
   <script src="/resources/indexresource/vendor/jquery/jquery.min.js"></script><!--toggle -->
   <script src="/resources/indexresource/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
- 
+
   </head>
 <body>
-<div id="wrapper">
+
+
+<div id="wrapper" style="background-color: #495057">
 <!-- 강의 목록 -->
-	<div id="sidebar"><!-- 사이드부분  공간 처리 할것 -->
-		
-			<ul class="player-sidebar-nav">
-				<li class="player-sidebar-brand"></li> <!--  공백 처리 다시 할것 -->
-				
-				<li class="player-sidebar-brand">
-					<h3>${course.cosname}</h3>
-				</li>
+	<div id="sidebar-wrapper"><!-- 사이드부분  공간 처리 할것 -->
+			<ul class="sidebar-nav">
+				<br>
+
 				<c:forEach var="lec" items="${lecturelist}">
 				<li>
 					<a href="/course/player/${lec.cosno}/${lec.lecno}">${lec.lecname}
@@ -43,16 +41,30 @@
 				</c:forEach>
 			</ul>
 	</div>
+
+	<!-- Content menubutton-->
+	<div id="page-content-wrapper">
+		<div class="container-fluid">
+			<a href="#lecture-toggle" class="btn btn-secondary" id="lecture-toggle">강좌리스트</a>
+		</div>
+	</div>
+	<!-- Menu Toggle Script -->
+	<script>
+        $("#lecture-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+	</script>
 			
 <br>
 <div class="container">
+
+	<h2 style="color: #999999;">${course.cosname}</h2>
 	<div>
 		<button type="button" class="btn btn-default" onClick="location.href='/course/intro/${course.cosno}'">강좌로 돌아가기</button>
 	</div>
+	<br>
 
-
-
-<h3>${lecture.lecname}</h3>
 <br>
 <iframe src="https://www.youtube.com/embed/${lecture.lecvideo}" height="800" width="1200" allowfullscreen="allowfullscreen"></iframe>
 

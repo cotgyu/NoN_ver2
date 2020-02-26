@@ -129,7 +129,7 @@ function commentEva(){
 		url : '/comment/eva',
 		type:'get',
 		data : {'cosno':cosno},
-		
+
 		success : function(data){
 				var a=0;
 				var c=0;
