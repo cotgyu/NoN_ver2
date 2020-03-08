@@ -20,7 +20,7 @@ public class LectureControllerTest extends BaseControllerTest {
 
     @Test
     @Description("특정 사용자 코스의 현재 강의 정보 가져오기(체크한 강의, 최신강의)")
-    public void reaUserLectureInfo() throws Exception{
+    public void readUserLectureInfo() throws Exception{
         //Given
         String userId = "admin2";
         int courseNumber = 54;
@@ -38,4 +38,25 @@ public class LectureControllerTest extends BaseControllerTest {
         ;
 
     }
+
+    @Test
+    @Description("존재 하지 않는 사용자 강의 가져오기")
+    public void readNonexistentUserLectureInfo() throws Exception{
+        //Given
+        String userId = "admin3";
+        int courseNumber = 54;
+
+        //When && Then
+        mockMvc.perform(post("/lecture/getUserLectureInfo")
+                .param("userId", userId)
+                .param("courseNumber", Integer.toString(courseNumber))
+
+        )
+                .andDo(print())
+                .andExpect(jsonPath("error").exists())
+
+        ;
+    }
+
+
 }
