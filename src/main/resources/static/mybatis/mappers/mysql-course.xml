@@ -133,7 +133,7 @@
 	</select>
 	
 	<!-- 기본적인 코스리스트 불러오기 -->
-	<select id="AllfindCosList" resultType="Course">
+	<select id="allFindCosList" resultType="Course">
 		SELECT *
 		FROM course
 	</select>
@@ -145,20 +145,20 @@
 	</insert>
 	
 	<!-- 내 강좌 조회 -->
-	<select id="mycourse" resultType="Course">
+	<select id="myCourse" resultType="Course">
 		SELECT * FROM course c, subscribe s 
 		WHERE c.cosno = s.cosno AND id = #{id}
 	</select>
 	
 	
 	<!-- 강좌 체크하기  -->
-	<select id="ajaxchecksubscribe" resultType="Subscribe">
+	<select id="ajaxCheckSubscribe" resultType="Subscribe">
 		SELECT * FROM subscribe 
 		WHERE cosno = #{cosno} AND id = #{id}
 	</select>
 	
 	<!-- 수강 취소 -->
-	<delete id="subscribecancel" >
+	<delete id="subscribeCancel" >
 		DELETE FROM subscribe
 		WHERE cosno = #{cosno} AND id = #{id}
 	

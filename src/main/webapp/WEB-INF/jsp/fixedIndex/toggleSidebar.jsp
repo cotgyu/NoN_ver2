@@ -13,7 +13,7 @@
 				<li><a href="/course/list">분야별 강좌</a></li>
 				<li><a href="#">질문과 답변</a></li>
 				<c:if test="${not empty member.id}">
-					<li><a href="/course/mycourse">내 강좌</a></li>
+					<li><a href="/course/myCourse">내 강좌</a></li>
 				</c:if>
 				<c:if test="${grade eq '4'}">	
 				<li><a href="/course/addcourse">강좌 추가</a></li>

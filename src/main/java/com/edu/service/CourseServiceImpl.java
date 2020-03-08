@@ -122,8 +122,8 @@ public class CourseServiceImpl implements CourseService{
 	}
 
 	@Override
-	public List<Course> AllfindCosList() {
-		return courseMapper.AllfindCosList();
+	public List<Course> allFindCosList() {
+		return courseMapper.allFindCosList();
 	}
 
 	@Override
@@ -137,20 +137,20 @@ public class CourseServiceImpl implements CourseService{
 	}
 
 	@Override
-	public List<Course> mycourse(String id) {
+	public List<Course> myCourse(String id) {
 		
-		return courseMapper.mycourse(id);
+		return courseMapper.myCourse(id);
 	}
 
 	@Override
-	public boolean ajaxchecksubscribe(String id, int cosno) {
+	public boolean ajaxCheckSubscribe(String id, int cosno) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("id", id);
 		map.put("cosno", cosno);
 
 		// 수강 course 체크
-		Subscribe cos=  courseMapper.ajaxchecksubscribe(map);
+		Subscribe cos=  courseMapper.ajaxCheckSubscribe(map);
 
 		boolean tf = false;
 
@@ -162,13 +162,13 @@ public class CourseServiceImpl implements CourseService{
 	}
 
 	@Override
-	public void subscribecancel(String id, int cosno) {
+	public void subscribeCancel(String id, int cosno) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		map.put("id", id);
 		map.put("cosno", cosno);
 		
-		courseMapper.subscribecancel(map);
+		courseMapper.subscribeCancel(map);
 		
 	}
 
@@ -184,6 +184,5 @@ public class CourseServiceImpl implements CourseService{
 	}
 
 
-	
 
 }

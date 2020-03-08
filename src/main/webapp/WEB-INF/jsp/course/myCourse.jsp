@@ -19,7 +19,7 @@
 		<h3>수강 중인 강좌 리스트</h3>
 		<c:forEach var="cos" items="${course}">
 			<a href="/course/intro/${cos.cosno}">${cos.cosname}</a> &ensp;&ensp;  
-			<button type="button" class="btn btn-default" onClick="location.href='/course/subscribecancel/${cos.cosno}'">수강 취소</button>
+			<button type="button" class="btn btn-default" onClick="location.href='/course/subscribeCancel/${cos.cosno}'">수강 취소</button>
 			<br>
 		</c:forEach> 
 			

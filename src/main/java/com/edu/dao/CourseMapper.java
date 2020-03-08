@@ -41,15 +41,15 @@ public interface CourseMapper {
 
 	int countCourse(Map map);
 
-	List<Course> AllfindCosList();
+	List<Course> allFindCosList();
 
 	void subscribe(Map map);
 
-	List<Course> mycourse(String id);
+	List<Course> myCourse(String id);
 
-	Subscribe ajaxchecksubscribe(Map map);
+	Subscribe ajaxCheckSubscribe(Map map);
 
-	void subscribecancel(Map map);
+	void subscribeCancel(Map map);
 
 	String findCosName(int cosno);
 

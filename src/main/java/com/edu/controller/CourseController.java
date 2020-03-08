@@ -46,7 +46,7 @@ public class CourseController {
 		String id = (String) session.getAttribute("loginId");
 		
 		//수강여부 체크
-		boolean checkstate = courseService.ajaxchecksubscribe(id,cosno);
+		boolean checkstate = courseService.ajaxCheckSubscribe(id,cosno);
 		
 		//데이터
 		DataConvert DataC = new DataConvert();
@@ -247,7 +247,7 @@ public class CourseController {
 	public ModelAndView AddLecture( ModelAndView mav){
 		
 		//코스번호를 가져오기 위한 코스 불러오기  
-		List<Course> courseList = courseService.AllfindCosList();
+		List<Course> courseList = courseService.allFindCosList();
 		
 		//modelandview에 정보 저장 
 		mav = new ModelAndView();
@@ -294,7 +294,7 @@ public class CourseController {
 	//수정할 코스 선택 
 	@RequestMapping(value = "/selectmodifycourse/", method = RequestMethod.GET)
 	public ModelAndView SelectModifyCourse( ModelAndView mav){
-		List<Course> allcourse = courseService.AllfindCosList();
+		List<Course> allcourse = courseService.allFindCosList();
 		
 		//modelandview에 정보 저장 
 		mav = new ModelAndView();
@@ -400,7 +400,7 @@ public class CourseController {
 				@PathVariable("lecno") int lecno){
 			
 			//코스번호를 가져오기 위한 코스 불러오기 
-			List<Course> courseList = courseService.AllfindCosList();
+			List<Course> courseList = courseService.allFindCosList();
 			Lecture lecture = courseService.findLecture(lecno);
 			//modelandview에 정보 저장 
 			mav = new ModelAndView();
@@ -453,33 +453,33 @@ public class CourseController {
 			   
 			courseService.subscribe(id,cosno);
 			
-			return "redirect:/course/mycourse";
+			return "redirect:/course/myCourse";
 		}
 		
 		//수강취소
-		@RequestMapping(value="/subscribecancel/{cosno}", method=RequestMethod.GET)
-		public String SubscribeCancel(@PathVariable("cosno") int cosno, HttpSession session){
+		@RequestMapping(value="/subscribeCancel/{cosno}", method=RequestMethod.GET)
+		public String subscribeCancel(@PathVariable("cosno") int cosno, HttpSession session){
 			String id = (String) session.getAttribute("loginId");
 					   
-			courseService.subscribecancel(id,cosno);
+			courseService.subscribeCancel(id,cosno);
 					
-			return "redirect:/course/mycourse";
+			return "redirect:/course/myCourse";
 		}
 		
 		
 		//내 강좌
-		@RequestMapping(value = "/mycourse", method = RequestMethod.GET)
-		public ModelAndView MyCourse( ModelAndView mav, HttpSession session){
+		@RequestMapping(value = "/myCourse", method = RequestMethod.GET)
+		public ModelAndView myCourse( ModelAndView mav, HttpSession session){
 			
 			String id = (String) session.getAttribute("loginId");
 			
-			List<Course> course = courseService.mycourse(id);
+			List<Course> course = courseService.myCourse(id);
 			
 			//modelandview에 정보 저장 
 			mav = new ModelAndView();
 			mav.addObject("course",course);	
 			
-			mav.setViewName("/course/mycourse");		
+			mav.setViewName("/course/myCourse");
 			
 			return mav;
 		}
