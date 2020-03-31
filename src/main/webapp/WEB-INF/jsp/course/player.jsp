@@ -6,7 +6,46 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>${course.cosname}_Player</title>
-<script>
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+		// 체크한 강의 표시
+        $.ajax({
+            type : "post",
+            url : '/lecture/getCheckedLectureInfo?userId=${sessionScope.member.id}&courseNumber=${course.cosno}',
+            success : function(result) {
+                var checkedLecture =  result.checkedList;
+
+                for(var i in checkedLecture) {
+
+                    $('#checklecture_'+checkedLecture[i]).prop("checked", true);
+                }
+
+            }
+        });
+
+
+
+    })
+
+	// 강의 체크
+	function checkedLecture(lecno) {
+        $.ajax({
+            type : "post",
+            url : '/lecture/checkedLecture?userId=${sessionScope.member.id}&courseNumber=${course.cosno}&lectureNumber='+lecno,
+            success : function(result) {
+                if(result.resultMessage == "error"){
+                    alert("강좌를 체크하는데 오류가 발생하였습니다.");
+                }
+
+            }
+        });
+    }
+
+
 </script>
   <!-- Bootstrap core CSS --> <!--toggle-->
   <link href="/resources/indexresource/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -30,7 +69,7 @@
 				<li>
 					<a href="/course/player/${lec.cosno}/${lec.lecno}">${lec.lecname}
 					&nbsp;
-					<input type="checkbox" id="check${lec.cosno}" 
+					<input type="checkbox" id="checklecture_${lec.lecno}" onchange="checkedLecture(${lec.lecno})"
 					style=" width: 25px;
 							height: 25px;
 							border: 4px solid #bcbcbc;

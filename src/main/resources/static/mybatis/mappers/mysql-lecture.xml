@@ -5,7 +5,7 @@
 	<select id="getCheckedLecture" resultType="String">
 		SELECT lecturenum
 		FROM userlectureinfo
-		WHERE userid = #{userId} AND coursenum = #{courseNumber}
+		WHERE userid = #{userid} AND coursenum = #{coursenum}  AND checkflag = 'Y' AND delflag = 'N'
 	</select>
 
 	<select id="getLastedLecture" resultType="Lecture">
@@ -14,11 +14,30 @@
 		WHERE lecno = (
 			SELECT lecturenum
 			FROM userlectureinfo
-			WHERE userid = #{userId} AND coursenum = #{courseNumber}
-			ORDER BY lecturenum ASC
+			WHERE userid = #{userid} AND coursenum = #{coursenum} AND checkflag = 'Y' AND delflag = 'N'
+			ORDER BY lecturenum DESC
 			LIMIT 1
 		)
 	</select>
+
+    <select id="getLectureInfo" resultType="UserLectureInfo">
+		SELECT *
+		FROM userlectureinfo
+		WHERE userid = #{userid} AND coursenum = #{coursenum} AND lecturenum = #{lecturenum} AND delflag = 'N'
+
+	</select>
+
+    <insert id="insertLectureInfo">
+        INSERT INTO userlectureinfo (userid, coursenum, lecturenum, checkflag) VALUES (#{userid}, #{coursenum}, #{lecturenum} , #{checkflag})
+    </insert>
+
+    <update id="updateLectureInfo" >
+        UPDATE userlectureinfo
+        SET
+          checkflag = #{checkflag}
+        WHERE userid = #{userid} AND coursenum = #{coursenum} AND lecturenum = #{lecturenum} AND delflag = 'N'
+
+    </update>
 
 	
 </mapper>

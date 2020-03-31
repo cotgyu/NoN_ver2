@@ -9,21 +9,16 @@
 	<typeAliases>
 		<typeAlias type="com.edu.domain.Board" alias="Board" />
 		<typeAlias type="com.edu.domain.Member" alias="Member"/>
-<!-- 		<typeAlias type="com.Edu.Domain.Book" alias="Book" /> -->
-<!-- 		<typeAlias type="com.Edu.Domain.Content" alias="Content" /> -->
-<!-- 		<typeAlias type="com.Edu.Domain.Dto" alias="Dto" /> -->
-<!-- 		<typeAlias type="com.Edu.Domain.SearchResult" alias="SearchResult" /> -->
-<!-- 		<typeAlias type="com.Edu.Domain.Sms" alias="Sms" /> -->
 		<typeAlias type="com.edu.domain.Code" alias="Code" />
-<!-- 		<typeAlias type="com.Edu.Domain.ItDamage" alias="ItDamage" /> -->
-<!-- 		<typeAlias type="com.Edu.Domain.Approval" alias="Approval" /> -->
 
 
-<!-- course -->
-<typeAlias type="com.edu.domain.Course" alias="Course" />
-<typeAlias type="com.edu.domain.Lecture" alias="Lecture" />
-<typeAlias type="com.edu.domain.CommentVO" alias="CommentVO"/>
-<typeAlias type="com.edu.domain.Subscribe" alias="Subscribe" />
+		<!-- course -->
+		<typeAlias type="com.edu.domain.Course" alias="Course" />
+		<typeAlias type="com.edu.domain.Lecture" alias="Lecture" />
+		<typeAlias type="com.edu.domain.CommentVO" alias="CommentVO"/>
+		<typeAlias type="com.edu.domain.Subscribe" alias="Subscribe" />
+		<!-- lecture -->
+		<typeAlias type="com.edu.domain.UserLectureInfo" alias="UserLectureInfo" />
 
 	</typeAliases>
 </configuration>

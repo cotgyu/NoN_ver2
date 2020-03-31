@@ -33,8 +33,8 @@ public class LectureController {
     LectureService lectureService;
 
     @ResponseBody
-    @RequestMapping("/getUserLectureInfo")
-    public Map getUserLectureInfo(String courseNumber, String userId){
+    @RequestMapping("/getCheckedLectureInfo")
+    public Map getCheckedLectureInfo(String courseNumber, String userId){
 
         // 사용자
         Member loginMember = memberService.login(userId);
@@ -52,13 +52,60 @@ public class LectureController {
         // 해당 사용자의 체크한 강의번호 조회
         List checkedList = lectureService.getCheckedLecture(loginMember.getId(), Integer.parseInt(courseNumber));
 
-        // 해당 사용자의 최신강의 조회
-        Lecture lastedLecture = lectureService.getLastedLecture(loginMember, Integer.parseInt(courseNumber));
-
         resultMap.put("checkedList", checkedList);
-        resultMap.put("lastedLecture", lastedLecture);
-
 
         return resultMap;
     }
+
+    @ResponseBody
+    @RequestMapping("/getLastedLectureInfo")
+    public Map getLastedLectureInfo(String courseNumber, String userId){
+
+        // 사용자
+        Member loginMember = memberService.login(userId);
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        if(loginMember == null){
+            logger.debug("해당 사용자가 존재하지 않습니다.");
+
+            resultMap.put("error", "해당 사용자가 존재하지 않습니다.");
+
+            return resultMap;
+        }
+
+        // 해당 사용자의 최신강의 조회
+        Lecture lastedLecture = lectureService.getLastedLecture(loginMember, Integer.parseInt(courseNumber));
+
+        resultMap.put("lastedLecture", lastedLecture);
+
+        return resultMap;
+    }
+
+    @ResponseBody
+    @RequestMapping("/checkedLecture")
+    public Map checkedLecture(String courseNumber, String lectureNumber, String userId){
+
+        // 사용자
+        Member loginMember = memberService.login(userId);
+
+        Map<String, Object> resultMap = new HashMap<>();
+
+        if(loginMember == null){
+            logger.debug("해당 사용자가 존재하지 않습니다.");
+
+            resultMap.put("error", "해당 사용자가 존재하지 않습니다.");
+
+            return resultMap;
+        }
+
+        // 강의 체크 반영
+        String result = lectureService.updateCheckedLecture(Integer.parseInt(courseNumber), Integer.parseInt(lectureNumber), loginMember);
+
+        resultMap.put("resultMessage", result);
+
+        return resultMap;
+    }
+
+
 }

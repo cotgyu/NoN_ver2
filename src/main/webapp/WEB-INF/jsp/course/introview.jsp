@@ -38,7 +38,13 @@
 			  <button type="button" class="btn btn-default" onClick="location.href='#intro'">강좌 소개</button>
 			  <button type="button" class="btn btn-default" onClick="location.href='#courselist'">강의리스트</button>
 			  <button type="button" class="btn btn-default" onClick="location.href='#eval'">수강후기</button>
-				<button type="button" class="btn btn-default" onClick="location.href='/course/player/${course.cosno}/'">이어서 듣기</button>
+    <c:if test="${not empty sessionScope.member}">
+        <c:choose>
+            <c:when test="${checkstate == true}">
+              <button type="button" class="btn btn-default" onClick="location.href='/course/player/${course.cosno}/'">이어서 듣기</button>
+            </c:when>
+        </c:choose>
+    </c:if>
 			</div>
 			<br><br>
 			
