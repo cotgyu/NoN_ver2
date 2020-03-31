@@ -9,6 +9,9 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
+import com.edu.domain.Member;
+import com.edu.service.LectureService;
+import com.edu.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -31,10 +34,14 @@ import com.edu.service.CourseService;
 public class CourseController {
 	@Autowired
 	private CourseService courseService;
+	@Autowired
+	private LectureService lectureService;
+	@Autowired
+	private MemberService memberService;
 	
 	//cosno에 맞는 소개 페이지 관련
 	@RequestMapping(value = "/intro/{cosno}", method = RequestMethod.GET)
-	public ModelAndView Courseintro( ModelAndView mav, @PathVariable("cosno") int cosno, HttpSession session){
+	public ModelAndView courseIntro( ModelAndView mav, @PathVariable("cosno") int cosno, HttpSession session){
 		
 		//cosno에 맞는 코스정보 불러오기
 		Course course = courseService.findCos(cosno);
@@ -89,7 +96,7 @@ public class CourseController {
 	
 	//강의 듣기 눌렀을 때 나올 플레이어 관련 
 	@RequestMapping(value = "/player/{cosno}/{lecno}", method = RequestMethod.GET)
-	public ModelAndView Player( ModelAndView mav, @PathVariable("cosno") int cosno, @PathVariable("lecno") int lecno ){
+	public ModelAndView player( ModelAndView mav, @PathVariable("cosno") int cosno, @PathVariable("lecno") int lecno ){
 		
 		//cosno에 맞는 코스정보 불러오기
 		Course course = courseService.findCos(cosno);				
@@ -111,11 +118,44 @@ public class CourseController {
 				
 		return mav;
 	}
-	
+
+	// 이어서 듣기
+	@RequestMapping(value = "/player/{cosno}", method = RequestMethod.GET)
+	public ModelAndView basicPlayer( ModelAndView mav, @PathVariable("cosno") int cosno , HttpSession session){
+
+		// 사용자
+		String id = (String) session.getAttribute("loginId");
+		Member loginMember = memberService.login(id);
+
+		//cosno에 맞는 코스정보 불러오기
+		Course course = courseService.findCos(cosno);
+
+		//cosno에 맞는 강좌들 불러오기
+		List<Lecture> lecturelist = courseService.findCos_lec(cosno);
+
+		//사용자 최신강의 불러오기
+		Lecture lastedLecture = lectureService.getLastedLecture(loginMember, cosno);
+
+
+		//lecno에 맞는 영상 불러오기
+		Lecture lecture = courseService.findLecture(lastedLecture.getLecno());
+
+
+		//modelandview에 정보 저장
+		mav = new ModelAndView();
+		mav.addObject("course",course);
+		mav.addObject("lecturelist",lecturelist);
+		mav.addObject("lecture",lecture);
+
+		mav.setViewName("/course/player");
+
+		return mav;
+	}
+
 	
 	//검색한 코스 리스트 불러오기
 	@RequestMapping(value = "/list")
-	public ModelAndView SearchCourseList(ModelAndView mav ){
+	public ModelAndView searchCourseList(ModelAndView mav ){
 		
 			
 		//프로그래밍 상세 카테고리 가져오기
@@ -140,7 +180,7 @@ public class CourseController {
 		
 	//키워드 검색 리스트 
 	@RequestMapping(value = "/searchajaxlist")
-	public ModelAndView SearchAjaxCourseList( ModelAndView mav, 
+	public ModelAndView searchAjaxCourseList( ModelAndView mav,
 			@RequestParam(defaultValue="") String keyword, 
 			@RequestParam(defaultValue="all") String searchOption,
 			@RequestParam(defaultValue="1") int curPage
@@ -174,7 +214,7 @@ public class CourseController {
 	//todo - 등록 실패시 오류 페이지 만들기? 
 	//코스 추가 창 이동
 	@RequestMapping(value = "/addcourse", method = RequestMethod.GET)
-	public ModelAndView AddCourse( ModelAndView mav){
+	public ModelAndView addCourse( ModelAndView mav){
 		
 		//대표 카테고리 가져오기
 		List<Course> courseCategory1 = courseService.findCosCategory1();
@@ -193,7 +233,7 @@ public class CourseController {
 	//새로운 코스 추가
 	//todo- 이미지 업로드할 때 올린이미지 바로 확인할 수 있게..
 	@RequestMapping(value = "/insertcourse", method = RequestMethod.POST)
-	public String InsertCourse( ModelAndView mav, @ModelAttribute Course cos, MultipartFile file) throws IOException{
+	public String insertCourse( ModelAndView mav, @ModelAttribute Course cos, MultipartFile file) throws IOException{
 		//경로 수정해야하는데 ...음
 		String uploadPath = "C:/Users/SK/Desktop/spring_non/src/main/webapp/resources/courseImage";
 		
@@ -244,7 +284,7 @@ public class CourseController {
 	//todo - 등록 실패시 오류 페이지 만들기?
 	//강의 추가 창 이동
 	@RequestMapping(value = "/addlecture", method = RequestMethod.GET)
-	public ModelAndView AddLecture( ModelAndView mav){
+	public ModelAndView addLecture( ModelAndView mav){
 		
 		//코스번호를 가져오기 위한 코스 불러오기  
 		List<Course> courseList = courseService.allFindCosList();
@@ -259,7 +299,7 @@ public class CourseController {
 	}
 	//새로운 강의 추가
 	@RequestMapping(value = "/insertlecture", method = RequestMethod.POST)
-	public String InsertLecture( ModelAndView mav, @ModelAttribute Lecture lecture){
+	public String insertLecture( ModelAndView mav, @ModelAttribute Lecture lecture){
 		
 		//강의 추가시 입력한 유뷰트 주소
 		String inputvideo = lecture.getLecvideo();
@@ -293,7 +333,7 @@ public class CourseController {
 	}
 	//수정할 코스 선택 
 	@RequestMapping(value = "/selectmodifycourse/", method = RequestMethod.GET)
-	public ModelAndView SelectModifyCourse( ModelAndView mav){
+	public ModelAndView selectModifyCourse( ModelAndView mav){
 		List<Course> allcourse = courseService.allFindCosList();
 		
 		//modelandview에 정보 저장 
@@ -308,7 +348,7 @@ public class CourseController {
 	
 	//코스 수정 창 이동
 	@RequestMapping(value = "/modifycourse/{cosno}", method = RequestMethod.GET)
-	public ModelAndView ModifyCourse( ModelAndView mav, @PathVariable("cosno") int cosno){
+	public ModelAndView modifyCourse( ModelAndView mav, @PathVariable("cosno") int cosno){
 			
 		//코스번호를 가져오기 위한 코스 불러오기 
 		Course course = courseService.findCos(cosno);
@@ -330,7 +370,7 @@ public class CourseController {
 	}
 	//코스 업데이트
 	@RequestMapping(value = "/updatecourse", method = RequestMethod.POST)
-	public String UpdateCourse( ModelAndView mav, @ModelAttribute Course cos, MultipartFile file) throws IOException{
+	public String updateCourse( ModelAndView mav, @ModelAttribute Course cos, MultipartFile file) throws IOException{
 		//경로 수정해야하는데 ...음
 		String uploadPath = "C:/Users/SK/Desktop/spring_non/src/main/webapp/resources/courseImage";
 			
@@ -378,7 +418,7 @@ public class CourseController {
 	}
 	//수정할 강의 선택 
 		@RequestMapping(value = "/selectmodifylecture/{cosno}", method = RequestMethod.GET)
-		public ModelAndView SelectModifyLecture( ModelAndView mav,  @PathVariable("cosno") int cosno){
+		public ModelAndView selectModifyLecture( ModelAndView mav,  @PathVariable("cosno") int cosno){
 			
 			//cosno에 맞는 강좌들 불러오기
 			List<Lecture> lecture = courseService.findCos_lec(cosno);
@@ -396,7 +436,7 @@ public class CourseController {
 	
 	//강의 수정 창 이동
 		@RequestMapping(value = "/modifylecture/{lecno}", method = RequestMethod.GET)
-		public ModelAndView ModifyLecture( ModelAndView mav,
+		public ModelAndView modifyLecture( ModelAndView mav,
 				@PathVariable("lecno") int lecno){
 			
 			//코스번호를 가져오기 위한 코스 불러오기 
@@ -413,7 +453,7 @@ public class CourseController {
 		}
 		//강의 업데잍 
 		@RequestMapping(value = "/updatelecture", method = RequestMethod.POST)
-		public String UpdateLecture( ModelAndView mav, @ModelAttribute Lecture lecture) throws IOException{
+		public String updateLecture( ModelAndView mav, @ModelAttribute Lecture lecture) throws IOException{
 			
 			//강의 추가시 입력한 유뷰트 주소
 			String inputvideo = lecture.getLecvideo();
@@ -448,7 +488,7 @@ public class CourseController {
 
 		//수강
 		@RequestMapping(value="/subscribe/{cosno}", method=RequestMethod.GET)
-		public String SubscribeCourse(@PathVariable("cosno") int cosno, HttpSession session){
+		public String subscribeCourse(@PathVariable("cosno") int cosno, HttpSession session){
 			String id = (String) session.getAttribute("loginId");
 			   
 			courseService.subscribe(id,cosno);
