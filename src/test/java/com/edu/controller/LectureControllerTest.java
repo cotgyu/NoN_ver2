@@ -19,21 +19,42 @@ public class LectureControllerTest extends BaseControllerTest {
     LectureService lectureService;
 
     @Test
-    @Description("특정 사용자 코스의 현재 강의 정보 가져오기(체크한 강의, 최신강의)")
-    public void readUserLectureInfo() throws Exception{
+    @Description("특정 사용자 코스의 현재 강의 정보 가져오기(체크한 강의)")
+    public void readUserCheckedLectureInfo() throws Exception{
         //Given
         String userId = "admin2";
         int courseNumber = 54;
 
         //When && Then
-        mockMvc.perform(post("/lecture/getUserLectureInfo")
+        mockMvc.perform(post("/lecture/getCheckedLectureInfo")
             .param("userId", userId)
             .param("courseNumber", Integer.toString(courseNumber))
 
         )
                 .andDo(print())
                 .andExpect(jsonPath("checkedList").exists())
-                .andExpect(jsonPath("lastedLecture").exists())
+
+
+        ;
+
+    }
+
+    @Test
+    @Description("특정 사용자 코스의 현재 강의 정보 가져오기(최신 강의)")
+    public void readUserLastedLectureInfo() throws Exception{
+        //Given
+        String userId = "admin2";
+        int courseNumber = 54;
+
+        //When && Then
+        mockMvc.perform(post("/lecture/getLastedLectureInfo")
+                .param("userId", userId)
+                .param("courseNumber", Integer.toString(courseNumber))
+
+        )
+                .andDo(print())
+                .andExpect(jsonPath("checkedList").exists())
+
 
         ;
 
@@ -47,7 +68,7 @@ public class LectureControllerTest extends BaseControllerTest {
         int courseNumber = 54;
 
         //When && Then
-        mockMvc.perform(post("/lecture/getUserLectureInfo")
+        mockMvc.perform(post("/lecture/getCheckedLectureInfo")
                 .param("userId", userId)
                 .param("courseNumber", Integer.toString(courseNumber))
 
