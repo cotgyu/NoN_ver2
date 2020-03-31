@@ -1,6 +1,13 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
 
+### GRADLE ###
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+/out
+
+
 ### STS ###
 .apt_generated
 .classpath
@@ -23,3 +30,6 @@ dist/
 nbdist/
 .nb-gradle/
 /bin/
+
+### 인증정보 제외
+/src/main/resources/socialInfo.properties

@@ -73,7 +73,7 @@
 			</div>
 			<div class="etc-login-form">
 				<p>
-					forgot your password? <a href="forgotPasswordForm">click here</a>
+					forgot your password? <a href="resetPassword">click here</a>
 				</p>
 				<p>
 					new user? <a href="register">create new account</a>
@@ -81,19 +81,13 @@
 			</div>
 		</form>
 		<a
-			href="https://kauth.kakao.com/oauth/authorize?client_id=8fb66d14386ea24cbcd23712d1164091&redirect_uri=http://localhost:8080/kakaologin&response_type=code">
-			<img id="kakaoicon" src="resources/img/kakao.png">
+			href="https://kauth.kakao.com/oauth/authorize?client_id=4c6dceb5eb1855fff0a634bdb04459aa&redirect_uri=http://localhost:8080/login/kakaoOauth&response_type=code">
+			<img id="kakaoicon" src="resources/img/kakao.png" style="width: 50px; height: 50px">
 		</a>
-		<!-- https://nid.naver.com/oauth2.0/authorize?client_id={restApi키입력}&response_type=code&redirect_uri={개발자 센터에 등록한 콜백 URL(URL 인코딩)}&state={상태 토큰} -->
 		<a
-			href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=ZxrHN8MDPizObABcEu_r&redirect_uri=http://localhost:8080/naverlogin&state=${state }">
-			<img id="navericon" src="resources/img/naver.PNG">
+			href="${google_url}">
+			<img id="googleicon" src="resources/img/googleLogin.png" style="width: 60px; height: 60px">
 		</a>
-
-		<!-- <a href="https://www.facebook.com/v2.12/dialog/oauth?client_id=119792748848840&redirect_uri=http://localhost:8080/project02/facelogin&response_type=code">
-		<img id="faceIcon" src="resources/images/face.jpg"></a>
- -->
-
 
 	</div>
 	</article>

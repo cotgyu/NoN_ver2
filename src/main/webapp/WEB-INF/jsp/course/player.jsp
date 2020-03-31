@@ -6,33 +6,70 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>${course.cosname}_Player</title>
-<script>
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+
+		// 체크한 강의 표시
+        $.ajax({
+            type : "post",
+            url : '/lecture/getCheckedLectureInfo?userId=${sessionScope.member.id}&courseNumber=${course.cosno}',
+            success : function(result) {
+                var checkedLecture =  result.checkedList;
+
+                for(var i in checkedLecture) {
+
+                    $('#checklecture_'+checkedLecture[i]).prop("checked", true);
+                }
+
+            }
+        });
+
+
+
+    })
+
+	// 강의 체크
+	function checkedLecture(lecno) {
+        $.ajax({
+            type : "post",
+            url : '/lecture/checkedLecture?userId=${sessionScope.member.id}&courseNumber=${course.cosno}&lectureNumber='+lecno,
+            success : function(result) {
+                if(result.resultMessage == "error"){
+                    alert("강좌를 체크하는데 오류가 발생하였습니다.");
+                }
+
+            }
+        });
+    }
+
+
 </script>
   <!-- Bootstrap core CSS --> <!--toggle-->
-  <link href="/resources/indexresource/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">  
+  <link href="/resources/indexresource/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom styles for this template -->
   <link href="/resources/indexresource/css/simple-sidebar.css?ver=1.1" rel="stylesheet">
   <!-- Bootstrap core JavaScript -->
   <script src="/resources/indexresource/vendor/jquery/jquery.min.js"></script><!--toggle -->
   <script src="/resources/indexresource/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
- 
+
   </head>
 <body>
-<div id="wrapper">
+
+
+<div id="wrapper" style="background-color: #495057">
 <!-- 강의 목록 -->
-	<div id="sidebar"><!-- 사이드부분  공간 처리 할것 -->
-		
-			<ul class="player-sidebar-nav">
-				<li class="player-sidebar-brand"></li> <!--  공백 처리 다시 할것 -->
-				
-				<li class="player-sidebar-brand">
-					<h3>${course.cosname}</h3>
-				</li>
+	<div id="sidebar-wrapper"><!-- 사이드부분  공간 처리 할것 -->
+			<ul class="sidebar-nav">
+				<br>
+
 				<c:forEach var="lec" items="${lecturelist}">
 				<li>
 					<a href="/course/player/${lec.cosno}/${lec.lecno}">${lec.lecname}
 					&nbsp;
-					<input type="checkbox" id="check${lec.cosno}" 
+					<input type="checkbox" id="checklecture_${lec.lecno}" onchange="checkedLecture(${lec.lecno})"
 					style=" width: 25px;
 							height: 25px;
 							border: 4px solid #bcbcbc;
@@ -43,16 +80,30 @@
 				</c:forEach>
 			</ul>
 	</div>
+
+	<!-- Content menubutton-->
+	<div id="page-content-wrapper">
+		<div class="container-fluid">
+			<a href="#lecture-toggle" class="btn btn-secondary" id="lecture-toggle">강좌리스트</a>
+		</div>
+	</div>
+	<!-- Menu Toggle Script -->
+	<script>
+        $("#lecture-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+	</script>
 			
 <br>
 <div class="container">
+
+	<h2 style="color: #999999;">${course.cosname}</h2>
 	<div>
 		<button type="button" class="btn btn-default" onClick="location.href='/course/intro/${course.cosno}'">강좌로 돌아가기</button>
 	</div>
+	<br>
 
-
-
-<h3>${lecture.lecname}</h3>
 <br>
 <iframe src="https://www.youtube.com/embed/${lecture.lecvideo}" height="800" width="1200" allowfullscreen="allowfullscreen"></iframe>
 
