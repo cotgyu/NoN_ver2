@@ -34,14 +34,31 @@
 		<jsp:include page="/WEB-INF/jsp/fixedIndex/menuButton.jsp" />
 
 		<!-- Page Contents -->
-		<div class="container">
-			<h1 class="my-4"></h1>
+		<div class="container" style="margin-bottom: 300px">
+			<c:if test="${not empty code}">
+				<div>
+				<c:if test="${code eq '404'}">
+					<h4>페이지를 찾을 수 없습니다.</h4>
+				</c:if>
 
+				<c:if test="${code eq '403'}">
+					<h4>접근 권한이 없습니다.</h4>
+				</c:if>
 
-			<h3>관리자에게 문의하세요</h3>
-		<div>
+				<c:if test="${code eq '500'}">
+					<h4>서버의 상태에 확인 필요합니다.</h4>
+				</c:if>
 
+				<c:if test="${code eq '503'}">
+					<h4>서버의 상태에 확인 필요합니다.</h4>
+				</c:if>
+				</div>
 
+			</c:if>
+
+			<br>
+			<h4>관리자에게 문의하세요!</h4>
+		</div>
 
 
 		<jsp:include page="/WEB-INF/jsp/fixedIndex/footer.jsp" />
