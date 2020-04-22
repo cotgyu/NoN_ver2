@@ -62,7 +62,7 @@ class eduDataSourceConfig extends DatabaseConfig {
 	public SqlSessionFactory sqlSessionFactory(@Qualifier("eduDataSource") DataSource dataSource) throws Exception {
 		SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
 		sqlSessionFactoryBean.setDataSource(dataSource);
-		sqlSessionFactoryBean.setTypeAliasesPackage("com.Edu.Domain");
+		sqlSessionFactoryBean.setTypeAliasesPackage("com.edu.domain");
 		sqlSessionFactoryBean
 				.setConfigLocation(applicationContext.getResource("classpath:static/mybatis/mybatis-config.xml"));
 		sqlSessionFactoryBean

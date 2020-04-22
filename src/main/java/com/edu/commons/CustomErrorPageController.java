@@ -1,4 +1,4 @@
-package com.Edu.commons;
+package com.edu.commons;
 
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.stereotype.Controller;
