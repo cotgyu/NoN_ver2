@@ -178,9 +178,9 @@ public class CourseServiceImpl implements CourseService{
 	}
 
 	@Override
-	public void dataUpdate() {
-		courseMapper.dataUpdate();
-		
+	public void dataUpdate(String filePath) {
+		courseMapper.dataUpdate(filePath);
+
 	}
 
 

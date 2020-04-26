@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import com.edu.domain.Member;
 import com.edu.service.LectureService;
 import com.edu.service.MemberService;
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -41,7 +42,7 @@ public class CourseController {
 	
 	//cosno에 맞는 소개 페이지 관련
 	@RequestMapping(value = "/intro/{cosno}", method = RequestMethod.GET)
-	public ModelAndView courseIntro( ModelAndView mav, @PathVariable("cosno") int cosno, HttpSession session){
+	public ModelAndView courseIntro(ModelAndView mav, @PathVariable("cosno") int cosno, HttpSession session, HttpServletRequest request){
 		
 		//cosno에 맞는 코스정보 불러오기
 		Course course = courseService.findCos(cosno);
@@ -54,18 +55,12 @@ public class CourseController {
 		
 		//수강여부 체크
 		boolean checkstate = courseService.ajaxCheckSubscribe(id,cosno);
-		
-		//데이터
-		DataConvert DataC = new DataConvert();
-		try {
-			DataC.Convert();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+
+		String resourcesPath = request.getServletContext().getRealPath("resources")+"/RecommendOutputData/RecommendData.csv";
+
 		//추천 강의리스트 뽑기
 		ItemRecommend IR = new ItemRecommend();		
-		List<String> recommendList = IR.Recommend(cosno);
+		List<String> recommendList = IR.Recommend(cosno, resourcesPath);
 		List<String> recommendCourseName = new ArrayList<>();
 		
 		Iterator iterator = recommendList.iterator();

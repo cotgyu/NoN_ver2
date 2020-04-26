@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.edu.domain.Course;
 import com.edu.service.CourseService;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class IndexController {
 	@Autowired
@@ -36,13 +38,15 @@ public class IndexController {
 	}
 	
 	@RequestMapping(value = "/updateData")
-	public String dataUpdate() throws Exception{
-		
-		File file = new File("C:/MySqlOutputData/test.csv");
+	public String dataUpdate(HttpServletRequest request) throws Exception{
+
+		// 아이템 추천을 위한 데이터 경로
+		String resourcesPath = request.getServletContext().getRealPath("resources");
+		File file = new File(resourcesPath+"/RecommendOutputData/RecommendData.csv");
 		
 		file.delete();
 
-		courseService.dataUpdate();
+		courseService.dataUpdate(file.getPath());
 		
 		return "redirect:/";
 		

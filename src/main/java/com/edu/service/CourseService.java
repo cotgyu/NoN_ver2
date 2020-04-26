@@ -51,5 +51,5 @@ public interface CourseService {
 
 	public String findCosName(int cosno);
 
-	public void dataUpdate();
+	public void dataUpdate(String filePath);
 }

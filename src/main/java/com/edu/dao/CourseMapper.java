@@ -55,5 +55,5 @@ public interface CourseMapper {
 
 	void insertCourseScore(Course cos);
 
-	void dataUpdate();
+	void dataUpdate(String filePath);
 }

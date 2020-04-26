@@ -177,7 +177,7 @@
 	
 	<select id="dataUpdate">
 		SELECT * FROM recommend_coursedata
-		INTO OUTFILE 'C:/MySqlOutputData/test.csv'
+		INTO OUTFILE #{filePath}
 		CHARACTER SET euckr
 		FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '"'
 		ESCAPED BY '\\'
