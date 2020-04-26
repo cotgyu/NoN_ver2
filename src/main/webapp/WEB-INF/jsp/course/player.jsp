@@ -17,6 +17,11 @@
             type : "post",
             url : '/lecture/getCheckedLectureInfo?userId=${sessionScope.member.id}&courseNumber=${course.cosno}',
             success : function(result) {
+
+                if(result.errorMsg != undefined){
+                    return;
+                }
+
                 var checkedLecture =  result.checkedList;
 
                 for(var i in checkedLecture) {

@@ -24,13 +24,11 @@ import org.apache.mahout.cf.taste.similarity.ItemSimilarity;
 public class ItemRecommend {
 
 	// for문 돌려서 나온는 번호나 출력결과 리스트에 저장시켜서 리스트 번호에 맞는 코스들 보여주기
-	public List<String> Recommend(int cosno, String filePath) {
+	public List<String> getItemRecommendList(int cosno, String filePath) {
 		List<String> recommendList = new ArrayList<>();
 		try {
 
 			DataModel dm = new FileDataModel( new File(filePath));
-
-			// ItemSimilarity sim = new LogLikelihoodSimilarity(dm);
 
 			ItemSimilarity sim = new TanimotoCoefficientSimilarity(dm);
 

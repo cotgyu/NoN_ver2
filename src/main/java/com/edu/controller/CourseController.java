@@ -60,7 +60,7 @@ public class CourseController {
 
 		//추천 강의리스트 뽑기
 		ItemRecommend IR = new ItemRecommend();		
-		List<String> recommendList = IR.Recommend(cosno, resourcesPath);
+		List<String> recommendList = IR.getItemRecommendList(cosno, resourcesPath);
 		List<String> recommendCourseName = new ArrayList<>();
 		
 		Iterator iterator = recommendList.iterator();

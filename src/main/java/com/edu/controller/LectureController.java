@@ -46,7 +46,7 @@ public class LectureController {
         if(loginMember == null){
             logger.debug("해당 사용자가 존재하지 않습니다.");
 
-            resultMap.put("error", "해당 사용자가 존재하지 않습니다.");
+            resultMap.put("errorMsg", "해당 사용자가 존재하지 않습니다.");
 
             return resultMap;
         }
