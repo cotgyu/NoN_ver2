@@ -119,12 +119,22 @@
 				<div class="commentList"></div>
 			</div>
 				<br><br>
-			<div class="container">
+
+			<section id="recommendListSection">
+				<c:choose>
+				<c:when test="${empty recommendList}">
+					<h1>강의 추천을 위해 수강평을 등록해주세요!</h1>
+				</c:when>
+				<c:otherwise>
 					<h1>이런 강의는 어떠세요??</h1>
-						<c:forEach var="num" varStatus="i" begin="0" end="4" step="1">
-							<a href ="/course/intro/${recommendList[num]}">${recommendCourseName[num]}</a><br>
-						</c:forEach>
-			</div>		
+				</c:otherwise>
+			</c:choose>
+			<div class="container">
+					<c:forEach var="num" varStatus="i" begin="0" end="4" step="1">
+						<a href ="/course/intro/${recommendList[num]}">${recommendCourseName[num]}</a><br>
+					</c:forEach>
+			</div>
+			</section>
 			<br><br><br><br><br><br>
 		</div>
 		<%@ include file="/WEB-INF/jsp/fixedIndex/footer.jsp"%>
