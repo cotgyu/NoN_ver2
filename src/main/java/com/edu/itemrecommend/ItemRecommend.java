@@ -14,7 +14,7 @@ import org.apache.mahout.cf.taste.impl.model.file.FileDataModel;
 
 import org.apache.mahout.cf.taste.impl.recommender.GenericItemBasedRecommender;
 
-import org.apache.mahout.cf.taste.impl.similarity.TanimotoCoefficientSimilarity;
+import org.apache.mahout.cf.taste.impl.similarity.*;
 
 import org.apache.mahout.cf.taste.model.DataModel;
 
@@ -30,7 +30,7 @@ public class ItemRecommend {
 
 			DataModel dm = new FileDataModel( new File(filePath));
 
-			ItemSimilarity sim = new TanimotoCoefficientSimilarity(dm);
+			ItemSimilarity sim = new EuclideanDistanceSimilarity(dm);
 
 			GenericItemBasedRecommender recommender = new GenericItemBasedRecommender(dm, sim);
 
