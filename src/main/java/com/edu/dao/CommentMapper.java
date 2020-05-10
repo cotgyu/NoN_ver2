@@ -14,30 +14,30 @@ import org.springframework.stereotype.Repository;
  
  public interface CommentMapper {
     // 댓글 개수
-    public int commentCount() throws Exception;
- 
+     int commentCount() throws Exception;
+
     // 댓글 목록
-    public List<CommentVO> commentList(int cosno) throws Exception;
- 
+     List<CommentVO> commentList(int cosno) throws Exception;
+
     // 댓글 작성
-    public int commentInsert(CommentVO comment) throws Exception;
-    
+     int commentInsert(CommentVO comment) throws Exception;
+
     // 댓글 수정
-    public int commentUpdate(CommentVO comment) throws Exception;
- 
+     int commentUpdate(CommentVO comment) throws Exception;
+
     // 댓글 삭제
-    public int commentDelete(int cno) throws Exception;
+     int commentDelete(int cno) throws Exception;
 
     //댓글 평점 출력
 /*	public double commentEva(int cosno) throws Exception;
 */
-	public List<CommentVO> commentEva(int cosno) throws Exception;
+	 List<CommentVO> commentEva(int cosno) throws Exception;
 
-	public void commentScoreAdd(CommentVO comment) throws Exception;
+	 void commentScoreAdd(CommentVO comment) throws Exception;
 
-	public void commentScoreUpdate(CommentVO comment);
+	 void commentScoreUpdate(CommentVO comment);
 
-	public void recommendCourseDataInsert(CommentVO comment);
+	 void recommendCourseDataInsert(CommentVO comment);
 
 }
 
