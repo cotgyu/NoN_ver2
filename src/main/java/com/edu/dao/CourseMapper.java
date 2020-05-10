@@ -6,9 +6,12 @@ import java.util.Map;
 import com.edu.domain.Course;
 import com.edu.domain.Lecture;
 import com.edu.domain.Subscribe;
+import org.apache.ibatis.annotations.Select;
 
 public interface CourseMapper {
 
+	// 간단한 쿼리는 직접 명시 가능 (xml과 혼용해서 사용 가능)
+	@Select("SELECT * FROM course WHERE cosno = #{cosno}")
 	Course findCos(int cosno);
 
 	List<Lecture> findCos_lec(int cosno);

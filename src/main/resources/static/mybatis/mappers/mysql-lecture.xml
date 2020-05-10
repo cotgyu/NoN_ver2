@@ -8,7 +8,7 @@
 		WHERE userid = #{userid} AND coursenum = #{coursenum}  AND checkflag = 'Y' AND delflag = 'N'
 	</select>
 
-	<select id="getLastedLecture" resultType="Lecture">
+	<select id="getLastedLecture" resultType="com.edu.domain.Lecture">
 		SELECT *
 		FROM lecture
 		WHERE lecno = (
@@ -20,7 +20,7 @@
 		)
 	</select>
 
-    <select id="getLectureInfo" resultType="UserLectureInfo">
+    <select id="getLectureInfo" resultType="com.edu.domain.UserLectureInfo">
 		SELECT *
 		FROM userlectureinfo
 		WHERE userid = #{userid} AND coursenum = #{coursenum} AND lecturenum = #{lecturenum} AND delflag = 'N'

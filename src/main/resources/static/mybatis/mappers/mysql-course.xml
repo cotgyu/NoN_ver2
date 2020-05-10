@@ -5,26 +5,26 @@
 <!-- Course 쿼리 -->
 
 
-	<!-- 코스 정보 불러오기 -->
-	<select id="findCos" resultType="Course">
+	<!-- 코스 정보 불러오기
+	<select id="findCos" resultType="com.edu.domain.Course">
 		SELECT *
 		FROM course where cosno = #{cosno}
-	</select>
+	</select>-->
 	
 	<!-- 코스번호에 맞는 강좌들 불러오기 -->
-	<select id="findCos_lec" resultType="Lecture">
+	<select id="findCos_lec" resultType="com.edu.domain.Lecture">
 		SELECT *
 		FROM lecture where cosno = #{cosno}
 	</select>
 	
 	<!-- 강좌번호에 맞는 강좌 불러오기 -->
-	<select id="findLecture" resultType="Lecture">
+	<select id="findLecture" resultType="com.edu.domain.Lecture">
 		SELECT *
 		FROM lecture where lecno = #{lecno}
 	</select>
 	
 	<!-- 코스 리스트 가져오기 (코스이름과 카테고리 검색)-->
-	<select id="findCosList" resultType="Course">
+	<select id="findCosList" resultType="com.edu.domain.Course">
 		SELECT *
 		FROM course 
 		<choose>
@@ -43,13 +43,13 @@
 	</select>
 	
 	<!-- 시간순으로 코스 가져오기(9개) -->
-	<select id="findNewCosList" resultType="Course">
+	<select id="findNewCosList" resultType="com.edu.domain.Course">
 		SELECT *
 		FROM course ORDER BY cosregtime desc LIMIT 9
 	</select>
 	
 	<!-- 인기 코스 가져오기 -->
-	<select id="findPopCosList" resultType="Course">
+	<select id="findPopCosList" resultType="com.edu.domain.Course">
 		SELECT *
 		FROM course ORDER BY coseval desc LIMIT 9
 	</select>
@@ -68,24 +68,24 @@
 	</insert>	
 	
 	<!-- 코스 대표 카테고리 가져오기 -->
-	<select id="findCosCategory1" resultType="Course">
+	<select id="findCosCategory1" resultType="com.edu.domain.Course">
 		SELECT DISTINCT coscategory1 FROM course 
 	</select>
 	<!-- 코스 상세 카테고리 가져오기 -->
-	<select id="findCosCategory2" resultType="Course">
+	<select id="findCosCategory2" resultType="com.edu.domain.Course">
 		SELECT DISTINCT coscategory2 FROM course 
 	</select>
 	
 	<!-- 프로그래밍 상세 카테고리 가져오기 -->
-	<select id="findProgrammingCategory" resultType="Course">
+	<select id="findProgrammingCategory" resultType="com.edu.domain.Course">
 		SELECT DISTINCT coscategory2 FROM course where coscategory1 = '프로그래밍'
 	</select>
 	<!-- 디자인 상세 카테고리 가져오기 -->
-	<select id="findDesignCategory" resultType="Course">
+	<select id="findDesignCategory" resultType="com.edu.domain.Course">
 		SELECT DISTINCT coscategory2 FROM course where coscategory1 = '디자인/CG'
 	</select>
 	<!-- 비즈니스 카테고리 가져오기 -->
-	<select id="findBusinessCategory" resultType="Course">
+	<select id="findBusinessCategory" resultType="com.edu.domain.Course">
 		SELECT DISTINCT coscategory2 FROM course where coscategory1 = 'IT비즈니스'
 	</select>
 	
@@ -133,7 +133,7 @@
 	</select>
 	
 	<!-- 기본적인 코스리스트 불러오기 -->
-	<select id="allFindCosList" resultType="Course">
+	<select id="allFindCosList" resultType="com.edu.domain.Course">
 		SELECT *
 		FROM course
 	</select>
@@ -145,14 +145,14 @@
 	</insert>
 	
 	<!-- 내 강좌 조회 -->
-	<select id="myCourse" resultType="Course">
+	<select id="myCourse" resultType="com.edu.domain.Course">
 		SELECT * FROM course c, subscribe s 
 		WHERE c.cosno = s.cosno AND id = #{id}
 	</select>
 	
 	
 	<!-- 강좌 체크하기  -->
-	<select id="ajaxCheckSubscribe" resultType="Subscribe">
+	<select id="ajaxCheckSubscribe" resultType="com.edu.domain.Subscribe">
 		SELECT * FROM subscribe 
 		WHERE cosno = #{cosno} AND id = #{id}
 	</select>
