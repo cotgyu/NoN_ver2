@@ -1,6 +1,7 @@
-package com.edu.domain;
+package com.edu.repository;
 
 
+import com.edu.domain.JPADomain;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
