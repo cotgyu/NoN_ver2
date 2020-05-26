@@ -119,6 +119,21 @@ public class TestJPADomainRepository {
 
     }
 
+    @Test
+    @Description("querydsl 컬럼 select 테스트")
+    public void selectTest(){
+
+        String id = "admin2";
+        int courseNum = 54;
+
+
+        List<Integer> info = lectureRepositorySupport.getCheckedLecture(id, courseNum);
+
+        int lastedNum = info.get(0);
+
+        assertThat(lastedNum, is(4));
+
+    }
 
 
 
