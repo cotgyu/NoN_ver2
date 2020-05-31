@@ -3,7 +3,7 @@ package com.edu.domain;
 
 import com.edu.repository.JPADomainRepository;
 import com.edu.repository.LectureRepository;
-import com.edu.repository.LectureRepositorySupport;
+import com.edu.repository.UserLectureInfoRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -32,7 +32,8 @@ public class TestJPADomainRepository {
     LectureRepository lectureRepository;
 
     @Autowired
-    LectureRepositorySupport lectureRepositorySupport;
+    UserLectureInfoRepository userLectureInfoRepository;
+
 
     private static final Logger logger = LoggerFactory.getLogger(TestJPADomainRepository.class);
 
@@ -93,18 +94,6 @@ public class TestJPADomainRepository {
 
     }
 
-    @Test
-    @Description("Lecture 전환 테스트2")
-    public void lectureRepositoryTest2(){
-
-        //given & when
-       LectureDomain lectureList = lectureRepository.findByLecno(1);
-
-        //then
-        LectureDomain lecture = lectureList;
-        assertThat(lecture.getLecno(), is(1));
-
-    }
 
     @Test
     @Description("querydsl 테스트")
@@ -112,7 +101,7 @@ public class TestJPADomainRepository {
         int courseNo  = 1;
 
         //when
-        List<LectureDomain> lectureList = lectureRepositorySupport.findByCosNo(courseNo);
+        List<LectureDomain> lectureList = lectureRepository.findByCosNo(courseNo);
 
         //then
         assertThat(lectureList.get(0).getLecname(), is("test1"));
@@ -127,7 +116,7 @@ public class TestJPADomainRepository {
         int courseNum = 54;
 
 
-        List<Integer> info = lectureRepositorySupport.getCheckedLecture(id, courseNum);
+        List<Integer> info = lectureRepository.getCheckedLecture(id, courseNum);
 
         int lastedNum = info.get(0);
 
@@ -135,6 +124,40 @@ public class TestJPADomainRepository {
 
     }
 
+
+    @Test
+    @Description("querydsl where절 서브쿼리 테스트")
+    public void whereTest(){
+        String id = "admin2";
+        int courseNum = 54;
+
+        LectureDomain lasted = lectureRepository.getLastedLecture(id, courseNum);
+
+        int lastedLectureNum = lasted.getLecno();
+
+        assertThat(lastedLectureNum, is(6));
+
+    }
+
+
+
+    @Test
+    @Description("lectureinfo save update 테스트")
+    public void lectureSaveTest(){
+        String userId = "admin2";
+        int courseNum = 999;
+        int lecturenum = 99;
+
+
+        userLectureInfoRepository.save(UserLectureInfoDomain.builder()
+                .lectureInfoNum(5)
+                .userId(userId)
+                .courseNum(courseNum)
+                .lectureNum(lecturenum)
+                .delFlag("N")
+                .build());
+
+    }
 
 
     //log 테스트

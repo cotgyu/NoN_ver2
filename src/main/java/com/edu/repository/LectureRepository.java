@@ -3,9 +3,8 @@ package com.edu.repository;
 import com.edu.domain.LectureDomain;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface LectureRepository extends JpaRepository<LectureDomain, Long> {
+public interface LectureRepository extends JpaRepository<LectureDomain, Long>, LectureRepositoryCustom {
 
-    LectureDomain findByLecno(Integer lecno);
 
 
 }

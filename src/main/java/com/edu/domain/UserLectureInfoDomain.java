@@ -1,12 +1,10 @@
 package com.edu.domain;
 
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.apache.ibatis.type.Alias;
 
 import javax.persistence.*;
+import java.sql.Time;
 import java.sql.Timestamp;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -55,4 +53,15 @@ public class UserLectureInfoDomain {
                 '}';
     }
 
+    @Builder
+    public UserLectureInfoDomain(int lectureInfoNum, String userId, int courseNum, int lectureNum, Timestamp regDate, Timestamp updateDate, String checkFlag, String delFlag){
+        this.lectureinfonum = lectureInfoNum;
+        this.userid = userId;
+        this.coursenum = courseNum;
+        this.lecturenum = lectureNum;
+        this.regDate = regDate;
+        this.updateDate = updateDate;
+        this.checkflag = checkFlag;
+        this.delflag = delFlag;
+    }
 }

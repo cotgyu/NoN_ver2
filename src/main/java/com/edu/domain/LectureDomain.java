@@ -39,8 +39,17 @@ public class LectureDomain {
 		return "Lecture [cosno=" + cosno + ", lecno=" + lecno + ", lectime=" + lectime + ", lecname=" + lecname
 				+ ", lecvideo=" + lecvideo + ", lecup=" + lecup + ", lecdown=" + lecdown + "]";
 	}
-	
-	
+
+	@Builder
+	public LectureDomain(int lecNo, int cosNo, String lecTime, String lecName ,String lecVideo, Integer lecUp, Integer lecDown){
+		this.lecno = lecNo;
+		this.cosno = cosNo;
+		this.lectime = lecTime;
+		this.lecname = lecName;
+		this.lecvideo = lecVideo;
+		this.lecup = lecUp;
+		this.lecdown = lecDown;
+	}
 
 	
 	
