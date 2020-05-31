@@ -1,6 +1,7 @@
 package com.edu.controller;
 
 import com.edu.domain.Lecture;
+import com.edu.domain.LectureDomain;
 import com.edu.domain.Member;
 import com.edu.service.CourseService;
 import com.edu.service.LectureService;
@@ -77,7 +78,7 @@ public class LectureController {
         }
 
         // 해당 사용자의 최신강의 조회
-        Lecture lastedLecture = lectureService.getLastedLecture(loginMember, Integer.parseInt(courseNumber));
+        LectureDomain lastedLecture = lectureService.getLastedLecture(loginMember, Integer.parseInt(courseNumber));
 
         resultMap.put("lastedLecture", lastedLecture);
 

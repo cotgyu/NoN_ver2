@@ -16,10 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
-
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest //기존 스프링test의 @ContextConfiguration 의 발전된 기능 ? 다양한 기능이 있으니 찾아볼 것
@@ -121,6 +119,17 @@ public class TestJPADomainRepository {
         int lastedNum = info.get(0);
 
         assertThat(lastedNum, is(4));
+
+    }
+
+    @Test
+    @Description("getLectureInfo 테스트")
+    public void getLectureInfo(){
+        String userid = "admin2";
+        int courseNum = 54;
+        int lecNum = 5;
+
+        UserLectureInfoDomain get = userLectureInfoRepository.getLectureInfo(userid, lecNum, courseNum);
 
     }
 

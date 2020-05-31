@@ -1,34 +1,25 @@
 package com.edu.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
-
-import javax.servlet.http.HttpSession;
-
-import com.edu.domain.Member;
+import com.edu.domain.*;
+import com.edu.itemrecommend.ItemRecommend;
+import com.edu.service.CourseService;
 import com.edu.service.LectureService;
 import com.edu.service.MemberService;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.edu.domain.Course;
-import com.edu.domain.Lecture;
-import com.edu.domain.Page;
-import com.edu.itemrecommend.*;
-import com.edu.service.CourseService;
+import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/course/")
@@ -129,7 +120,7 @@ public class CourseController {
 		List<Lecture> lecturelist = courseService.findCos_lec(cosno);
 
 		//사용자 최신강의 불러오기
-		Lecture lastedLecture = lectureService.getLastedLecture(loginMember, cosno);
+		LectureDomain lastedLecture = lectureService.getLastedLecture(loginMember, cosno);
 
 
 		//lecno에 맞는 영상 불러오기

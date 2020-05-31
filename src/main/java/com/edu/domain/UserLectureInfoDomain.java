@@ -4,7 +4,6 @@ import lombok.*;
 import org.apache.ibatis.type.Alias;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.sql.Timestamp;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

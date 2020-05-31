@@ -1,9 +1,10 @@
 package com.edu.service;
 
-import com.edu.dao.LectureMapper;
-import com.edu.domain.Lecture;
+import com.edu.domain.LectureDomain;
 import com.edu.domain.Member;
-import com.edu.domain.UserLectureInfo;
+import com.edu.domain.UserLectureInfoDomain;
+import com.edu.repository.LectureRepository;
+import com.edu.repository.UserLectureInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,21 +13,24 @@ import java.util.List;
 @Service
 public class LectureService {
 
-    @Autowired LectureMapper lectureMapper;
+    @Autowired
+    LectureRepository lectureRepository;
 
-    public Lecture getLastedLecture(Member member, int courseNumber) {
+    @Autowired
+    UserLectureInfoRepository userLectureInfoRepository;
+
+    public LectureDomain getLastedLecture(Member member, int courseNumber) {
 
         String userId = member.getId();
 
-
-        Lecture lastedLecture = lectureMapper.getLastedLecture(userId, courseNumber);
+        LectureDomain lastedLecture = lectureRepository.getLastedLecture(userId, courseNumber);
 
         return lastedLecture;
     }
 
     public List getCheckedLecture(String userId, int courseNumber){
 
-        List checkedList = lectureMapper.getCheckedLecture(userId, courseNumber);
+        List checkedList = lectureRepository.getCheckedLecture(userId, courseNumber);
 
         return checkedList;
     }
@@ -34,33 +38,33 @@ public class LectureService {
     public String updateCheckedLecture(int courseNumber, int lectureNumber, Member member){
 
         // 해당 번호로 조회
-        UserLectureInfo getUserLectureInfo = lectureMapper.getLectureInfo(member.getId(), courseNumber, lectureNumber);
+        UserLectureInfoDomain getUserLectureInfo = userLectureInfoRepository.getLectureInfo(member.getId(), lectureNumber, courseNumber);
 
-        // 결과없으면? insert
+        // 체크결과가 없으면 insert
         if(getUserLectureInfo == null){
 
-            getUserLectureInfo = new UserLectureInfo();
-
-            getUserLectureInfo.setUserid(member.getId());
-            getUserLectureInfo.setCoursenum(courseNumber);
-            getUserLectureInfo.setLecturenum(lectureNumber);
-            getUserLectureInfo.setCheckflag("Y");
-
-            lectureMapper.insertLectureInfo(getUserLectureInfo);
+            userLectureInfoRepository.save(UserLectureInfoDomain.builder()
+                    .userId(member.getId())
+                    .courseNum(courseNumber)
+                    .lectureNum(lectureNumber)
+                    .checkFlag("Y")
+                    .delFlag("N")
+                    .build());
 
             return "insert";
         }
 
-
-        // 결과가 있다.  Y이면 N으로 N이면 Y로 update?
+        // 조회결과가 있을 경우  Y이면 N으로 N이면 Y로 update
         if(getUserLectureInfo.getCheckflag().equals("Y")){
             getUserLectureInfo.setCheckflag("N");
         }else {
             getUserLectureInfo.setCheckflag("Y");
         }
+
         try {
             // update
-            lectureMapper.updateLectureInfo(getUserLectureInfo);
+            userLectureInfoRepository.save(getUserLectureInfo);
+
         }catch (Exception e){
             return "error";
         }
