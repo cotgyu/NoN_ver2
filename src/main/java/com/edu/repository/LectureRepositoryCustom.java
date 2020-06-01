@@ -12,4 +12,6 @@ public interface LectureRepositoryCustom {
 
     LectureDomain getLastedLecture(String userId, int courseNum);
 
+    LectureDomain findLecture(int lectureNum);
+
 }

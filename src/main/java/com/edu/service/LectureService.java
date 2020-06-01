@@ -72,4 +72,12 @@ public class LectureService {
         return "update";
     }
 
+    public List<LectureDomain> findCos_lec(int cosNum){
+        return lectureRepository.findByCosNo(cosNum);
+    }
+
+    public LectureDomain findLecture(int lectureNum){
+        return lectureRepository.findLecture(lectureNum);
+    }
+
 }

@@ -54,4 +54,9 @@ public class LectureRepositoryImpl implements LectureRepositoryCustom {
                 .fetchOne();
     }
 
+    public LectureDomain findLecture(int lectureNum){
+        return queryFactory.selectFrom(lectureDomain)
+                .where(lectureDomain.lecno.eq(lectureNum))
+                .fetchOne();
+    }
 }
