@@ -14,4 +14,6 @@ public interface LectureRepositoryCustom {
 
     LectureDomain findLecture(int lectureNum);
 
+    List<LectureDomain> findCos_lec(int cosNum);
+
 }

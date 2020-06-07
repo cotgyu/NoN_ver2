@@ -4,158 +4,186 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.edu.domain.*;
+import com.edu.repository.CourseRepository;
+import com.edu.repository.CourseScoreRepository;
+import com.edu.repository.LectureRepository;
+import com.edu.repository.SubscribeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.edu.dao.CourseMapper;
-import com.edu.domain.Course;
-import com.edu.domain.Lecture;
-import com.edu.domain.Subscribe;
 
 @Service
 public class CourseServiceImpl implements CourseService{
-	@Autowired 
-	private CourseMapper courseMapper;
+	@Autowired
+    private CourseMapper courseMapper;
+
+	@Autowired
+    private CourseRepository courseRepository;
+
+	@Autowired
+    private LectureRepository lectureRepository;
+
+	@Autowired
+    private SubscribeRepository subscribeRepository;
+
+	@Autowired
+	private CourseScoreRepository courseScoreRepository;
 	
 	//cosno에 맞는 코스 찾기
 	@Override
-	public Course findCos(int cosno) {
-		return courseMapper.findCos(cosno);
+	public CourseDomain findCos(int cosno) {
+	    return courseRepository.findCos(cosno);
 	}
 	
 	//cosno에 맞는 강좌들 찾기
 	@Override
-	public List<Lecture> findCos_lec(int cosno) {
-		return courseMapper.findCos_lec(cosno);
+	public List<LectureDomain> findCos_lec(int cosno) {
+		return lectureRepository.findCos_lec(cosno);
 	}
 
 	//lecno에 맞는 강좌 영상 가져오기 
 	@Override
-	public Lecture findLecture(int lecno) {
-		return courseMapper.findLecture(lecno);
+	public LectureDomain findLecture(int lecno) {
+
+	    return lectureRepository.findLecture(lecno);
 	}
 
 	//course리스트 불러오기 
 	@Override
-	public List<Course> findCosList(int start, int end, String searchOption, String keyword) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("start", start);
-		map.put("end", end);
-		map.put("searchOption", searchOption);
-		map.put("keyword", keyword);
+	public List<CourseDomain> findCosList(int start, int end, String searchOption, String keyword) {
 		
-		return courseMapper.findCosList(map);
+		return courseRepository.findCosList(start, end, searchOption, keyword);
 	}
 	
 	//시간순으로 코스 불러오기
 	@Override
-	public List<Course> findNewCosList() {
-		return courseMapper.findNewCosList();
+	public List<CourseDomain> findNewCosList() {
+		return courseRepository.findNewCosList();
 	}
 
 	//추천수 많은 코스 가져오기
 	@Override
-	public List<Course> findPopCosList() {
-		return courseMapper.findPopCosList();
+	public List<CourseDomain> findPopCosList() {
+		return courseRepository.findPopCosList();
 	}
 	
 	
 	//새로운 course 추가
 	@Override
 	public void insertCourse(Course cos) {
-		courseMapper.insertCourse(cos);
+		courseRepository.save(CourseDomain.builder()
+				.cosName(cos.getCosname())
+				.cosIntro(cos.getCosintro())
+				.cosIntrovideo(cos.getCosintrovideo())
+				.cosCategory1(cos.getCoscategory1())
+				.cosCategory2(cos.getCoscategory2())
+				.cosPicture(cos.getCospicture())
+				.build()
+		);
 		
 		//코스 추가할때 코스스코어도 같이 추가 
-		courseMapper.insertCourseScore(cos);
+		courseScoreRepository.save(CourseScoreDomain.builder()
+				.cosno(cos.getCosno())
+				.build()
+		);
 	}
 	
 	//새로운 lecture 추가
 	@Override
 	public void insertLecture(Lecture lecture) {
-		courseMapper.insertLecture(lecture);
-		
+		lectureRepository.save(LectureDomain.builder()
+				.cosNo(lecture.getCosno())
+				.lecTime(lecture.getLectime())
+				.lecName(lecture.getLecname())
+				.lecVideo(lecture.getLecvideo())
+				.build());
 	}
 
 	//코스 카테고리 불러오기
 	@Override
-	public List<Course> findCosCategory1() {
-		return courseMapper.findCosCategory1();
-	}@Override
-	public List<Course> findCosCategory2() {
-		return courseMapper.findCosCategory2();
+	public List<String> findCosCategory1() {
+
+	    return courseRepository.findCosCategory1();
 	}
 
 	@Override
-	public List<Course> findProgrammingCategory() {
-		return courseMapper.findProgrammingCategory();
+	public List<String> findCosCategory2() {
+
+	    return courseRepository.findCosCategory2();
 	}
+
 	@Override
-	public List<Course> findDesignCategory() {
-		return courseMapper.findDesignCategory();
+	public List<String> findDetailCategory(String type) {
+		return courseRepository.findDetailCategory(type);
 	}
-	@Override
-	public List<Course> findBusinessCategory() {
-		return courseMapper.findBusinessCategory();
-	}
+
 
 	//코스 업데이트하기
 	@Override
 	public void updateCourse(Course cos) {
-		courseMapper.updateCourse(cos);
+	    courseRepository.save(CourseDomain.builder()
+				.cosNo(cos.getCosno())
+				.cosName(cos.getCosname())
+				.cosIntro(cos.getCosintro())
+				.cosIntrovideo(cos.getCosintrovideo())
+				.cosCategory1(cos.getCoscategory1())
+				.cosCategory2(cos.getCoscategory2())
+				.cosPicture(cos.getCospicture())
+				.build()
+		);
 	}
+
 	//강의 업데이트하기
 	@Override
 	public void updateLecture(Lecture lecture) {
-		courseMapper.updateLecture(lecture);
+		lectureRepository.save(LectureDomain.builder()
+				.lecNo(lecture.getLecno())
+				.cosNo(lecture.getCosno())
+				.lecTime(lecture.getLectime())
+				.lecVideo(lecture.getLecvideo())
+				.build()
+		);
 		
 	}
 
 	@Override
-	public int countCourse(String searchOption, String keyword) {
-		Map<String, Object> map = new HashMap<String, Object>();
+	public long countCourse(String searchOption, String keyword) {
 	
-		map.put("searchOption", searchOption);
-		map.put("keyword", keyword);
-		
-	
-		return courseMapper.countCourse(map);
+		return courseRepository.countCourse(searchOption, keyword);
 	}
 
 	@Override
-	public List<Course> allFindCosList() {
-		return courseMapper.allFindCosList();
+	public List<CourseDomain> allFindCosList() {
+
+	    return courseRepository.findAll();
 	}
+
 
 	@Override
 	public void subscribe(String id, int cosno) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("id", id);
-		map.put("cosno", cosno);
-		
-		courseMapper.subscribe(map);
+		subscribeRepository.save(SubscribeDomain.builder().cosNo(cosno).id(id).build());
 	}
 
 	@Override
-	public List<Course> myCourse(String id) {
+	public List<CourseDomain> myCourse(String id) {
 		
-		return courseMapper.myCourse(id);
+		return courseRepository.myCourse(id);
 	}
 
 	@Override
 	public boolean ajaxCheckSubscribe(String id, int cosno) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("id", id);
-		map.put("cosno", cosno);
-
-		// 수강 course 체크
-		Subscribe cos=  courseMapper.ajaxCheckSubscribe(map);
 
 		boolean tf = false;
 
-		if(cos != null){
-		 tf = true;
+		if(id != null) {
+			// 수강 course 체크
+			SubscribeDomain cos = subscribeRepository.ajaxCheckSubscribe(cosno, id);
+
+			if (cos != null) {
+				tf = true;
+			}
 		}
 		
 		return tf;
@@ -163,18 +191,15 @@ public class CourseServiceImpl implements CourseService{
 
 	@Override
 	public void subscribeCancel(String id, int cosno) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		map.put("id", id);
-		map.put("cosno", cosno);
-		
-		courseMapper.subscribeCancel(map);
-		
+		SubscribeDomain target = subscribeRepository.findByCosnoAndId(cosno,id);
+
+		subscribeRepository.delete(target);
 	}
 
 	@Override
 	public String findCosName(int cosno) {
-		return courseMapper.findCosName(cosno);
+
+		return courseRepository.findCosName(cosno);
 	}
 
 	@Override

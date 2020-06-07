@@ -2,6 +2,8 @@ package com.edu.service;
 
 import java.util.List;
 
+import com.edu.domain.CourseDomain;
+import com.edu.domain.LectureDomain;
 import org.springframework.stereotype.Service;
 
 import com.edu.domain.Course;
@@ -9,41 +11,40 @@ import com.edu.domain.Lecture;
 
 @Service
 public interface CourseService {
-	public Course findCos(int cosno);
+	public CourseDomain findCos(int cosno);
 	
-	public List<Lecture> findCos_lec(int cosno);
+	public List<LectureDomain> findCos_lec(int cosno);
 
-	public Lecture findLecture(int lecno);
+	public LectureDomain findLecture(int lecno);
 
-	public List<Course> findCosList(int start,int end,String searchOption, String keyword);
+	public List<CourseDomain> findCosList(int start,int end,String searchOption, String keyword);
 
 	public void insertCourse(Course cos);
 
 	public void insertLecture(Lecture lecture);
 
-	public List<Course> findCosCategory1();
-	public List<Course> findCosCategory2();
+	public List<String> findCosCategory1();
+	public List<String> findCosCategory2();
 	
-	public List<Course> findProgrammingCategory();
-	public List<Course> findDesignCategory();
-	public List<Course> findBusinessCategory();
-		
-	
-	public List<Course> findNewCosList();
+	public List<String> findDetailCategory(String type);
 
-	public List<Course> findPopCosList();
+
+
+	public List<CourseDomain> findNewCosList();
+
+	public List<CourseDomain> findPopCosList();
 
 	public void updateCourse(Course cos);
 
 	public void updateLecture(Lecture lecture);
 
-	public int countCourse(String searchOption, String keyword);
+	public long countCourse(String searchOption, String keyword);
 
-	public List<Course> allFindCosList();
+	public List<CourseDomain> allFindCosList();
 
 	public void subscribe(String id, int cosno);
 
-	public List<Course> myCourse(String id);
+	public List<CourseDomain> myCourse(String id);
 
 	public boolean ajaxCheckSubscribe(String id, int cosno);
 

@@ -101,7 +101,7 @@
 					<td>
 						<select name="selectcategory1" id="selectcategory1" onChange="selectcoscategory1(this.value);">
 							<c:forEach var="coscate1" items="${coursecategory1}">	
-								<option value="${coscate1.coscategory1}">${coscate1.coscategory1}</option>	
+								<option value="${coscate1}">${coscate1}</option>
 							</c:forEach>
 							<option selected value="0">카테고리 직접 입력</option>
 						</select>
@@ -114,7 +114,7 @@
 					<td>
 						<select name="selectcategory2" id="selectcategory2" onChange="selectcoscategory2(this.value);">
 							<c:forEach var="coscate2" items="${coursecategory2}">	
-								<option value="${coscate2.coscategory2}">${coscate2.coscategory2}</option>	
+								<option value="${coscate2}">${coscate2}</option>
 							</c:forEach>
 							<option selected value="0">카테고리 직접 입력</option>
 						</select>

@@ -59,4 +59,8 @@ public class LectureRepositoryImpl implements LectureRepositoryCustom {
                 .where(lectureDomain.lecno.eq(lectureNum))
                 .fetchOne();
     }
+
+    public List<LectureDomain> findCos_lec(int cosNum){
+        return queryFactory.selectFrom(lectureDomain).where(lectureDomain.cosno.eq(cosNum)).fetch();
+    }
 }

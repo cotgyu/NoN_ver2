@@ -36,10 +36,10 @@ public class CourseController {
 	public ModelAndView courseIntro(ModelAndView mav, @PathVariable("cosno") int cosno, HttpSession session, HttpServletRequest request){
 		
 		//cosno에 맞는 코스정보 불러오기
-		Course course = courseService.findCos(cosno);
+		CourseDomain course = courseService.findCos(cosno);
 		
 		//cosno에 맞는 강좌들 불러오기
-		List<Lecture> lecture = courseService.findCos_lec(cosno);
+		List<LectureDomain> lecture = courseService.findCos_lec(cosno);
 		
 		//세션에서 아이디 받아오기
 		String id = (String) session.getAttribute("loginId");
@@ -85,13 +85,13 @@ public class CourseController {
 	public ModelAndView player( ModelAndView mav, @PathVariable("cosno") int cosno, @PathVariable("lecno") int lecno ){
 		
 		//cosno에 맞는 코스정보 불러오기
-		Course course = courseService.findCos(cosno);				
+		CourseDomain course = courseService.findCos(cosno);
 		
 		//cosno에 맞는 강좌들 불러오기
-		List<Lecture> lecturelist = courseService.findCos_lec(cosno);
+		List<LectureDomain> lecturelist = courseService.findCos_lec(cosno);
 		
 		//lecno에 맞는 영상 불러오기
-		Lecture lecture = courseService.findLecture(lecno); 
+		LectureDomain lecture = courseService.findLecture(lecno);
 		
 		
 		//modelandview에 정보 저장 
@@ -114,17 +114,17 @@ public class CourseController {
 		Member loginMember = memberService.login(id);
 
 		//cosno에 맞는 코스정보 불러오기
-		Course course = courseService.findCos(cosno);
+		CourseDomain course = courseService.findCos(cosno);
 
 		//cosno에 맞는 강좌들 불러오기
-		List<Lecture> lecturelist = courseService.findCos_lec(cosno);
+		List<LectureDomain> lecturelist = courseService.findCos_lec(cosno);
 
 		//사용자 최신강의 불러오기
 		LectureDomain lastedLecture = lectureService.getLastedLecture(loginMember, cosno);
 
 
 		//lecno에 맞는 영상 불러오기
-		Lecture lecture = courseService.findLecture(lastedLecture.getLecno());
+		LectureDomain lecture = courseService.findLecture(lastedLecture.getLecno());
 
 
 		//modelandview에 정보 저장
@@ -145,11 +145,11 @@ public class CourseController {
 		
 			
 		//프로그래밍 상세 카테고리 가져오기
-		List<Course> ProgrammingCategory = courseService.findProgrammingCategory();
+		List<String> ProgrammingCategory = courseService.findDetailCategory("프로그래밍");
 		//디자인 상세 카테고리 가져오기
-		List<Course> DesignCategory = courseService.findDesignCategory();
+		List<String> DesignCategory = courseService.findDetailCategory("디자인/CG");
 		//비즈니스  상세 카테고리 가져오기
-		List<Course> BusinessCategory = courseService.findBusinessCategory();
+		List<String> BusinessCategory = courseService.findDetailCategory("IT비즈니스");
 					
 			
 		//modelandview에 정보 저장 
@@ -172,7 +172,7 @@ public class CourseController {
 			@RequestParam(defaultValue="1") int curPage
 			){
 		//코스 수
-		int count = courseService.countCourse(searchOption,keyword);
+		int count = (int)courseService.countCourse(searchOption,keyword);
 			
 		//페이징 
 		Page Page = new Page(count, curPage);
@@ -180,7 +180,7 @@ public class CourseController {
 		int end = Page.getPageEnd();
 	
 		//모든 코스 가져오기 
-		List<Course> courseList = courseService.findCosList(start,end,searchOption,keyword);
+		List<CourseDomain> courseList = courseService.findCosList(start,end,searchOption,keyword);
 			
 		//modelandview에 정보 저장 
 		mav = new ModelAndView();
@@ -203,9 +203,9 @@ public class CourseController {
 	public ModelAndView addCourse( ModelAndView mav){
 		
 		//대표 카테고리 가져오기
-		List<Course> courseCategory1 = courseService.findCosCategory1();
+		List<String> courseCategory1 = courseService.findCosCategory1();
 		//상세 카테고리 가져오기
-		List<Course> courseCategory2 = courseService.findCosCategory2();
+		List<String> courseCategory2 = courseService.findCosCategory2();
 				
 		//modelandview에 정보 저장 
 		mav = new ModelAndView();
@@ -273,7 +273,7 @@ public class CourseController {
 	public ModelAndView addLecture( ModelAndView mav){
 		
 		//코스번호를 가져오기 위한 코스 불러오기  
-		List<Course> courseList = courseService.allFindCosList();
+		List<CourseDomain> courseList = courseService.allFindCosList();
 		
 		//modelandview에 정보 저장 
 		mav = new ModelAndView();
@@ -320,7 +320,7 @@ public class CourseController {
 	//수정할 코스 선택 
 	@RequestMapping(value = "/selectmodifycourse/", method = RequestMethod.GET)
 	public ModelAndView selectModifyCourse( ModelAndView mav){
-		List<Course> allcourse = courseService.allFindCosList();
+		List<CourseDomain> allcourse = courseService.allFindCosList();
 		
 		//modelandview에 정보 저장 
 		mav = new ModelAndView();
@@ -337,11 +337,11 @@ public class CourseController {
 	public ModelAndView modifyCourse( ModelAndView mav, @PathVariable("cosno") int cosno){
 			
 		//코스번호를 가져오기 위한 코스 불러오기 
-		Course course = courseService.findCos(cosno);
+		CourseDomain course = courseService.findCos(cosno);
 		//대표 카테고리 가져오기
-		List<Course> courseCategory1 = courseService.findCosCategory1();
+		List<String> courseCategory1 = courseService.findCosCategory1();
 		//상세 카테고리 가져오기
-		List<Course> courseCategory2 = courseService.findCosCategory2();
+		List<String> courseCategory2 = courseService.findCosCategory2();
 	
 		
 		//modelandview에 정보 저장 
@@ -407,7 +407,7 @@ public class CourseController {
 		public ModelAndView selectModifyLecture( ModelAndView mav,  @PathVariable("cosno") int cosno){
 			
 			//cosno에 맞는 강좌들 불러오기
-			List<Lecture> lecture = courseService.findCos_lec(cosno);
+			List<LectureDomain> lecture = courseService.findCos_lec(cosno);
 			
 			
 			//modelandview에 정보 저장 
@@ -426,8 +426,8 @@ public class CourseController {
 				@PathVariable("lecno") int lecno){
 			
 			//코스번호를 가져오기 위한 코스 불러오기 
-			List<Course> courseList = courseService.allFindCosList();
-			Lecture lecture = courseService.findLecture(lecno);
+			List<CourseDomain> courseList = courseService.allFindCosList();
+			LectureDomain lecture = courseService.findLecture(lecno);
 			//modelandview에 정보 저장 
 			mav = new ModelAndView();
 			mav.addObject("courselist",courseList);	
@@ -499,7 +499,7 @@ public class CourseController {
 			
 			String id = (String) session.getAttribute("loginId");
 			
-			List<Course> course = courseService.myCourse(id);
+			List<CourseDomain> course = courseService.myCourse(id);
 			
 			//modelandview에 정보 저장 
 			mav = new ModelAndView();

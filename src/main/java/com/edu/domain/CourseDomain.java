@@ -1,23 +1,44 @@
 package com.edu.domain;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
 @Entity(name = "course")
 public class CourseDomain {
+    @Id
     private int cosno;
+
+    @Column
     private String cosname;
+
+    @Column
     private String cosintro;
+
+    @Column
     private String cosintrovideo;
+
+    @Column
     private String coscategory1;
+
+    @Column
     private String coscategory2;
+
+    @Column
     private String cosregtime;
+
+    @Column
     private String cospicture;
-    private int coseval;
+
+    @Column
+    @ColumnDefault(value = "0")
+    private Integer coseval;
 
     @Override
     public String toString() {

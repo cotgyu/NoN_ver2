@@ -4,6 +4,7 @@ package com.edu.controller;
 import java.io.File;
 import java.util.List;
 
+import com.edu.domain.CourseDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,10 +24,10 @@ public class IndexController {
 	public ModelAndView index( ModelAndView mav){
 
 		//시간순으로 코스 가져오기(9개) 
-		List<Course> newCourseList = courseService.findNewCosList();
+		List<CourseDomain> newCourseList = courseService.findNewCosList();
 				
 		//추천수 많은  코스 가져오기(9개) 
-		List<Course> popCourseList = courseService.findPopCosList();
+		List<CourseDomain> popCourseList = courseService.findPopCosList();
 		
 		
 		mav.addObject("newcourselist",newCourseList);
