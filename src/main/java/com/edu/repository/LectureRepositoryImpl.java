@@ -17,13 +17,6 @@ public class LectureRepositoryImpl implements LectureRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<LectureDomain> findByCosNo(int cecno){
-        return queryFactory.selectFrom(lectureDomain)
-                .where(lectureDomain.cosno.eq(cecno))
-                .fetch();
-    }
-
-    @Override
     public List<Integer> getCheckedLecture(String userId, int courseNum){
 
         return queryFactory.select(userLectureInfoDomain.lecturenum)

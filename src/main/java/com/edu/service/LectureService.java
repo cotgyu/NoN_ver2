@@ -73,7 +73,7 @@ public class LectureService {
     }
 
     public List<LectureDomain> findCos_lec(int cosNum){
-        return lectureRepository.findByCosNo(cosNum);
+        return lectureRepository.findAllByCosno(cosNum);
     }
 
     public LectureDomain findLecture(int lectureNum){

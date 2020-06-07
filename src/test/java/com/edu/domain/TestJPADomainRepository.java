@@ -99,7 +99,7 @@ public class TestJPADomainRepository {
         int courseNo  = 1;
 
         //when
-        List<LectureDomain> lectureList = lectureRepository.findByCosNo(courseNo);
+        List<LectureDomain> lectureList = lectureRepository.findAllByCosno(courseNo);
 
         //then
         assertThat(lectureList.get(0).getLecname(), is("test1"));
