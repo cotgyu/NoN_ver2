@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
  
  //@Repository("com.example.demo.board.mapper.CommentMapper")
  @Repository("com.Edu.Dao.CommentMapper")
- 
  public interface CommentMapper {
     // 댓글 개수
      int commentCount() throws Exception;

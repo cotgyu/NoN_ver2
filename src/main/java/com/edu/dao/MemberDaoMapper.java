@@ -3,7 +3,9 @@ package com.edu.dao;
 import java.util.ArrayList;
 
 import com.edu.domain.Member;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface MemberDaoMapper {
 
 	public Member loginCheck(String id) throws Exception;
