@@ -3,6 +3,7 @@ package com.edu.controller;
 import com.edu.domain.Lecture;
 import com.edu.domain.LectureDomain;
 import com.edu.domain.Member;
+import com.edu.domain.UserDomain;
 import com.edu.service.CourseService;
 import com.edu.service.LectureService;
 import com.edu.service.MemberService;
@@ -37,10 +38,10 @@ public class LectureController {
 
     @ResponseBody
     @RequestMapping("/getCheckedLectureInfo")
-    public Map getCheckedLectureInfo(String courseNumber, String userId){
+    public Map getCheckedLectureInfo(String courseNumber, String userId) throws Exception{
 
         // 사용자
-        Member loginMember = memberService.login(userId);
+        UserDomain loginMember = memberService.getMemberById(userId);
 
         Map<String, Object> resultMap = new HashMap<>();
 
@@ -62,10 +63,10 @@ public class LectureController {
 
     @ResponseBody
     @RequestMapping("/getLastedLectureInfo")
-    public Map getLastedLectureInfo(String courseNumber, String userId){
+    public Map getLastedLectureInfo(String courseNumber, String userId) throws Exception{
 
         // 사용자
-        Member loginMember = memberService.login(userId);
+        UserDomain loginMember = memberService.getMemberById(userId);
 
         Map<String, Object> resultMap = new HashMap<>();
 
@@ -87,10 +88,10 @@ public class LectureController {
 
     @ResponseBody
     @RequestMapping("/checkedLecture")
-    public Map checkedLecture(String courseNumber, String lectureNumber, String userId) {
+    public Map checkedLecture(String courseNumber, String lectureNumber, String userId) throws Exception{
 
         // 사용자
-        Member loginMember = memberService.login(userId);
+        UserDomain loginMember = memberService.getMemberById(userId);
 
         Map<String, Object> resultMap = new HashMap<>();
 

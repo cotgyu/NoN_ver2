@@ -3,82 +3,59 @@ package com.edu.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.edu.domain.UserDomain;
+import com.edu.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.edu.dao.MemberDaoMapper;
 import com.edu.domain.Member;
 
 @Service
 public class MemberServiceImpl implements MemberService {
 
-/*	@Autowired
-	private FacebookConnectionFactory connectionFactory;
-	
-	@Autowired 
-	private OAuth2Parameters oAuth2Parameters;
-	*/
 	@Autowired
-	private MemberDaoMapper memberDaoMapper;
+	private MemberRepository memberRepository;
 
 	@Override
-	public Member loginCheck(String id) throws Exception {
+	public UserDomain getMemberById(String id) throws Exception {
 
-		return memberDaoMapper.loginCheck(id);
-	}
-
-	@Override
-	public Member idCheck(String id) {
-		return memberDaoMapper.idCheck(id);
-	}
-
-	@Override
-	public ArrayList<Member> getMemberList() {
-		return null;
+		return memberRepository.findAllById(id);
 	}
 
 	@Override
 	public void joinMember(Member member) {
-		memberDaoMapper.joinMember(member);
+
+		memberRepository.save(UserDomain.builder()
+				.id(member.getId())
+				.password(member.getPass())
+				.nickName(member.getName())
+				.email(member.getEmail())
+				.loginType(member.getLogintype())
+				.build());
 	}
 
 	@Override
-	public void updateMember(Member member) {
-		memberDaoMapper.updateMember(member);
+	public void updateMember(UserDomain member) {
+		memberRepository.save(UserDomain.builder()
+				.userNum(member.getUsernum())
+				.nickName(member.getNickname())
+				.email(member.getEmail())
+				.build());
+
 	}
 
 	@Override
-	public void resetPassword(Member member) {
-		memberDaoMapper.resetPassword(member);
+	public void resetPassword(UserDomain member) {
+		memberRepository.save(UserDomain.builder()
+				.password(member.getPassword())
+				.build());
 	}
 
-
-	@Override
-	public Member login(String id) {
-		return memberDaoMapper.login(id);
-	}
-
-	@Override
-	public void forgotPass(Member member) {
-		memberDaoMapper.forgotPass(member);
-	}
-
-	@Override
-	public void kakaologin(Member member) {
-		memberDaoMapper.kakaologin(member);
-	}
-
-	@Override
-	public void naverlogin(Member member) {
-		memberDaoMapper.naverlogin(member);
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public boolean checkUserByUserId(String id) {
 
-		if (memberDaoMapper.idCheck((id)) != null) {
+		if (memberRepository.findAllById((id)) != null) {
 			return true;
 		}
 
@@ -109,9 +86,13 @@ public class MemberServiceImpl implements MemberService {
 
 		}
 
-		memberDaoMapper.joinMember(member);
-
-
+		memberRepository.save(UserDomain.builder()
+				.id(member.getId())
+				.password(member.getPass())
+				.nickName(member.getName())
+				.email(member.getEmail())
+				.loginType(member.getLogintype())
+				.build());
 
 	}
 

@@ -107,11 +107,11 @@ public class CourseController {
 
 	// 이어서 듣기
 	@RequestMapping(value = "/player/{cosno}", method = RequestMethod.GET)
-	public ModelAndView basicPlayer( ModelAndView mav, @PathVariable("cosno") int cosno , HttpSession session){
+	public ModelAndView basicPlayer( ModelAndView mav, @PathVariable("cosno") int cosno , HttpSession session) throws Exception{
 
 		// 사용자
 		String id = (String) session.getAttribute("loginId");
-		Member loginMember = memberService.login(id);
+		UserDomain loginMember = memberService.getMemberById(id);
 
 		//cosno에 맞는 코스정보 불러오기
 		CourseDomain course = courseService.findCos(cosno);

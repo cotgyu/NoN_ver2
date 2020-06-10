@@ -2,6 +2,7 @@ package com.edu.service;
 
 import com.edu.domain.LectureDomain;
 import com.edu.domain.Member;
+import com.edu.domain.UserDomain;
 import com.edu.domain.UserLectureInfoDomain;
 import com.edu.repository.LectureRepository;
 import com.edu.repository.UserLectureInfoRepository;
@@ -19,7 +20,7 @@ public class LectureService {
     @Autowired
     UserLectureInfoRepository userLectureInfoRepository;
 
-    public LectureDomain getLastedLecture(Member member, int courseNumber) {
+    public LectureDomain getLastedLecture(UserDomain member, int courseNumber) {
 
         String userId = member.getId();
 
@@ -35,7 +36,7 @@ public class LectureService {
         return checkedList;
     }
 
-    public String updateCheckedLecture(int courseNumber, int lectureNumber, Member member){
+    public String updateCheckedLecture(int courseNumber, int lectureNumber, UserDomain member){
 
         // 해당 번호로 조회
         UserLectureInfoDomain getUserLectureInfo = userLectureInfoRepository.getLectureInfo(member.getId(), lectureNumber, courseNumber);

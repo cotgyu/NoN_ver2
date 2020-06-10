@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.edu.domain.UserDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,21 +26,21 @@ public class AjaxProcessController {
 	@RequestMapping("/dupleCheck.ajax")
 	@ResponseBody
 	public String dupleCheck(String id,String nick) throws Exception {
-		Member member = null;
+		UserDomain member = null;
 
 		String checkResult = "false";
 
 
 		if(id != null && nick == null) {
 
-			member = memberService.loginCheck(id);
+			member = memberService.getMemberById(id);
 
 			if(member == null) {
 				checkResult = "true";
 			}
 		}
 		else if(id == null && nick != null) {
-			member = memberService.idCheck(nick);
+			member = memberService.getMemberById(id);
 			if(member == null) {
 				checkResult = "true";
 			}
@@ -52,7 +53,7 @@ public class AjaxProcessController {
 	
 	@RequestMapping("/resetPassword.ajax")
 	@ResponseBody
-	public Map<String,String> resetPassword(String email1,String email2, String id){
+	public Map<String,String> resetPassword(String email1,String email2, String id) throws Exception{
 		String email = null;
 		Map<String,String> map = new HashMap<String,String>();
 		if(!email1.equals("")||!email2.equals("")) {//email1이 null이 아니거나 email2가 null이 아닐경우
@@ -63,8 +64,8 @@ public class AjaxProcessController {
 		String authNum = emailconfirm.connectEmail(email);
 
 		// 발송된 비밀번호로 초기화
-		Member member = memberService.login(id);
-		member.setPass(authNum);
+		UserDomain member = memberService.getMemberById(id);
+		member.setPassword(authNum);
 
 		memberService.resetPassword(member);
 
@@ -73,10 +74,10 @@ public class AjaxProcessController {
 
 	@RequestMapping("/memberEmailCheck.ajax")
 	@ResponseBody
-	public Boolean memberEmailCheck(String id,String email, HttpSession session,HttpServletResponse repsonse){
+	public Boolean memberEmailCheck(String id,String email, HttpSession session,HttpServletResponse repsonse) throws Exception{
 		boolean checkMember = false;
 
-		Member member = memberService.login(id);
+		UserDomain member = memberService.getMemberById(id);
 		if(member != null) {
 			if(member.getEmail().equals(email)) {
 
@@ -91,21 +92,21 @@ public class AjaxProcessController {
 	// 로그인 체크 후 로그인
 	@RequestMapping("/loginCheck.ajax")
 	@ResponseBody
-	public Boolean loginCheck(String id,String password, HttpSession session){
+	public Boolean loginCheck(String id,String password, HttpSession session) throws Exception{
 		boolean checkMember = false;
 
-		Member member = null;
+		UserDomain member = null;
 
-		member = memberService.login(id);
+		member = memberService.getMemberById(id);
 
 		if(member != null) {
 
 		    // 패스워드 비교 수정 필요
-			if(member.getId().equals(id)&&member.getPass().equals(password)) {
+			if(member.getId().equals(id)&&member.getPassword().equals(password)) {
 
 				session.setAttribute("member", member);
 				session.setAttribute("loginId", member.getId());
-				session.setAttribute("nickName", member.getNick());
+				session.setAttribute("nickName", member.getNickname());
 				session.setAttribute("grade", member.getGrade());
 
 				checkMember = true;

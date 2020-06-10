@@ -3,6 +3,7 @@ package com.edu.controller;
 import com.edu.commons.GoogleAuthInfo;
 import com.edu.commons.SocialLogin;
 import com.edu.domain.Member;
+import com.edu.domain.UserDomain;
 import com.edu.service.MemberService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -77,12 +78,12 @@ public class MemberController {
 
 	// 회원 수정창 이동
 	@RequestMapping(value="/memberUpdateForm")
-	public String memberUpdateForm(Model model, HttpSession session) {
+	public String memberUpdateForm(Model model, HttpSession session) throws Exception{
 
 		String loginId = (String)session.getAttribute("loginId");
 
 		//사용자 
-		Member loginMember = memberService.login(loginId);
+		UserDomain loginMember = memberService.getMemberById(loginId);
 
 		model.addAttribute("member",loginMember);
 
@@ -91,14 +92,14 @@ public class MemberController {
 
 	// 회원 수정
 	@RequestMapping("/memberUpdate")
-	public String memberUpdate(String u_nick, String u_email1, String u_email2, HttpSession session) {
+	public String memberUpdate(String u_nick, String u_email1, String u_email2, HttpSession session) throws Exception{
 
 		String loginId = (String)session.getAttribute("loginId");
 
 		//사용자
-		Member loginMember = memberService.login(loginId);
+		UserDomain loginMember = memberService.getMemberById(loginId);
 
-		loginMember.setNick(u_nick);
+		loginMember.setNickname(u_nick);
 		loginMember.setEmail(u_email1 + "@" + u_email2);
 
 		try {
@@ -109,7 +110,7 @@ public class MemberController {
 
 		// 회원 수정 후 세션에 반영
 		session.setAttribute("member", loginMember);
-		session.setAttribute("nickName", loginMember.getNick());
+		session.setAttribute("nickName", loginMember.getNickname());
 
 		return "redirect:/";
 	}
@@ -165,21 +166,21 @@ public class MemberController {
 			// 회원 등록
 			memberService.registerMember(kakaoUserInfo, "KAKAO");
 
-			Member loginMember = memberService.login(id);
+			UserDomain loginMember = memberService.getMemberById(id);
 
 			session.setAttribute("member", loginMember);
 			session.setAttribute("loginId", loginMember.getId());
-			session.setAttribute("nickName", loginMember.getNick());
+			session.setAttribute("nickName", loginMember.getNickname());
 
 		} else {
-			Member loginMember = memberService.loginCheck(id);
+			UserDomain loginMember = memberService.getMemberById(id);
 
 			//기존에 있는 회원이므로 바로 로그인 진행
 			logger.info("기존의 카카오 회원정보가 존재합니다. userId: " + id);
 
 			session.setAttribute("member", loginMember);
 			session.setAttribute("loginId", loginMember.getId());
-			session.setAttribute("nickName", loginMember.getNick());
+			session.setAttribute("nickName", loginMember.getNickname());
 
 		}
 
@@ -215,21 +216,21 @@ public class MemberController {
 			// 회원 등록
 			memberService.registerMember(result, "GOOGLE");
 
-			Member loginMember = memberService.login(userId);
+			UserDomain loginMember = memberService.getMemberById(userId);
 
 			session.setAttribute("member", loginMember);
 			session.setAttribute("loginId", loginMember.getId());
-			session.setAttribute("nickName", loginMember.getNick());
+			session.setAttribute("nickName", loginMember.getNickname());
 
 		} else {
-			Member loginMember = memberService.login(userId);
+			UserDomain loginMember = memberService.getMemberById(userId);
 
 			//기존에 있는 회원이므로 바로 로그인 진행
 			logger.info("기존의 구글 회원정보가 존재합니다. userID: " + userId);
 
 			session.setAttribute("member", loginMember);
 			session.setAttribute("loginId", loginMember.getId());
-			session.setAttribute("nickName", loginMember.getNick());
+			session.setAttribute("nickName", loginMember.getNickname());
 
 		}
 
