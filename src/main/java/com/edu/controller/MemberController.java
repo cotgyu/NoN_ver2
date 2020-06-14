@@ -124,17 +124,19 @@ public class MemberController {
 
 	// 회원가입 처리
 	@RequestMapping(value = "/joinResult")
-	public String joinResult(Member member, String email1, String email2, HttpSession session) {
+	public String joinResult(Member member, String email1, String email2, HttpSession session) throws Exception{
 
 
 		member.setEmail(email1 + "@" + email2);
 		memberService.joinMember(member);
 
+		UserDomain logindMember =  memberService.getMemberById(member.getId());
+
 		// 회원 가입 후 자동로그인
-		session.setAttribute("member", member);
-		session.setAttribute("loginId", member.getId());
-		session.setAttribute("nickName", member.getNick());
-		session.setAttribute("grade", member.getGrade());
+		session.setAttribute("member", logindMember);
+		session.setAttribute("loginId", logindMember.getId());
+		session.setAttribute("nickName", logindMember.getNickname());
+		session.setAttribute("grade", logindMember.getGrade());
 
 		return "redirect:/";
 	}

@@ -202,21 +202,21 @@ text-indent:-9999em;
 			      <li><a href="javascript:searchcategorylist('coscategory1', '프로그래밍')" id="current">프로그래밍</a>
 			         <ul>
 			           <c:forEach var="procategory" items="${programmingcategory}">
-			     		 <li><a href="javascript:searchcategorylist('coscategory2', '${procategory.coscategory2}')">${procategory.coscategory2}</a></li>
+			     		 <li><a href="javascript:searchcategorylist('coscategory2', '${procategory}')">${procategory}</a></li>
 			      	   </c:forEach>
 			         </ul>
 			      </li>    
 			      <li><a href="javascript:searchcategorylist('coscategory1', '디자인/CG')" id="current">디자인/CG</a>
 			         <ul>
 			           <c:forEach var="decategory" items="${designcategory}">
-			     		 <li><a href="javascript:searchcategorylist('coscategory2', '${decategory.coscategory2}')">${decategory.coscategory2}</a></li>
+			     		 <li><a href="javascript:searchcategorylist('coscategory2', '${decategory}')">${decategory}</a></li>
 			      		</c:forEach>
 			         </ul>
 			      </li>
 			      <li><a href="javascript:searchcategorylist('coscategory1', 'IT비즈니스')" id="current">IT비즈니스</a>
 			         <ul>
 			           <c:forEach var="bucategory" items="${businesscategory}">
-			     		 <li><a href="javascript:searchcategorylist('coscategory2', '${bucategory.coscategory2}')">${bucategory.coscategory2}</a></li>
+			     		 <li><a href="javascript:searchcategorylist('coscategory2', '${bucategory}')">${bucategory}</a></li>
 			      		</c:forEach>
 			         </ul>
 			      </li>

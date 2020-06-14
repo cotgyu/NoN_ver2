@@ -28,7 +28,7 @@ public class MemberServiceImpl implements MemberService {
 		memberRepository.save(UserDomain.builder()
 				.id(member.getId())
 				.password(member.getPass())
-				.nickName(member.getName())
+				.nickName(member.getNick())
 				.email(member.getEmail())
 				.loginType(member.getLogintype())
 				.build());
@@ -89,7 +89,7 @@ public class MemberServiceImpl implements MemberService {
 		memberRepository.save(UserDomain.builder()
 				.id(member.getId())
 				.password(member.getPass())
-				.nickName(member.getName())
+				.nickName(member.getNick())
 				.email(member.getEmail())
 				.loginType(member.getLogintype())
 				.build());

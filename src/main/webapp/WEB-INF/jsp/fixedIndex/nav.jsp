@@ -163,7 +163,7 @@
 					            </a>
 					          </li>
 					          <li class="nav-item">
-					            <a class="nav-link" href="/memberUpdateForm">${member.nick}</a>
+					            <a class="nav-link" href="/memberUpdateForm">${member.nickname}</a>
 					          </li>
 					          <li class="nav-item">
 					            <a class="nav-link" href="/logout">logout</a>
@@ -191,7 +191,7 @@
 					            </a>
 					          </li>
 					          <li class="nav-item">
-					            <a class="nav-link" href="/memberUpdateForm">${member.nick}</a>
+					            <a class="nav-link" href="/memberUpdateForm">${member.nickname}</a>
 					          </li>
 					          <li class="nav-item">
 					            <a class="nav-link" href="/logout">logout</a>
