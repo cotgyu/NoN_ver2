@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.edu.domain.Member;
 import com.edu.commons.EmailConfirm;
 import com.edu.service.MemberService;
 

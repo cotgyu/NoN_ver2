@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.edu.domain.Course;
 import com.edu.service.CourseService;
 
 import javax.servlet.http.HttpServletRequest;
