@@ -7,46 +7,40 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import com.edu.domain.CommentDomain;
+import com.edu.domain.UserDomain;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
- 
-//import com.example.demo.board.domain.CommentVO;
+
 import com.edu.domain.CommentVO;
 import com.edu.domain.Member;
-//import com.example.demo.board.service.CommentService;
+
 import com.edu.service.CommentService;;
 
 @Controller
 @RequestMapping("/comment")
 public class CommentController {
  
-    //@Resource(name="com.example.demo.board.service.CommentService")
     @Resource(name="com.Edu.Service.CommentService")
 	CommentService mCommentService;
     
     @RequestMapping("/list") //댓글 리스트
     @ResponseBody
-    private List<CommentVO> mCommentServiceList(Model model,@RequestParam int cosno) throws Exception{
+    private List<CommentDomain> mCommentServiceList(Model model, @RequestParam int cosno) throws Exception{
         
         return mCommentService.commentListService(cosno);
     }
-    
-    /*@RequestMapping("/eva")//댓글 평점,평점평균값 하나만 리턴하므로...
-    @ResponseBody
-    private double mCommentServiceEva(@RequestParam int cosno) throws Exception {
-    	
-    	return mCommentService.commentEvaService(cosno);
-    }*/
+
     
     @RequestMapping("/eva")//댓글 평점 
     @ResponseBody
-    private List<CommentVO> mCommentServiceEva(Model model, @RequestParam int cosno) throws Exception {
+    private List<CommentDomain> mCommentServiceEva(Model model, @RequestParam int cosno) throws Exception {
     	
-    	return mCommentService.commentEvaService(cosno);
+    	return mCommentService.commentListService(cosno);
     }
     
     @RequestMapping("/insert") //댓글 작성 
@@ -57,15 +51,16 @@ public class CommentController {
         comment.setCosno(cosno);
         comment.setContent(content);
         comment.setEva_count(eva_count);//댓글 입력 시 평점까지.
-        //로그인 기능을 구현했거나 따로 댓글 작성자를 입력받는 폼이 있다면 입력 받아온 값으로 사용하면 됩니다. 저는 따로 폼을 구현하지 않았기때문에 임시로 "test"라는 값을 입력해놨습니다.
-        //comment.setWriter("test");
-        Member member=(Member)session.getAttribute("member");
-        comment.setWriter(member.getNick());
-        comment.setUserno(member.getUserno());
+
+        UserDomain member=(UserDomain)session.getAttribute("member");
+        comment.setWriter(member.getNickname());
+        comment.setUserno(member.getUsernum());
         
         mCommentService.commentScoreAdd(comment);
         
-        return mCommentService.commentInsertService(comment);
+        mCommentService.commentInsertService(comment);
+
+        return 1;
     }
     
     @RequestMapping("/update") //댓글 수정  

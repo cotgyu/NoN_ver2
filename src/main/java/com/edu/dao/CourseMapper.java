@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CourseMapper {
 
-	@Select("SELECT * FROM recommend_coursedata\n" +
+	@Select("SELECT userno, cosno, userscore FROM recommend_coursedata\n" +
 			"\t\tINTO OUTFILE #{filePath}\n" +
 			"\t\tCHARACTER SET euckr\n" +
 			"\t\tFIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"'\n" +

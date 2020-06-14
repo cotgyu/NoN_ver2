@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CourseScoreRepository extends JpaRepository<CourseScoreDomain, Long> {
 
-
+    CourseScoreDomain findAllByCosno(int cosno);
 
 }

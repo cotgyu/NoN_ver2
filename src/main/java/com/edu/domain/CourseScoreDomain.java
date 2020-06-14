@@ -10,8 +10,8 @@ import javax.persistence.Id;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-@Entity(name = "coursescore")
-public @Data class CourseScoreDomain {
+@Entity(name = "course_score")
+public class CourseScoreDomain {
 
 	@Id
 	private int cosno;
@@ -23,7 +23,7 @@ public @Data class CourseScoreDomain {
 	private int totalcnt;
 
 	@Column
-	private float score;
+	private double score;
 
 	@Override
 	public String toString() {
@@ -32,7 +32,7 @@ public @Data class CourseScoreDomain {
 	}
 	
 	@Builder
-	CourseScoreDomain(int cosno, int totalscore, int totalcnt, float score){
+	CourseScoreDomain(int cosno, int totalscore, int totalcnt, double score){
 		this.cosno = cosno;
 		this.totalscore = totalscore;
 		this.totalcnt = totalcnt;

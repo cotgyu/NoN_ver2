@@ -1,8 +1,6 @@
 package com.edu.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.edu.domain.*;
 import com.edu.repository.CourseRepository;
