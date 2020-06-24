@@ -14,7 +14,7 @@
 
 		// 체크한 강의 표시
         $.ajax({
-            type : "post",
+            type : "get",
             url : '/lecture/getCheckedLectureInfo?userId=${sessionScope.member.id}&courseNumber=${course.cosno}',
             success : function(result) {
 

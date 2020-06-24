@@ -10,11 +10,10 @@ import com.edu.service.MemberService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -36,9 +35,8 @@ public class LectureController {
     @Autowired
     LectureService lectureService;
 
-    @ResponseBody
-    @RequestMapping("/getCheckedLectureInfo")
-    public Map getCheckedLectureInfo(String courseNumber, String userId) throws Exception{
+    @GetMapping("/getCheckedLectureInfo")
+    public ResponseEntity getCheckedLectureInfo(String courseNumber, String userId) throws Exception{
 
         // 사용자
         UserDomain loginMember = memberService.getMemberById(userId);
@@ -50,7 +48,7 @@ public class LectureController {
 
             resultMap.put("errorMsg", "해당 사용자가 존재하지 않습니다.");
 
-            return resultMap;
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
         }
 
         // 해당 사용자의 체크한 강의번호 조회
@@ -58,12 +56,11 @@ public class LectureController {
 
         resultMap.put("checkedList", checkedList);
 
-        return resultMap;
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @ResponseBody
-    @RequestMapping("/getLastedLectureInfo")
-    public Map getLastedLectureInfo(String courseNumber, String userId) throws Exception{
+    @GetMapping("/getLastedLectureInfo")
+    public ResponseEntity getLastedLectureInfo(String courseNumber, String userId) throws Exception{
 
         // 사용자
         UserDomain loginMember = memberService.getMemberById(userId);
@@ -75,7 +72,7 @@ public class LectureController {
 
             resultMap.put("error", "해당 사용자가 존재하지 않습니다.");
 
-            return resultMap;
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
         }
 
         // 해당 사용자의 최신강의 조회
@@ -83,12 +80,11 @@ public class LectureController {
 
         resultMap.put("lastedLecture", lastedLecture);
 
-        return resultMap;
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @ResponseBody
-    @RequestMapping("/checkedLecture")
-    public Map checkedLecture(String courseNumber, String lectureNumber, String userId) throws Exception{
+    @PostMapping("/checkedLecture")
+    public ResponseEntity checkedLecture(String courseNumber, String lectureNumber, String userId) throws Exception{
 
         // 사용자
         UserDomain loginMember = memberService.getMemberById(userId);
@@ -100,7 +96,7 @@ public class LectureController {
 
             resultMap.put("error", "해당 사용자가 존재하지 않습니다.");
 
-            return resultMap;
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
         }
 
         // 강의 체크 반영
@@ -108,7 +104,7 @@ public class LectureController {
 
         resultMap.put("resultMessage", result);
 
-        return resultMap;
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
 /*
