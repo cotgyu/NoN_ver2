@@ -2,6 +2,7 @@ package com.edu.controller;
 
 
 import com.edu.common.BaseControllerTest;
+import com.edu.dto.LectureDto;
 import com.edu.service.LectureService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -9,8 +10,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Description;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 import static org.mockito.Matchers.any;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -130,6 +134,25 @@ public class LectureControllerTest extends BaseControllerTest {
         logger.error("Logger 테스트");
 
         log.error("slf4j 테스트");
+
+    }
+
+    @Test
+    @Description("getCheckedLectureInfoValidate 테스트")
+    public void validateTest() throws Exception{
+
+        LectureDto lectureDto = LectureDto.builder().cosno(0).userId("admin").build();
+
+        // Then
+        mockMvc.perform(get("/lecture/getCheckedLectureInfo")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(this.objectMapper.writeValueAsString(lectureDto))
+        ).andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errorMsg").exists())
+                .andExpect(jsonPath("errorMsgDetail").exists())
+
+        ;
 
     }
 
