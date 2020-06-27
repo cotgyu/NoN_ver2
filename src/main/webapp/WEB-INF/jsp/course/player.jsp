@@ -12,10 +12,18 @@
 
     $(document).ready(function() {
 
+        var checkLectureInfo = new Object();
+
+        checkLectureInfo.userId = '${sessionScope.member.id}';
+        checkLectureInfo.cosno = ${course.cosno};
+
 		// 체크한 강의 표시
         $.ajax({
-            type : "get",
-            url : '/lecture/getCheckedLectureInfo?userId=${sessionScope.member.id}&courseNumber=${course.cosno}',
+            type : "post",
+			data : JSON.stringify(checkLectureInfo),
+            contentType: 'application/json',
+            dataType: 'json',
+            url : '/lecture/getCheckedLectureInfo',
             success : function(result) {
 
                 if(result.errorMsg != undefined){
@@ -38,9 +46,18 @@
 
 	// 강의 체크
 	function checkedLecture(lecno) {
+        var checkLectureInfo = new Object();
+
+        checkLectureInfo.userId = '${sessionScope.member.id}';
+        checkLectureInfo.cosno = ${course.cosno};
+        checkLectureInfo.lecno = lecno;
+
         $.ajax({
             type : "post",
-            url : '/lecture/checkedLecture?userId=${sessionScope.member.id}&courseNumber=${course.cosno}&lectureNumber='+lecno,
+            data : JSON.stringify(checkLectureInfo),
+            contentType: 'application/json',
+            dataType: 'json',
+            url : '/lecture/checkedLecture',
             success : function(result) {
                 if(result.resultMessage == "error"){
                     alert("강좌를 체크하는데 오류가 발생하였습니다.");

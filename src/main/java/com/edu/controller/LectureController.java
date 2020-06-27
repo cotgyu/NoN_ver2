@@ -41,7 +41,7 @@ public class LectureController {
     @Autowired
     LectureValidator lectureValidator;
 
-    @GetMapping("/getCheckedLectureInfo")
+    @PostMapping("/getCheckedLectureInfo")
     public ResponseEntity getCheckedLectureInfo(@RequestBody LectureDto lectureDto, Errors errors) throws Exception{
 
         Map<String, Object> resultMap = new HashMap<>();
@@ -56,7 +56,7 @@ public class LectureController {
 
         lectureValidator.getCheckedLectureInfoValidate(lectureDto, errors);
 
-       if(errors.hasErrors()){
+        if(errors.hasErrors()){
             resultMap.put("errorMsg", "에러가 발생하였습니다.");
             resultMap.put("errorMsgDetail", errors.getFieldError());
 
@@ -111,12 +111,26 @@ public class LectureController {
     }
 
     @PostMapping("/checkedLecture")
-    public ResponseEntity checkedLecture(String courseNumber, String lectureNumber, String userId) throws Exception{
+    public ResponseEntity checkedLecture(@RequestBody LectureDto lectureDto, Errors errors) throws Exception {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        String userId = lectureDto.getUserId();
+        int courseNumber = lectureDto.getCosno();
+        int lectureNumber = lectureDto.getLecno();
+
+        lectureValidator.checkedLectureValidate(lectureDto, errors);
+
+
+        if(errors.hasErrors()){
+            resultMap.put("errorMsg", "에러가 발생하였습니다.");
+            resultMap.put("errorMsgDetail", errors.getFieldError());
+
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
 
         // 사용자
         UserDomain loginMember = memberService.getMemberById(userId);
 
-        Map<String, Object> resultMap = new HashMap<>();
 
         if(loginMember == null){
             logger.debug("해당 사용자가 존재하지 않습니다.");
@@ -127,7 +141,7 @@ public class LectureController {
         }
 
         // 강의 체크 반영
-        String result = lectureService.updateCheckedLecture(Integer.parseInt(courseNumber), Integer.parseInt(lectureNumber), loginMember);
+        String result = lectureService.updateCheckedLecture(courseNumber, lectureNumber, loginMember);
 
         resultMap.put("resultMessage", result);
 

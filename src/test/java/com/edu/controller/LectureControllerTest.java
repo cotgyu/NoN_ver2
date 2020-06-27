@@ -144,7 +144,7 @@ public class LectureControllerTest extends BaseControllerTest {
         LectureDto lectureDto = LectureDto.builder().cosno(0).userId("admin").build();
 
         // Then
-        mockMvc.perform(get("/lecture/getCheckedLectureInfo")
+        mockMvc.perform(post("/lecture/getCheckedLectureInfo")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(this.objectMapper.writeValueAsString(lectureDto))
         ).andDo(print())
@@ -156,6 +156,24 @@ public class LectureControllerTest extends BaseControllerTest {
 
     }
 
+    @Test
+    @Description("checkedLectureValidate 테스트")
+    public void validateTest2() throws Exception{
+
+        LectureDto lectureDto = LectureDto.builder().cosno(0).lecno(0).userId("admin").build();
+
+        // Then
+        mockMvc.perform(post("/lecture/checkedLecture")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(this.objectMapper.writeValueAsString(lectureDto))
+        ).andDo(print())
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errorMsg").exists())
+                .andExpect(jsonPath("errorMsgDetail").exists())
+
+        ;
+
+    }
 
 
 
