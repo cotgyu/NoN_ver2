@@ -86,30 +86,6 @@ public class LectureController {
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
-    @GetMapping("/getLastedLectureInfo")
-    public ResponseEntity getLastedLectureInfo(String courseNumber, String userId) throws Exception{
-
-        // 사용자
-        UserDomain loginMember = memberService.getMemberById(userId);
-
-        Map<String, Object> resultMap = new HashMap<>();
-
-        if(loginMember == null){
-            logger.debug("해당 사용자가 존재하지 않습니다.");
-
-            resultMap.put("error", "해당 사용자가 존재하지 않습니다.");
-
-            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
-        }
-
-        // 해당 사용자의 최신강의 조회
-        LectureDomain lastedLecture = lectureService.getLastedLecture(loginMember, Integer.parseInt(courseNumber));
-
-        resultMap.put("lastedLecture", lastedLecture);
-
-        return new ResponseEntity<>(resultMap, HttpStatus.OK);
-    }
-
     @PostMapping("/checkedLecture")
     public ResponseEntity checkedLecture(@RequestBody LectureDto lectureDto, Errors errors) throws Exception {
         Map<String, Object> resultMap = new HashMap<>();
