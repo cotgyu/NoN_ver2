@@ -57,6 +57,7 @@ dependencies {
     compile 'org.springframework.boot:spring-boot-starter-jdbc:1.5.10.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-web:1.5.10.RELEASE'
     compile 'org.springframework.boot:spring-boot-starter-web-services:1.5.10.RELEASE'
+    compile 'org.springframework.boot:spring-boot-starter-security:1.5.10.RELEASE'
     compile 'org.slf4j:slf4j-api:1.6.6'
     compile 'org.slf4j:jcl-over-slf4j:1.6.6'
     compile 'org.mybatis:mybatis:3.3.0'

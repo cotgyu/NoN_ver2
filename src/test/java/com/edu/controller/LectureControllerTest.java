@@ -176,5 +176,14 @@ public class LectureControllerTest extends BaseControllerTest {
     }
 
 
+    @Test
+    @Description("시큐리티 테스트")
+    public void securityTest() throws Exception{
+
+        mockMvc.perform(get("/resetPassword"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection());
+    }
+
 
 }
