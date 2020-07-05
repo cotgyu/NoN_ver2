@@ -71,8 +71,8 @@
         if(checkLoginValidation() == true){
 
             $.ajax({
-                url:"/loginCheck.ajax",
-                type:"get",
+                url:"/loginProcess.ajax",
+                type:"post",
                 data:"id="+id+"&password="+password,
                 dataType:"json",
                 success:function(data){

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import com.edu.domain.UserDomain;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,6 +22,8 @@ public class AjaxProcessController {
 	@Autowired
 	private MemberService memberService;
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@RequestMapping("/dupleCheck.ajax")
 	@ResponseBody
@@ -91,7 +94,7 @@ public class AjaxProcessController {
 	// 로그인 체크 후 로그인
 	@RequestMapping("/loginCheck.ajax")
 	@ResponseBody
-	public Boolean loginCheck(String id,String password, HttpSession session) throws Exception{
+	public Boolean loginCheck(String id, String password, HttpSession session) throws Exception{
 		boolean checkMember = false;
 
 		UserDomain member = null;
@@ -100,8 +103,7 @@ public class AjaxProcessController {
 
 		if(member != null) {
 
-		    // 패스워드 비교 수정 필요
-			if(member.getId().equals(id)&&member.getPassword().equals(password)) {
+			if(member.getId().equals(id) && passwordEncoder.matches(password, member.getPassword())) {
 
 				session.setAttribute("member", member);
 				session.setAttribute("loginId", member.getId());
