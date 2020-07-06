@@ -197,9 +197,8 @@ public class CourseController {
 	
 		
 	
-	//todo - 등록 실패시 오류 페이지 만들기? 
 	//코스 추가 창 이동
-	@RequestMapping(value = "/addcourse", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/addcourse", method = RequestMethod.GET)
 	public ModelAndView addCourse( ModelAndView mav){
 		
 		//대표 카테고리 가져오기
@@ -218,10 +217,10 @@ public class CourseController {
 	}
 	//새로운 코스 추가
 	//todo- 이미지 업로드할 때 올린이미지 바로 확인할 수 있게..
-	@RequestMapping(value = "/insertcourse", method = RequestMethod.POST)
-	public String insertCourse( ModelAndView mav, @ModelAttribute Course cos, MultipartFile file) throws IOException{
+	@RequestMapping(value = "/admin/insertcourse", method = RequestMethod.POST)
+	public String insertCourse( ModelAndView mav, @ModelAttribute Course cos, MultipartFile file, HttpServletRequest request) throws IOException{
 		//경로 수정해야하는데 ...음
-		String uploadPath = "C:/Users/SK/Desktop/spring_non/src/main/webapp/resources/courseImage";
+		String uploadPath = request.getServletContext().getRealPath("resources")+"/courseImage";
 		
 		
 		
@@ -267,9 +266,8 @@ public class CourseController {
 	}
 	
 	
-	//todo - 등록 실패시 오류 페이지 만들기?
 	//강의 추가 창 이동
-	@RequestMapping(value = "/addlecture", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/addlecture", method = RequestMethod.GET)
 	public ModelAndView addLecture( ModelAndView mav){
 		
 		//코스번호를 가져오기 위한 코스 불러오기  
@@ -284,7 +282,7 @@ public class CourseController {
 		return mav;
 	}
 	//새로운 강의 추가
-	@RequestMapping(value = "/insertlecture", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/insertlecture", method = RequestMethod.POST)
 	public String insertLecture( ModelAndView mav, @ModelAttribute Lecture lecture){
 		
 		//강의 추가시 입력한 유뷰트 주소
@@ -318,7 +316,7 @@ public class CourseController {
 		return "redirect:/course/list";
 	}
 	//수정할 코스 선택 
-	@RequestMapping(value = "/selectmodifycourse/", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/selectmodifycourse/", method = RequestMethod.GET)
 	public ModelAndView selectModifyCourse( ModelAndView mav){
 		List<CourseDomain> allcourse = courseService.allFindCosList();
 		
@@ -356,9 +354,9 @@ public class CourseController {
 	}
 	//코스 업데이트
 	@RequestMapping(value = "/updatecourse", method = RequestMethod.POST)
-	public String updateCourse( ModelAndView mav, @ModelAttribute Course cos, MultipartFile file) throws IOException{
+	public String updateCourse( ModelAndView mav, @ModelAttribute Course cos, MultipartFile file, HttpServletRequest request) throws IOException{
 		//경로 수정해야하는데 ...음
-		String uploadPath = "C:/Users/SK/Desktop/spring_non/src/main/webapp/resources/courseImage";
+		String uploadPath = request.getServletContext().getRealPath("resources")+"/courseImage";
 			
 			
 			

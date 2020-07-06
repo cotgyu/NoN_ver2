@@ -37,7 +37,7 @@ public class IndexController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/updateData")
+	@RequestMapping(value = "/admin/updateData")
 	public String dataUpdate(HttpServletRequest request) throws Exception{
 
 		// 아이템 추천을 위한 데이터 경로

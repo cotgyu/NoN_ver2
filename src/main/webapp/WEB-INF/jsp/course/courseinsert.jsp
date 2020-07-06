@@ -79,7 +79,7 @@
 <div class="container">
 
 
-<form id="addcourse" method="post" action="/course/insertcourse" enctype="multipart/form-data" method="${method}">
+<form id="addcourse" method="post" action="/course/admin/insertcourse" enctype="multipart/form-data" method="${method}">
 			<table>
 				<tr>
 					<td>코스 이름 </td>
