@@ -20,7 +20,7 @@ buildscript {
 
 task print(){
     doLast{
-        println "github push"
+        println "github push test1"
     }
 }
 
