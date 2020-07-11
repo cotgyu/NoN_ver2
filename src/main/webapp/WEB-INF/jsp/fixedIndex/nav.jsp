@@ -84,7 +84,9 @@
                     }
                 },
                 error:function(error){
-                    alert("error :" + error);
+
+                    $('.modal-error').text(' 로그인 오류 : 입력하신 ID나 비밀번호가 맞지 않습니다.');
+                    return false;
                 }
             });
 		}
@@ -179,8 +181,8 @@
 
 			<div class="modal-footer">
 
-				<button type="button" class="btn btn-info btn-md" data-dismiss="modal" onclick="showGoogleLoginPopup();">구글 로그인</button>
-				<button type="button" class="btn btn-danger btn-md" data-dismiss="modal" onclick="showGoogleKakaoPopup();">카카오 로그인</button>
+				<%--<button type="button" class="btn btn-info btn-md" data-dismiss="modal" onclick="showGoogleLoginPopup();">구글 로그인</button>--%>
+				<%--<button type="button" class="btn btn-danger btn-md" data-dismiss="modal" onclick="showGoogleKakaoPopup();">카카오 로그인</button>--%>
 			</div>
 		</div>
 
