@@ -41,7 +41,6 @@
 	}
 
 
-	
 	function checkLoginValidation() {
 
         var id = $("#loginId").val();
@@ -68,7 +67,6 @@
         var id = $("#loginId").val();
         var password = $("#loginPW").val();
 
-
         if(checkLoginValidation() == true){
 
             $.ajax({
@@ -90,9 +88,6 @@
                 }
             });
 		}
-
-
-
 	}
 
 
@@ -102,9 +97,6 @@
             goLogin();
 		}
 	}
-
-
-
 
 
 

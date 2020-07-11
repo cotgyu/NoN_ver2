@@ -3,8 +3,6 @@ package com.edu.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.edu.domain.UserDomain;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,7 +74,7 @@ public class AjaxProcessController {
 
 	@RequestMapping("/memberEmailCheck.ajax")
 	@ResponseBody
-	public Boolean memberEmailCheck(String id,String email, HttpSession session,HttpServletResponse repsonse) throws Exception{
+	public Boolean memberEmailCheck(String id,String email) throws Exception{
 		boolean checkMember = false;
 
 		UserDomain member = memberService.getMemberById(id);

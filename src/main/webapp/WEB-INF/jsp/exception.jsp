@@ -36,7 +36,7 @@
 		<!-- Page Contents -->
 		<div class="container" style="margin-bottom: 300px">
 
-			<img src="resources/img/error_image.png" style="height: 250px; margin-left: 40%">
+			<img src="/resources/img/error_image.png" style="height: 250px; margin-left: 40%">
 
 			<c:if test="${not empty code}">
 				<div>

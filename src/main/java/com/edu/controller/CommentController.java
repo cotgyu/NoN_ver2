@@ -2,13 +2,15 @@
 package com.edu.controller;
 
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
 
 import com.edu.domain.CommentDomain;
 import com.edu.domain.UserDomain;
+import com.edu.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +28,10 @@ public class CommentController {
  
     @Resource(name="com.Edu.Service.CommentService")
 	CommentService mCommentService;
-    
+
+    @Autowired
+    MemberService memberService;
+
     @RequestMapping("/list") //댓글 리스트
     @ResponseBody
     private List<CommentDomain> mCommentServiceList(Model model, @RequestParam int cosno) throws Exception{
@@ -44,14 +49,20 @@ public class CommentController {
     
     @RequestMapping("/insert") //댓글 작성 
     @ResponseBody
-    private int mCommentServiceInsert(HttpSession session,@RequestParam int cosno,@RequestParam int eva_count, @RequestParam String content) throws Exception{
+    private int mCommentServiceInsert(Principal principal, @RequestParam int cosno, @RequestParam int eva_count, @RequestParam String content) throws Exception{
     	
         CommentVO comment = new CommentVO();
         comment.setCosno(cosno);
         comment.setContent(content);
-        comment.setEva_count(eva_count);//댓글 입력 시 평점까지.
+        comment.setEva_count(eva_count);//댓글 입력 시 평점까지
 
-        UserDomain member=(UserDomain)session.getAttribute("member");
+        if(principal == null){
+            return 0;
+        }
+
+        String userId = principal.getName();
+
+        UserDomain member = memberService.getMemberById(userId);
         comment.setWriter(member.getNickname());
         comment.setUserno(member.getUsernum());
         

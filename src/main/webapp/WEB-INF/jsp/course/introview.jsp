@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,7 +22,7 @@
 			<!-- 수강버튼 부분
 			todo 수강했을때 성공했다고 알람창 띄우기 -->
 			<div id="subcheck">
-			<c:if test="${not empty sessionScope.member}">
+				<sec:authorize access="isAuthenticated()">
 					<c:choose>
 						<c:when test="${checkstate == false}">					
 							<button type="button" class="btn btn-default" onClick="location.href='/course/subscribe/${course.cosno}'">수강하기</button>
@@ -30,7 +31,7 @@
 							<button type="button" class="btn btn-default">수강 중</button>
 						</c:otherwise>
 					</c:choose>			
-			</c:if>
+				</sec:authorize>
 			</div>
 			
 			<h3>${course.cosname}</h3> 
@@ -38,13 +39,13 @@
 			  <button type="button" class="btn btn-default" onClick="location.href='#intro'">강좌 소개</button>
 			  <button type="button" class="btn btn-default" onClick="location.href='#courselist'">강의리스트</button>
 			  <button type="button" class="btn btn-default" onClick="location.href='#eval'">수강후기</button>
-    <c:if test="${not empty sessionScope.member}">
+		<sec:authorize access="isAuthenticated()">
         <c:choose>
             <c:when test="${checkstate == true}">
               <button type="button" class="btn btn-default" onClick="location.href='/course/player/${course.cosno}/'">이어서 듣기</button>
             </c:when>
         </c:choose>
-    </c:if>
+		</sec:authorize>
 			</div>
 			<br><br>
 			
@@ -77,7 +78,7 @@
 			<br><br><br><br><br><br>
 			
 			<h4>수강평</h4>
-			<c:if test="${not empty sessionScope.member}">
+			<sec:authorize access="isAuthenticated()">
 			<section id="eval">
 				<h1><span class="evaPrint"></span></h1>
 				<!-- 댓글부분 -->
@@ -114,14 +115,14 @@
 						</form>
 					</div>
 			</section><br><br>
-			</c:if>
+			</sec:authorize>
 			<div class="container">
 				<div class="commentList"></div>
 			</div>
 				<br><br>
 
 			<section id="recommendListSection">
-				<c:choose>
+			<c:choose>
 				<c:when test="${empty recommendList}">
 					<h1>강의 추천을 위해 수강평을 등록해주세요!</h1>
 				</c:when>

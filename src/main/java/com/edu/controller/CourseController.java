@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -33,19 +34,23 @@ public class CourseController {
 	
 	//cosno에 맞는 소개 페이지 관련
 	@RequestMapping(value = "/intro/{cosno}", method = RequestMethod.GET)
-	public ModelAndView courseIntro(ModelAndView mav, @PathVariable("cosno") int cosno, HttpSession session, HttpServletRequest request){
+	public ModelAndView courseIntro(ModelAndView mav, @PathVariable("cosno") int cosno, Principal principal, HttpServletRequest request){
 		
 		//cosno에 맞는 코스정보 불러오기
 		CourseDomain course = courseService.findCos(cosno);
 		
 		//cosno에 맞는 강좌들 불러오기
 		List<LectureDomain> lecture = courseService.findCos_lec(cosno);
-		
-		//세션에서 아이디 받아오기
-		String id = (String) session.getAttribute("loginId");
-		
-		//수강여부 체크
-		boolean checkstate = courseService.ajaxCheckSubscribe(id,cosno);
+
+		boolean checkstate = false;
+
+		if( principal != null){
+			//세션에서 아이디 받아오기
+			String id = principal.getName();
+
+			//수강여부 체크
+			checkstate = courseService.ajaxCheckSubscribe(id,cosno);
+		}
 
 		String resourcesPath = request.getServletContext().getRealPath("resources")+"/RecommendOutputData/RecommendData.csv";
 
@@ -107,10 +112,19 @@ public class CourseController {
 
 	// 이어서 듣기
 	@RequestMapping(value = "/player/{cosno}", method = RequestMethod.GET)
-	public ModelAndView basicPlayer( ModelAndView mav, @PathVariable("cosno") int cosno , HttpSession session) throws Exception{
+	public ModelAndView basicPlayer( ModelAndView mav, @PathVariable("cosno") int cosno , Principal principal) throws Exception{
+		//modelandview에 정보 저장
+		mav = new ModelAndView();
+
+		if(principal == null){
+			mav.setViewName("/exception");
+
+			return mav;
+		}
 
 		// 사용자
-		String id = (String) session.getAttribute("loginId");
+		String id = principal.getName();
+
 		UserDomain loginMember = memberService.getMemberById(id);
 
 		//cosno에 맞는 코스정보 불러오기
@@ -127,8 +141,6 @@ public class CourseController {
 		LectureDomain lecture = courseService.findLecture(lastedLecture.getLecno());
 
 
-		//modelandview에 정보 저장
-		mav = new ModelAndView();
 		mav.addObject("course",course);
 		mav.addObject("lecturelist",lecturelist);
 		mav.addObject("lecture",lecture);
@@ -401,112 +413,126 @@ public class CourseController {
 		return "redirect:/course/list";
 	}
 	//수정할 강의 선택 
-		@RequestMapping(value = "/selectmodifylecture/{cosno}", method = RequestMethod.GET)
-		public ModelAndView selectModifyLecture( ModelAndView mav,  @PathVariable("cosno") int cosno){
-			
-			//cosno에 맞는 강좌들 불러오기
-			List<LectureDomain> lecture = courseService.findCos_lec(cosno);
-			
-			
-			//modelandview에 정보 저장 
-			mav = new ModelAndView();
-			mav.addObject("lecture",lecture);	
-			
-			mav.setViewName("/course/course_selectmodify_lec");		
-			
-			return mav;
-		}
+	@RequestMapping(value = "/selectmodifylecture/{cosno}", method = RequestMethod.GET)
+	public ModelAndView selectModifyLecture( ModelAndView mav,  @PathVariable("cosno") int cosno){
+
+		//cosno에 맞는 강좌들 불러오기
+		List<LectureDomain> lecture = courseService.findCos_lec(cosno);
+
+
+		//modelandview에 정보 저장
+		mav = new ModelAndView();
+		mav.addObject("lecture",lecture);
+
+		mav.setViewName("/course/course_selectmodify_lec");
+
+		return mav;
+	}
 	
 	
 	//강의 수정 창 이동
-		@RequestMapping(value = "/modifylecture/{lecno}", method = RequestMethod.GET)
-		public ModelAndView modifyLecture( ModelAndView mav,
-				@PathVariable("lecno") int lecno){
-			
-			//코스번호를 가져오기 위한 코스 불러오기 
-			List<CourseDomain> courseList = courseService.allFindCosList();
-			LectureDomain lecture = courseService.findLecture(lecno);
-			//modelandview에 정보 저장 
-			mav = new ModelAndView();
-			mav.addObject("courselist",courseList);	
-			mav.addObject("lecture",lecture);	
-			
-			mav.setViewName("/course/lecturemodify");
-					
-			return mav;
+	@RequestMapping(value = "/modifylecture/{lecno}", method = RequestMethod.GET)
+	public ModelAndView modifyLecture( ModelAndView mav,
+			@PathVariable("lecno") int lecno){
+
+		//코스번호를 가져오기 위한 코스 불러오기
+		List<CourseDomain> courseList = courseService.allFindCosList();
+		LectureDomain lecture = courseService.findLecture(lecno);
+		//modelandview에 정보 저장
+		mav = new ModelAndView();
+		mav.addObject("courselist",courseList);
+		mav.addObject("lecture",lecture);
+
+		mav.setViewName("/course/lecturemodify");
+
+		return mav;
+	}
+
+	//강의 업데잍
+	@RequestMapping(value = "/updatelecture", method = RequestMethod.POST)
+	public String updateLecture( ModelAndView mav, @ModelAttribute Lecture lecture) throws IOException{
+
+		//강의 추가시 입력한 유뷰트 주소
+		String inputvideo = lecture.getLecvideo();
+
+		//영상 주소 속 watch?v= 부분 찾기
+		int front = inputvideo.indexOf("watch?v=");
+		//영상 주소 속 &부분 찾기
+		//&가 2개 들어가는 주소도 넣어봤는데 일단 정상적을 작동됨. 첫번째 부분만 기록이 되야함...
+		int back = inputvideo.indexOf("&");
+		//주소 길이 찾기
+		int all = inputvideo.length();
+
+		//&이 없는 영상일 경우(indexof는 문자를 못찾으면 -1 반환)
+		if(back==-1){
+			//watch?v= 뒷부분 부터 주소 끝부분까지 자르기
+			String video = inputvideo.substring(front+8, all);
+			//바뀐 영상이름으로 다시 저장
+			lecture.setLecvideo(video);
+			//수정된 lecture로 db에 입력
+			courseService.updateLecture(lecture);
 		}
-		//강의 업데잍 
-		@RequestMapping(value = "/updatelecture", method = RequestMethod.POST)
-		public String updateLecture( ModelAndView mav, @ModelAttribute Lecture lecture) throws IOException{
-			
-			//강의 추가시 입력한 유뷰트 주소
-			String inputvideo = lecture.getLecvideo();
-			
-			//영상 주소 속 watch?v= 부분 찾기
-			int front = inputvideo.indexOf("watch?v=");
-			//영상 주소 속 &부분 찾기
-			//&가 2개 들어가는 주소도 넣어봤는데 일단 정상적을 작동됨. 첫번째 부분만 기록이 되야함...
-			int back = inputvideo.indexOf("&");
-			//주소 길이 찾기
-			int all = inputvideo.length();
-			
-			//&이 없는 영상일 경우(indexof는 문자를 못찾으면 -1 반환)
-			if(back==-1){
-				//watch?v= 뒷부분 부터 주소 끝부분까지 자르기
-				String video = inputvideo.substring(front+8, all);
-				//바뀐 영상이름으로 다시 저장
-				lecture.setLecvideo(video);
-				//수정된 lecture로 db에 입력
-				courseService.updateLecture(lecture);	
-			}
-			//list에 있는 영상을 가져올 경우
-			else{
-				//watch?v= 뒷부분부터 & 전까지 자르기
-				String video = inputvideo.substring(front+8,back);
-				lecture.setLecvideo(video);
-				courseService.updateLecture(lecture);
-			}
-			
-			return "redirect:/course/list";
+		//list에 있는 영상을 가져올 경우
+		else{
+			//watch?v= 뒷부분부터 & 전까지 자르기
+			String video = inputvideo.substring(front+8,back);
+			lecture.setLecvideo(video);
+			courseService.updateLecture(lecture);
 		}
 
-		//수강
-		@RequestMapping(value="/subscribe/{cosno}", method=RequestMethod.GET)
-		public String subscribeCourse(@PathVariable("cosno") int cosno, HttpSession session){
-			String id = (String) session.getAttribute("loginId");
-			   
-			courseService.subscribe(id,cosno);
-			
-			return "redirect:/course/myCourse";
+		return "redirect:/course/list";
+	}
+
+	//수강
+	@RequestMapping(value="/subscribe/{cosno}", method=RequestMethod.GET)
+	public String subscribeCourse(@PathVariable("cosno") int cosno, Principal principal){
+		if(principal == null){
+			return "redirect:/error";
 		}
-		
-		//수강취소
-		@RequestMapping(value="/subscribeCancel/{cosno}", method=RequestMethod.GET)
-		public String subscribeCancel(@PathVariable("cosno") int cosno, HttpSession session){
-			String id = (String) session.getAttribute("loginId");
-					   
-			courseService.subscribeCancel(id,cosno);
-					
-			return "redirect:/course/myCourse";
+
+		String id = principal.getName();
+
+		courseService.subscribe(id,cosno);
+
+		return "redirect:/course/myCourse";
+	}
+
+	//수강취소
+	@RequestMapping(value="/subscribeCancel/{cosno}", method=RequestMethod.GET)
+	public String subscribeCancel(@PathVariable("cosno") int cosno, Principal principal){
+		if(principal == null){
+			return "redirect:/error";
 		}
-		
-		
-		//내 강좌
-		@RequestMapping(value = "/myCourse", method = RequestMethod.GET)
-		public ModelAndView myCourse( ModelAndView mav, HttpSession session){
-			
-			String id = (String) session.getAttribute("loginId");
-			
-			List<CourseDomain> course = courseService.myCourse(id);
-			
-			//modelandview에 정보 저장 
-			mav = new ModelAndView();
-			mav.addObject("course",course);	
-			
-			mav.setViewName("/course/myCourse");
-			
+
+		String id = principal.getName();
+
+		courseService.subscribeCancel(id,cosno);
+
+		return "redirect:/course/myCourse";
+	}
+
+
+	//내 강좌
+	@RequestMapping(value = "/myCourse", method = RequestMethod.GET)
+	public ModelAndView myCourse( ModelAndView mav, Principal principal){
+		if(principal == null){
+			mav.setViewName("/exception");
+
 			return mav;
 		}
+
+		String id = principal.getName();
+
+		List<CourseDomain> course = courseService.myCourse(id);
+
+		//modelandview에 정보 저장
+		mav = new ModelAndView();
+		mav.addObject("course",course);
+
+		mav.setViewName("/course/myCourse");
+
+		return mav;
+	}
 			
 	
 }

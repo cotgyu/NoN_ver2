@@ -21,6 +21,7 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.Map;
 import java.util.UUID;
 
@@ -70,9 +71,13 @@ public class MemberController {
 
 	// 회원 수정창 이동
 	@RequestMapping(value="/memberUpdateForm")
-	public String memberUpdateForm(Model model, HttpSession session) throws Exception{
+	public String memberUpdateForm(Model model, Principal principal) throws Exception{
 
-		String loginId = (String)session.getAttribute("loginId");
+		if(principal == null){
+			return "redirect:/error";
+		}
+
+		String loginId = principal.getName();
 
 		//사용자 
 		UserDomain loginMember = memberService.getMemberById(loginId);
@@ -84,9 +89,13 @@ public class MemberController {
 
 	// 회원 수정
 	@RequestMapping("/memberUpdate")
-	public String memberUpdate(String u_nick, String u_email1, String u_email2, HttpSession session) throws Exception{
+	public String memberUpdate(String u_nick, String u_email1, String u_email2,  Principal principal) throws Exception{
 
-		String loginId = (String)session.getAttribute("loginId");
+		if(principal == null){
+			return "redirect:/error";
+		}
+
+		String loginId = principal.getName();
 
 		//사용자
 		UserDomain loginMember = memberService.getMemberById(loginId);
@@ -99,10 +108,6 @@ public class MemberController {
 		} catch (Exception e){
 
 		}
-
-		// 회원 수정 후 세션에 반영
-		session.setAttribute("member", loginMember);
-		session.setAttribute("nickName", loginMember.getNickname());
 
 		return "redirect:/";
 	}

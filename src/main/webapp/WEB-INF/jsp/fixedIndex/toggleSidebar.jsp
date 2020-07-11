@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 
-<!-- Sidebar -->
+<!-- /#sidebar-wrapper -->
 		<div id="sidebar-wrapper">
 			<ul class="sidebar-nav">
 				<li class="sidebar-brand"><a href="#"> 공백...(수정해야함..) </a></li>
@@ -16,13 +16,13 @@
 					<li><a href="/course/myCourse">내 강좌</a></li>
 				</sec:authorize>
 				<sec:authorize access="hasRole('ROLE_ADMIN')">
-				<li><a href="/course/admin/addcourse">강좌 추가</a></li>
-				<li><a href="/course/admin/addlecture">강의 추가</a></li>
-				<li><a href="/course/admin/selectmodifycourse/">강좌&강의 수정</a></li>
-				<li><a href="/admin/updateData">추천 데이터 업데이트</a></li>
+					<li><a href="/course/admin/addcourse">강좌 추가</a></li>
+					<li><a href="/course/admin/addlecture">강의 추가</a></li>
+					<li><a href="/course/admin/selectmodifycourse/">강좌&강의 수정</a></li>
+					<li><a href="/admin/updateData">추천 데이터 업데이트</a></li>
 				</sec:authorize>
 			</ul>
 		</div>
-		<!-- /#sidebar-wrapper -->
+<!-- /#sidebar-wrapper -->
 
 

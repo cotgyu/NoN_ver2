@@ -70,7 +70,7 @@
 								<span class="input-group-addon"><i class="fa fa-id-card" ></i></span>
 								<input type="text" class="form-control" name="u_nick"
 								id="u_nick" placeholder="한글,영어,숫자를 이용해서 5~20자 이내로 입력하세요."
-								value="${member.nick}">
+								value="${member.nickname}">
 							</div>
 							<div>
 								<p class="font-italic" id = "u_nickFlag" style=" color:red;">
