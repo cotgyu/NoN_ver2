@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri = "http://www.springframework.org/security/tags" prefix = "sec" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <!-- css도 같이 포함? -->
@@ -109,105 +110,47 @@
 
 </script>
 
-<c:set var="member" value="${member}" scope="session"/>
-<c:set var="grade" value="${grade}" scope="session"/>
+<sec:authorize access="isAuthenticated()">
 
-  <c:catch>
-  	<c:choose>
-  		<c:when test="${member.id eq null }">
-		  <!-- Navigation -->
-		  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-		    <div class="container" >
-		      <a class="navbar-brand" href="/">NoN</a>
-		      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-		        <span class="navbar-toggler-icon"></span>
-		      </button>
-		      <div class="collapse navbar-collapse" id="navbarResponsive">
-		        <ul class="navbar-nav ml-auto">
-		          <li class="nav-item active">
-		            <a class="nav-link" href="/">Home
-		              <span class="sr-only">(current)</span>
-		            </a>
-		          </li>
-					<!--
-		          <li class="nav-item">
-		            <a class="nav-link" href="/login">로그인</a>
-		          </li>
-					-->
-				<li class="nav-item">
-					<a class="nav-link"  data-toggle="modal" href="#myModal" onclick="openLoginModal();">로그인</a>
-				</li>
+	<sec:authentication property="principal.Username" var="memberId"/>
 
-		          <li class="nav-item">
-		            <a class="nav-link" href="#">about</a>
-		          </li>
-		        </ul>
-		      </div>
-		    </div>
-		  </nav>
-  		</c:when>
-  		<c:otherwise>
-  			<c:choose>
-  				<c:when test="${grade eq '4'}">
-					 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-					    <div class="container">
-					      <a class="navbar-brand" href="/">NoN</a>
-					      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-					        <span class="navbar-toggler-icon"></span>
-					      </button>
-					      <div class="collapse navbar-collapse" id="navbarResponsive">
-					        <ul class="navbar-nav ml-auto">
-					          <li class="nav-item active">
-					            <a class="nav-link" href="/">Home
-					              <span class="sr-only">(current)</span>
-					            </a>
-					          </li>
-					          <li class="nav-item">
-					            <a class="nav-link" href="/memberUpdateForm">${member.nickname}</a>
-					          </li>
-					          <li class="nav-item">
-					            <a class="nav-link" href="/logout">logout</a>
-					          </li>
-					          <li class="nav-item">
-					            <a class="nav-link" href="#">about</a>
-					          </li>
-					        </ul>
-					      </div>
-					    </div>
-					  </nav>
-				</c:when>
-				<c:otherwise>
-						<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-					    <div class="container">
-					      <a class="navbar-brand" href="/">NoN</a>
-					      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-					        <span class="navbar-toggler-icon"></span>
-					      </button>
-					      <div class="collapse navbar-collapse" id="navbarResponsive">
-					        <ul class="navbar-nav ml-auto">
-					          <li class="nav-item active">
-					            <a class="nav-link" href="/">Home
-					              <span class="sr-only">(current)</span>
-					            </a>
-					          </li>
-					          <li class="nav-item">
-					            <a class="nav-link" href="/memberUpdateForm">${member.nickname}</a>
-					          </li>
-					          <li class="nav-item">
-					            <a class="nav-link" href="/logout">logout</a>
-					          </li>
-					          <li class="nav-item">
-					            <a class="nav-link" href="#">about</a>
-					          </li>
-					        </ul>
-					      </div>
-					    </div>
-					  </nav>
-				</c:otherwise>	
-			</c:choose>
-		</c:otherwise>
-	</c:choose>
-</c:catch>			
+</sec:authorize>
+
+	  <!-- Navigation -->
+	  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+		<div class="container" >
+		  <a class="navbar-brand" href="/">NoN</a>
+		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		  </button>
+		  <div class="collapse navbar-collapse" id="navbarResponsive">
+			<ul class="navbar-nav ml-auto">
+			  <li class="nav-item active">
+				<a class="nav-link" href="/">Home
+				  <span class="sr-only">(current)</span>
+				</a>
+			  </li>
+				<sec:authorize access="isAnonymous()">
+					<li class="nav-item">
+						<a class="nav-link"  data-toggle="modal" href="#myModal" onclick="openLoginModal();">로그인</a>
+					</li>
+				</sec:authorize>
+
+				<sec:authorize access="isAuthenticated()">
+					<li class="nav-item">
+						<a class="nav-link" href="/memberUpdateForm">${memberId}</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/logout">logout</a>
+					</li>
+				</sec:authorize>
+			  <li class="nav-item">
+				<a class="nav-link" href="#">about</a>
+			  </li>
+			</ul>
+		  </div>
+		</div>
+	  </nav>
   <!--Navigation-->
 
 <!-- modal -->

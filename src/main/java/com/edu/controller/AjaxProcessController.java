@@ -94,24 +94,14 @@ public class AjaxProcessController {
 	// 로그인 체크 후 로그인
 	@RequestMapping("/loginCheck.ajax")
 	@ResponseBody
-	public Boolean loginCheck(String id, String password, HttpSession session) throws Exception{
+	public Boolean loginCheck(String id) throws Exception{
 		boolean checkMember = false;
 
-		UserDomain member = null;
-
-		member = memberService.getMemberById(id);
+		UserDomain member = memberService.getMemberById(id);
 
 		if(member != null) {
 
-			if(member.getId().equals(id) && passwordEncoder.matches(password, member.getPassword())) {
-
-				session.setAttribute("member", member);
-				session.setAttribute("loginId", member.getId());
-				session.setAttribute("nickName", member.getNickname());
-				session.setAttribute("grade", member.getGrade());
-
-				checkMember = true;
-			}
+			checkMember = true;
 		}
 
 		return checkMember;

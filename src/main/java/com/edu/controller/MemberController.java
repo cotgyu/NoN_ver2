@@ -68,14 +68,6 @@ public class MemberController {
 		return "member/login";
 	}
 
-	// 로그아웃
-	@RequestMapping("/logout")
-	public String logout(SessionStatus sessionStatus, HttpSession session) {
-		session.removeAttribute("member");
-		session.invalidate();
-		return "redirect:/";
-	}
-
 	// 회원 수정창 이동
 	@RequestMapping(value="/memberUpdateForm")
 	public String memberUpdateForm(Model model, HttpSession session) throws Exception{
