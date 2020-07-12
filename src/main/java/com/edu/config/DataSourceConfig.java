@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@MapperScan(basePackages = { "com.Edu.Dao" })
+@MapperScan(basePackages = { "com.edu.dao" })
 @EnableTransactionManagement
 public class DataSourceConfig {
 

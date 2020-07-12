@@ -48,34 +48,13 @@ public class LectureControllerTest extends BaseControllerTest {
     @Description("특정 사용자 코스의 현재 강의 정보 가져오기(체크한 강의)")
     public void readUserCheckedLectureInfo() throws Exception{
         //Given
-        String userId = "admin2";
-        int courseNumber = 54;
+        LectureDto lectureDto = LectureDto.builder().cosno(54).userId("admin").build();
+
 
         //When && Then
         mockMvc.perform(post("/lecture/getCheckedLectureInfo")
-            .param("userId", userId)
-            .param("courseNumber", Integer.toString(courseNumber))
-
-        )
-                .andDo(print())
-                .andExpect(jsonPath("checkedList").exists())
-
-
-        ;
-
-    }
-
-    @Test
-    @Description("특정 사용자 코스의 현재 강의 정보 가져오기(최신 강의)")
-    public void readUserLastedLectureInfo() throws Exception{
-        //Given
-        String userId = "admin2";
-        int courseNumber = 54;
-
-        //When && Then
-        mockMvc.perform(post("/lecture/getLastedLectureInfo")
-                .param("userId", userId)
-                .param("courseNumber", Integer.toString(courseNumber))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(this.objectMapper.writeValueAsString(lectureDto))
 
         )
                 .andDo(print())
@@ -90,17 +69,16 @@ public class LectureControllerTest extends BaseControllerTest {
     @Description("존재 하지 않는 사용자 강의 가져오기")
     public void readNonexistentUserLectureInfo() throws Exception{
         //Given
-        String userId = "admin3";
-        int courseNumber = 54;
+        LectureDto lectureDto = LectureDto.builder().cosno(54).userId("admin2").build();
 
         //When && Then
         mockMvc.perform(post("/lecture/getCheckedLectureInfo")
-                .param("userId", userId)
-                .param("courseNumber", Integer.toString(courseNumber))
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(this.objectMapper.writeValueAsString(lectureDto))
 
         )
                 .andDo(print())
-                .andExpect(jsonPath("error").exists())
+                .andExpect(jsonPath("errorMsg").exists())
 
         ;
     }
@@ -180,7 +158,7 @@ public class LectureControllerTest extends BaseControllerTest {
     @Description("시큐리티 테스트")
     public void securityTest() throws Exception{
 
-        mockMvc.perform(get("/resetPassword"))
+        mockMvc.perform(get("/admin"))
                 .andDo(print())
                 .andExpect(status().is3xxRedirection());
     }

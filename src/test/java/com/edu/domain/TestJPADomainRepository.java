@@ -144,7 +144,7 @@ public class TestJPADomainRepository {
 
         int lastedLectureNum = lasted.getLecno();
 
-        assertThat(lastedLectureNum, is(6));
+        assertThat(lastedLectureNum, is(5));
 
     }
 
