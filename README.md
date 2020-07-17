@@ -1,3 +1,4 @@
 # NoN_ver2
 
-<a href='http://69c0ae139aa3.ngrok.io/job/non/'><img src='http://69c0ae139aa3.ngrok.io/buildStatus/icon?job=non'></a>
+
+[![Build Status](http://49.50.174.19:9100/buildStatus/icon?job=NoN)](http://49.50.174.19:9100/job/NoN/)
