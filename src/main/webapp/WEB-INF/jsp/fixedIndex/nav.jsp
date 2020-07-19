@@ -4,14 +4,15 @@
 <%@ taglib uri = "http://www.springframework.org/security/tags" prefix = "sec" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!-- css도 같이 포함? -->
-<!-- Bootstrap core CSS --> <!--toggle-->
-  <link href="/resources/indexresource/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">  
-  <!-- Custom styles for this template -->
-  <link href="/resources/indexresource/css/simple-sidebar.css" rel="stylesheet">
-  <!-- Bootstrap core JavaScript -->
-  <script src="/resources/indexresource/vendor/jquery/jquery.min.js"></script><!--toggle -->
-  <script src="/resources/indexresource/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap core CSS -->
+<link href="/resources/indexresource/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="/resources/indexresource/css/simple-sidebar.css" rel="stylesheet">
+
+<!-- Bootstrap core JavaScript -->
+<script src="/resources/indexresource/vendor/jquery/jquery.min.js"></script>
+<script src="/resources/indexresource/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 <script type="text/javascript">
 
@@ -59,7 +60,6 @@
         }
 
         return true;
-
     }
 
     function goLogin(){

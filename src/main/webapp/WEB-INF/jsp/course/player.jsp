@@ -88,7 +88,7 @@
 
 
 <div id="wrapper" style="background-color: #495057">
-<!-- 강의 목록 -->
+
 	<div id="sidebar-wrapper"><!-- 사이드부분  공간 처리 할것 -->
 			<ul class="sidebar-nav">
 				<br>
@@ -115,7 +115,7 @@
 			<a href="#lecture-toggle" class="btn btn-secondary" id="lecture-toggle">강좌리스트</a>
 		</div>
 	</div>
-	<!-- Menu Toggle Script -->
+
 	<script>
         $("#lecture-toggle").click(function(e) {
             e.preventDefault();

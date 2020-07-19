@@ -44,7 +44,7 @@ public class CourseController {
 
 		boolean checkstate = false;
 
-		if( principal != null){
+		if( principal != null ){
 			//세션에서 아이디 받아오기
 			String id = principal.getName();
 
@@ -61,14 +61,12 @@ public class CourseController {
 		
 		Iterator iterator = recommendList.iterator();
 		while (iterator.hasNext()) {
-			String a = (String) iterator.next();
-		    int element = Integer.parseInt(a);	    
+			String recommendCourseNumber = (String) iterator.next();
+		    int element = Integer.parseInt(recommendCourseNumber);
 		    recommendCourseName.add(courseService.findCosName(element));
 		}
 
 
-	
-		
 		//modelandview에 정보 저장 
 		mav = new ModelAndView();
 		mav.addObject("course",course);
@@ -231,10 +229,8 @@ public class CourseController {
 	//todo- 이미지 업로드할 때 올린이미지 바로 확인할 수 있게..
 	@RequestMapping(value = "/admin/insertcourse", method = RequestMethod.POST)
 	public String insertCourse( ModelAndView mav, @ModelAttribute Course cos, MultipartFile file, HttpServletRequest request) throws IOException{
-		//경로 수정해야하는데 ...음
+		// 이미지 업로드 경로
 		String uploadPath = request.getServletContext().getRealPath("resources")+"/courseImage";
-		
-		
 		
 		//코스 대표이미지 업로드
 		UUID uuid = UUID.randomUUID();	    
@@ -252,12 +248,11 @@ public class CourseController {
 	  	//영상 주소 속 watch?v= 부분 찾기
 	  	int front = inputvideo.indexOf("watch?v=");
 	  	//영상 주소 속 &부분 찾기
-	  	//&가 2개 들어가는 주소도 넣어봤는데 일단 정상적을 작동됨. 첫번째 부분만 기록이 되야함...
 	  	int back = inputvideo.indexOf("&");
 	  	//주소 길이 찾기
 	  	int all = inputvideo.length();
 	  		
-	  	//&이 없는 영상일 경우(indexof는 문자를 못찾으면 -1 반환)
+	  	//&이 없는 영상일 경우
 	  	if(back==-1){
 	  		//watch?v= 뒷부분 부터 주소 끝부분까지 자르기
 	  		String video = inputvideo.substring(front+8, all);
@@ -303,7 +298,6 @@ public class CourseController {
 		//영상 주소 속 watch?v= 부분 찾기
 		int front = inputvideo.indexOf("watch?v=");
 		//영상 주소 속 &부분 찾기
-		//&가 2개 들어가는 주소도 넣어봤는데 일단 정상적을 작동됨. 첫번째 부분만 기록이 되야함...
 		int back = inputvideo.indexOf("&");
 		//주소 길이 찾기
 		int all = inputvideo.length();
@@ -367,10 +361,8 @@ public class CourseController {
 	//코스 업데이트
 	@RequestMapping(value = "/updatecourse", method = RequestMethod.POST)
 	public String updateCourse( ModelAndView mav, @ModelAttribute Course cos, MultipartFile file, HttpServletRequest request) throws IOException{
-		//경로 수정해야하는데 ...음
+		//코스 이미지 경로
 		String uploadPath = request.getServletContext().getRealPath("resources")+"/courseImage";
-			
-			
 			
 		//코스 대표이미지 업로드
 		UUID uuid = UUID.randomUUID();	    
@@ -388,7 +380,6 @@ public class CourseController {
 		//영상 주소 속 watch?v= 부분 찾기
 		int front = inputvideo.indexOf("watch?v=");
 		//영상 주소 속 &부분 찾기
-	  	//&가 2개 들어가는 주소도 넣어봤는데 일단 정상적을 작동됨. 첫번째 부분만 기록이 되야함...
 	  	int back = inputvideo.indexOf("&");
 		//주소 길이 찾기
 		int all = inputvideo.length();
@@ -458,7 +449,6 @@ public class CourseController {
 		//영상 주소 속 watch?v= 부분 찾기
 		int front = inputvideo.indexOf("watch?v=");
 		//영상 주소 속 &부분 찾기
-		//&가 2개 들어가는 주소도 넣어봤는데 일단 정상적을 작동됨. 첫번째 부분만 기록이 되야함...
 		int back = inputvideo.indexOf("&");
 		//주소 길이 찾기
 		int all = inputvideo.length();

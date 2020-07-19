@@ -3,34 +3,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>NoN 회원가입</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>NoN 회원가입</title>
 
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <link href="resources/indexresource/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-   
-  
-  <!-- Font Awesome --><!--i class="fa fa-adress-card" 이부분 사용하는듯 , 개인 이모티콘사용시..-->
-  <link href="resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"><!--리소스존재  -->
-  
-  <!-- Fancy Box -->
-  <link href="resources/plugins/fancybox/jquery.fancybox.pack.css" rel="stylesheet"><!-- 로딩중인거 표시할때 쓰는듯..리소스존재 -->
-  <link href="resources/plugins/jquery-nice-select/css/nice-select.css" rel="stylesheet"><!--셀럭터인데 안쓰인듯..리소스존재  -->
-  <!-- <link href="resources/plugins/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css" rel="stylesheet"> --><!--슬라이더 만들때 필요한듯 근데 no리소스.  -->
+	<link href="resources/indexresource/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
-  <link href="resources/css/style.css" rel="stylesheet">
-  <link rel="stylesheet" href="resources/css/member/login.css">
+	<!-- Fancy Box -->
+	<link href="resources/plugins/fancybox/jquery.fancybox.pack.css" rel="stylesheet">
+	<link href="resources/plugins/jquery-nice-select/css/nice-select.css" rel="stylesheet">
+	<link href="resources/css/style.css" rel="stylesheet">
+	<link rel="stylesheet" href="resources/css/member/login.css">
 	<link rel="stylesheet" type="text/css" href="resources/plugins/slick-1.8.0/slick/slick.css">
 	<link rel="stylesheet" type="text/css" href="resources/plugins/slick-1.8.0/slick/slick-theme.css">
 
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
-
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 
 	<script type ="text/javascript">
         $(document).ready(function() {
@@ -125,11 +116,11 @@
 
 
             $("#email3").change(function(){
-                var email3=$("#email3 option:selected").val(); //도메인 선택되면
-                if(email3==0){
+                var email3 = $("#email3 option:selected").val();
+                if(email3 == 0){
                     return;
                 } else{
-                    document.getElementById("email2").value=email3;
+                    document.getElementById("email2").value = email3;
                     $("#email2").change(); //유효성검사
                 }
 
@@ -154,8 +145,8 @@
             $("#email2").change(function() {
                 var email1 = document.getElementById("email1").value;
                 var email2 = document.getElementById("email2").value;
-                var regEmail = /^([a-zA-z]{3,20})\.([a-zA-z]{2,11})$/;//1:문자+숫자 ,2:소문자와 . 이 포함되어야함.
-                aa = regEmail.test(email2); //문자열에 일치하는 패턴이 있는지 알고싶을때 true or false 반환.
+                var regEmail = /^([a-zA-z]{3,20})\.([a-zA-z]{2,11})$/;
+                aa = regEmail.test(email2);
 
                 var $parent = $(this).parent();
 
@@ -179,7 +170,7 @@
 
                 $("#emailFlag").css({color : "green"});
                 $("#emailFlag").text('');
-                $('<i class="fa fa-circle-o"></i>').prependTo('#emailFlag');//동그라미 표시 emailflag에 덧붙인다.
+                $('<i class="fa fa-circle-o"></i>').prependTo('#emailFlag');
                 emailBoolean = true;
                 $("#pass").focus().val("");
 
@@ -189,8 +180,8 @@
             $("#pass").change(function() {
                 regPass=/[0-9]/;
                 var pass = $("#pass").val();
-                if(regPass.test(pass)){ //regPass에 문자열이 있는지 판단할떄 true or false 리턴.입력값이 소문자가 존재하고..
-					if(pass.length>=8&&pass.length<20){		//입력받은 문자열이 8이상 20미만일때
+                if(regPass.test(pass)){
+					if(pass.length>=8 && pass.length<20){
 						$("#cpassFlag").text('비밀번호 확인을 하세요.');
                         $("#cpassFlag").css({color : "red"});
 						$("#cpass").focus().val("");
@@ -274,10 +265,9 @@
 					<span>NoN 회원 가입</span>
 				</h3>
 				<hr>
-				<form class="form-horizontal" method="post" name="joinC" id="signup" action="joinResult"><!--액션추가  -->
+				<form class="form-horizontal" method="post" name="joinC" id="signup" action="joinResult">
 					<div class="form-group">
 						<label class="control-label col-sm-3">ID<span class="text-danger">*</span></label>
-						<!-- id 입력부분 -->
 						<div class="col-md-7 col-sm-7">
 							<div class="input-group">
 								<input type="text" class="form-control" name="id" id="joinId" placeholder="한글,영어,숫자를 이용해서 5~20자 이내로 입력하세요." value="${sessionScope.member.id }">
@@ -291,7 +281,6 @@
 					</div>
 
 				
-					<!-- 닉네임 입력부분  -->
 					<div class="form-group" id="join2" style="">
 						<label class="control-label col-sm-3">Nick Name<span
 							class="text-danger">*</span></label>
@@ -308,7 +297,6 @@
 						</div>
 					</div>
 					
-					<!-- 이메일 입력부분 -->
 					<div class="form-group" id="join3" style="">
 						<label class="control-label col-sm-3">Email<span
 							class="text-danger">*</span></label>
@@ -340,7 +328,6 @@
 						</div>
 					</div>
 						
-					<!-- 패스워드 입력부분 -->	
 					<div class="form-group" id="join4" style="">
 						<label class="control-label col-sm-3">Set Password <span
 							class="text-danger">*</span></label>
@@ -353,7 +340,6 @@
 						</div>
 					</div>
 					
-					<!-- 비밀번호 확인 -->
 					<div class="form-group" id="join5" style="">
 						<label class="control-label col-sm-3">Confirm Password <span
 							class="text-danger">*</span></label>
@@ -374,7 +360,7 @@
 					<div class="form-group" id="join14" style="">
 						<div class="col-xs-offset-3 col-xs-10">
 							<input name="Submit" type="submit" value="회원가입" id="btnJoinSubmit" style="margin-top:10px;"
-								class="btn btn-outline-success btn-lg btn-block"><!--btnJoinSumit이 이벤트발생 -->
+								class="btn btn-outline-success btn-lg btn-block">
 						</div>
 					</div>
 				</form>

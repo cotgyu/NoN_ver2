@@ -8,14 +8,14 @@
 <title>분야별 강좌</title>
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script type="text/javascript">
-//페이지 이동 
-function pagelist(page){
+
+	function pagelist(page){
 	var keyword = document.getElementById("hiddenkeyword").value;
 	var searchOption = document.getElementById("hiddensearchOption").value;
-	//페이지 맨위로
-	window.scrollBy(0,0); 
+
+	window.scrollBy(0,0);
 	window.scrollTo(0,0);
-	//ajax
+
 	$.ajax({
 		type : "get",
 		url : "/course/searchajaxlist?keyword="+keyword+"&curPage="+page+"&searchOption="+searchOption,
@@ -27,10 +27,10 @@ function pagelist(page){
 //키워드 검색
 function searchlist() {
 		var keyword = document.getElementById("ajaxkeyword").value;
-		//페이지 맨위로
-		window.scrollBy(0,0); 
+
+		window.scrollBy(0,0);
 		window.scrollTo(0,0);
-		//ajax
+
 		$.ajax({
 			type : "get",
 			url : "/course/searchajaxlist?keyword="+keyword,
@@ -42,10 +42,10 @@ function searchlist() {
 //카테고리 검색
 function searchcategorylist(searchOption, category) {
 		var keyword = document.getElementById("ajaxkeyword").value;
-		//페이지 맨위로
+
 		window.scrollBy(0,0); 
 		window.scrollTo(0,0);
-		//ajax
+
 		$.ajax({
 			type : "get",
 			url : "/course/searchajaxlist?keyword="+category+"&searchOption="+searchOption,
@@ -56,7 +56,7 @@ function searchcategorylist(searchOption, category) {
 }
 
 $(document).ready(function() {
-	//기본화면 리스트 
+
 	var keyword = document.getElementById("ajaxkeyword").value;
 	$.ajax({
 		type : "get",
@@ -66,9 +66,9 @@ $(document).ready(function() {
 		}
 	});
 
-	//키워드 엔터 검색시 함수 실행 
+	//키워드 엔터 검색시 함수 실행
 	 $("#ajaxkeyword").keypress(function (e) {
-		 //13은 엔터키 
+
 	        if (e.which == 13){
 	                   searchlist();  
 	        }
@@ -224,13 +224,12 @@ text-indent:-9999em;
 			   </ul>
 			</div>
 			<br><br><br>
-			<!-- 코스 검색 -->						
+
 			<div class="searchMenu">
-		 	
 				<input name="ajaxkeyword" id="ajaxkeyword" value="${ajaxkeyword}" placeholder="원하는 강좌를 입력해주세요!" style="width: 250px;">
-				<button type="submit" class="btn" name="searchlist" onclick="javascript:searchlist()">검색</button>				
-			
-			</div>						
+				<button type="submit" class="btn" name="searchlist" onclick="javascript:searchlist()">검색</button>
+			</div>
+
 			<br><br><br>
 					
 			<div id="ajaxlist"></div>

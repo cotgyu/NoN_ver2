@@ -4,7 +4,7 @@
 <head>
 <title>소셜 로그인 팝업</title>
 </head>
-<script src="/resources/indexresource/vendor/jquery/jquery.min.js"></script><!--toggle -->
+<script src="/resources/indexresource/vendor/jquery/jquery.min.js"></script>
 
 <script>
     $(document).ready(function() {
@@ -14,8 +14,6 @@
         window.close();
 
     });
-
-
 
 </script>
 

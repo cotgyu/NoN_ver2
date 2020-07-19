@@ -8,13 +8,11 @@
 <link href="resources/indexresource/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 
-<!-- Font Awesome --><!--i class="fa fa-adress-card" 이부분 사용하는듯 , 개인 이모티콘사용시..-->
-<link href="resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet"><!--리소스존재  -->
+<link href="resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet">
 
 <!-- Fancy Box -->
-<link href="resources/plugins/fancybox/jquery.fancybox.pack.css" rel="stylesheet"><!-- 로딩중인거 표시할때 쓰는듯..리소스존재 -->
-<link href="resources/plugins/jquery-nice-select/css/nice-select.css" rel="stylesheet"><!--셀럭터인데 안쓰인듯..리소스존재  -->
-<!-- <link href="resources/plugins/seiyria-bootstrap-slider/dist/css/bootstrap-slider.min.css" rel="stylesheet"> --><!--슬라이더 만들때 필요한듯 근데 no리소스.  -->
+<link href="resources/plugins/fancybox/jquery.fancybox.pack.css" rel="stylesheet">
+<link href="resources/plugins/jquery-nice-select/css/nice-select.css" rel="stylesheet">
 
 <link href="resources/css/style.css" rel="stylesheet">
 <link rel="stylesheet" href="resources/css/member/login.css">
@@ -31,8 +29,9 @@
 
 
             $("#u_email3").change(function(){
-                var email3=$("#u_email3 option:selected").val(); //도메인 선택되면
-                if(email3==0){
+                var email3 = $("#u_email3 option:selected").val(); //도메인 선택
+
+				if(email3==0){
                     return;
                 } else{
                     document.getElementById("u_email2").value=email3;

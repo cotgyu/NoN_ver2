@@ -8,10 +8,7 @@
 <title>${course.cosname} 코스 수정</title>
 </head>
 <script type="text/javascript">
-/* 
-카테고리 선택 - 특정 카테고리 선택시 input창에 카테고리선택 값 입력하고 readonly로 변경
-			직접 입력시 input 값 비우고 readonly false로 변경 
- */
+
 	function selectcoscategory1(value){
 		var obj = document.getElementById("coscategory1");
 		

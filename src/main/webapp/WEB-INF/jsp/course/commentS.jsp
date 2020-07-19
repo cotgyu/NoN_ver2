@@ -103,7 +103,7 @@ function commentUpdate(cno, content, eva_count){
 //댓글 수정
 function commentUpdateProc(cno){
    var updateContent = $('[name=content_'+cno+']').val();
-   var eva_count = $("input[name=inlineRadio]:checked").val(); // input 태그의 name이 트루면 값을 value값을 가져온다.
+   var eva_count = $("input[name=inlineRadio]:checked").val();
    
 	$.ajax({
         url : '/comment/update',

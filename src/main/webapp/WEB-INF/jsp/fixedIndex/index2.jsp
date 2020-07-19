@@ -7,11 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>NoN</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<!-- <meta name="description" content="">
-<meta name="author" content=""> -->
-
 <!-- Bootstrap core CSS -->
-<!--toggle-->
 <link href="resources/indexresource/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
@@ -19,7 +15,6 @@
 
 <!-- Bootstrap core JavaScript -->
 <script src="resources/indexresource/vendor/jquery/jquery.min.js"></script>
-<!--toggle -->
 <script src="resources/indexresource/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <style>
 .star{
@@ -48,12 +43,9 @@ text-indent:-9999em;
 		<!-- Page Contents -->
 		<div class="container">
 			<h1 class="my-4"></h1>
-			
-		
-		
-		<div>
+
+			<div>
 				<h3>새로운 강좌</h3>
-				<!-- 새로운 코스 리스트 -->
 				<div class="row">
 					<c:forEach var="newcoslist" items="${newcourselist}">
 						<div class="col-lg-4 col-sm-6 portfolio-item">
@@ -64,7 +56,6 @@ text-indent:-9999em;
 				                    <a href="/course/intro/${newcoslist.cosno}">${newcoslist.cosname}</a>
 				                  </h4>
 				                 
-				                  <!-- 수강평 점수 -->                
 				                  <c:choose>
 				                  	  <c:when test="${newcoslist.coseval == 0}">
 										  <div class='star'>
@@ -107,7 +98,6 @@ text-indent:-9999em;
 			
 			<div>
 				<h3>인기 강좌</h3>
-				<!-- 인기 코스 리스트 -->
 				<div class="row">
 					<c:forEach var="popcoslist" items="${popcourselist}">			
 				            <div class="col-lg-4 col-sm-6 portfolio-item">
@@ -118,7 +108,6 @@ text-indent:-9999em;
 				                    <a href="/course/intro/${popcoslist.cosno}">${popcoslist.cosname}</a>
 				                  </h4>
 				                  
-				                  <!-- 수강평 점수 -->                
 				                  <c:choose>
 				                  	  <c:when test="${popcoslist.coseval == 0}">
 										  <div class='star'>

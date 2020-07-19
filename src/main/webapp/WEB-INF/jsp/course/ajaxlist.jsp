@@ -30,7 +30,7 @@ text-indent:-9999em;
 <input type="hidden" id=hiddenkeyword value="${keyword}">
 
 <div>
-				<!-- 카테고리 검색일시 카테고리문구 표시 -->			
+
 				<c:choose>
 					<c:when test="${searchOption == 'coscategory2'}">
 						<h3>카테고리 "${keyword}" 검색 결과</h3>
@@ -45,8 +45,7 @@ text-indent:-9999em;
 						<h3>"${keyword}" 검색 결과</h3>	
 					</c:otherwise>
 				</c:choose>				
-			
-				<!-- 코스 리스트 -->
+
 				<div class="row">
 					<c:forEach var="coslist" items="${courselist}">
 						<div class="col-md-4 col-sm-4 portfolio-item">
@@ -57,7 +56,6 @@ text-indent:-9999em;
 				                    <a href="/course/intro/${coslist.cosno}">${coslist.cosname}</a>
 				                  </h4>
 				                  
-				                  <!-- 수강평 점수 -->                
 				                  <c:choose>
 				                  	  <c:when test="${coslist.coseval == 0}">
 										  <div class='star'>
@@ -101,9 +99,8 @@ text-indent:-9999em;
 				</div>
 			</div>
 			<br><br><br>
-			
-	        	<!-- Pagination 수정해야함!!-->
-		          <ul class="pagination justify-content-center">
+
+			<ul class="pagination justify-content-center">
 		            <li class="page-item">
 			            <c:if test="${Page.curPage > 1}">
 			              <a class="page-link" href="javascript:pagelist('1')" aria-label="Previous">
@@ -120,9 +117,9 @@ text-indent:-9999em;
 			            	</a>
 		            	</li>			        
 		            </c:if>
-		            <!-- 페이지 표시 -->     
+
 	                <c:forEach var="num" begin="${Page.blockBegin}" end="${Page.blockEnd}">
-	                    <!-- 현재 페이지는 링크 제거 -->
+
 	                    <c:choose>
 	                        <c:when test="${num == Page.curPage}">
 								<li class="page-link" style="color: red">${num}
@@ -135,8 +132,7 @@ text-indent:-9999em;
 	                        </c:otherwise>
 	                    </c:choose>
 	                </c:forEach>
-		            
-		              <!-- 다음 블록으로 이동  -->
+
 	                <c:if test="${Page.curBlock < Page.totBlock}">
 	                	<li class="page-item">
 			              	<a class="page-link" href="javascript:pagelist('${Page.nextPage}')">
@@ -145,7 +141,7 @@ text-indent:-9999em;
 			            	</a>
 		            	</li>
 		            </c:if>
-		            <!-- 마지막 페이지로 이동 -->
+
 	                <c:if test="${Page.curPage < Page.totPage}">
 	                <li class="page-item">
 		              <a class="page-link" href="javascript:pagelist('${Page.totPage}')">
@@ -155,8 +151,6 @@ text-indent:-9999em;
 		            </li>
 	                </c:if>
 		          </ul>
-	
-		
 		</body>
 		</html>
 		
