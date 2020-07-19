@@ -10,7 +10,6 @@
 
 
 <!-- Bootstrap core CSS -->
-<!--toggle-->
 <link href="resources/indexresource/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
@@ -18,7 +17,6 @@
 
 <!-- Bootstrap core JavaScript -->
 <script src="resources/indexresource/vendor/jquery/jquery.min.js"></script>
-<!--toggle -->
 <script src="resources/indexresource/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <style>
 </style>

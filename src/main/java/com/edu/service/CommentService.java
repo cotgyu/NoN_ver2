@@ -1,7 +1,5 @@
 package com.edu.service;
 
-import java.util.List;
-
 import com.edu.domain.*;
 import com.edu.repository.CommentRepository;
 import com.edu.repository.CourseRepository;
@@ -9,6 +7,8 @@ import com.edu.repository.CourseScoreRepository;
 import com.edu.repository.RecommendCourseDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static java.lang.Math.round;
 

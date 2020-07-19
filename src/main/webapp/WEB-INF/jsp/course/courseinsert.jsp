@@ -16,13 +16,13 @@
 					obj.value="";
 					obj.readOnly=false;
 					obj.focus();
-				}
-			else{
+			} else {
 				obj.value=value;
 				obj.readOnly=true;
 				
-				}
-		}
+			}
+	}
+
 	function selectcoscategory2(value){
 		var obj = document.getElementById("coscategory2");
 		
@@ -30,13 +30,13 @@
 					obj.value="";
 					obj.readOnly=false;
 					obj.focus();
-				}
-			else{
+			} else {
 				obj.value=value;
 				obj.readOnly=true;
 				
-				}
-		}
+			}
+
+	}
 
 	function insertvalidate(){
 		if($("#cosname").val() == ''){
@@ -53,13 +53,12 @@
 		  	return false;
 		}
 
-		
 		return true;
 	}
 
 	function insertCourse(){
 		if(insertvalidate()){
-		$("#addcourse").submit(); 
+			$("#addcourse").submit();
 		}
 	}
 

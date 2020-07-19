@@ -1,14 +1,10 @@
-//package com.example.demo.board.controller;
 package com.edu.controller;
 
 
-import java.security.Principal;
-import java.util.List;
-
-import javax.annotation.Resource;
-
 import com.edu.domain.CommentDomain;
+import com.edu.domain.CommentVO;
 import com.edu.domain.UserDomain;
+import com.edu.service.CommentService;
 import com.edu.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.edu.domain.CommentVO;
+import javax.annotation.Resource;
+import java.security.Principal;
+import java.util.List;
 
-import com.edu.service.CommentService;;
+;
 
 @Controller
 @RequestMapping("/comment")

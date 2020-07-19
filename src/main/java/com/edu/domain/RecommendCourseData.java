@@ -1,8 +1,7 @@
 package com.edu.domain;
 
-import org.apache.ibatis.type.Alias;
-
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 @Alias("RecommendCourseData")
 public @Data class RecommendCourseData {

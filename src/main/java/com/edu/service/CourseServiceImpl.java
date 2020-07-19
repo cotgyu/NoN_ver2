@@ -1,7 +1,6 @@
 package com.edu.service;
 
-import java.util.List;
-
+import com.edu.dao.CourseMapper;
 import com.edu.domain.*;
 import com.edu.repository.CourseRepository;
 import com.edu.repository.CourseScoreRepository;
@@ -10,7 +9,7 @@ import com.edu.repository.SubscribeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.edu.dao.CourseMapper;
+import java.util.List;
 
 @Service
 public class CourseServiceImpl implements CourseService{

@@ -1,13 +1,10 @@
-//package com.example.demo.board.domain;
 package com.edu.domain;
 
 import lombok.*;
-import org.apache.ibatis.type.Alias;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.xml.stream.events.Comment;
 
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)

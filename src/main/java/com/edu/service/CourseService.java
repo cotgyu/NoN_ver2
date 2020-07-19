@@ -1,56 +1,54 @@
 package com.edu.service;
 
-import java.util.List;
-
+import com.edu.domain.Course;
 import com.edu.domain.CourseDomain;
+import com.edu.domain.Lecture;
 import com.edu.domain.LectureDomain;
 import org.springframework.stereotype.Service;
 
-import com.edu.domain.Course;
-import com.edu.domain.Lecture;
+import java.util.List;
 
 @Service
 public interface CourseService {
-	public CourseDomain findCos(int cosno);
+	CourseDomain findCos(int cosno);
 	
-	public List<LectureDomain> findCos_lec(int cosno);
+	List<LectureDomain> findCos_lec(int cosno);
 
-	public LectureDomain findLecture(int lecno);
+	LectureDomain findLecture(int lecno);
 
-	public List<CourseDomain> findCosList(int start,int end,String searchOption, String keyword);
+	List<CourseDomain> findCosList(int start,int end,String searchOption, String keyword);
 
-	public void insertCourse(Course cos);
+	void insertCourse(Course cos);
 
-	public void insertLecture(Lecture lecture);
+	void insertLecture(Lecture lecture);
 
-	public List<String> findCosCategory1();
-	public List<String> findCosCategory2();
+	List<String> findCosCategory1();
+
+	List<String> findCosCategory2();
 	
-	public List<String> findDetailCategory(String type);
+	List<String> findDetailCategory(String type);
 
+	List<CourseDomain> findNewCosList();
 
+	List<CourseDomain> findPopCosList();
 
-	public List<CourseDomain> findNewCosList();
+	void updateCourse(Course cos);
 
-	public List<CourseDomain> findPopCosList();
+	void updateLecture(Lecture lecture);
 
-	public void updateCourse(Course cos);
+	long countCourse(String searchOption, String keyword);
 
-	public void updateLecture(Lecture lecture);
+	List<CourseDomain> allFindCosList();
 
-	public long countCourse(String searchOption, String keyword);
+	void subscribe(String id, int cosno);
 
-	public List<CourseDomain> allFindCosList();
+	List<CourseDomain> myCourse(String id);
 
-	public void subscribe(String id, int cosno);
+	boolean ajaxCheckSubscribe(String id, int cosno);
 
-	public List<CourseDomain> myCourse(String id);
+	void subscribeCancel(String id, int cosno);
 
-	public boolean ajaxCheckSubscribe(String id, int cosno);
+	String findCosName(int cosno);
 
-	public void subscribeCancel(String id, int cosno);
-
-	public String findCosName(int cosno);
-
-	public void dataUpdate(String filePath);
+	void dataUpdate(String filePath);
 }

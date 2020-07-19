@@ -1,7 +1,6 @@
 package com.edu.repository;
 
 import com.edu.domain.LectureDomain;
-import com.edu.domain.UserLectureInfoDomain;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;

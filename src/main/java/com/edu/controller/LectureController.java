@@ -1,9 +1,6 @@
 package com.edu.controller;
 
 import com.edu.commons.LectureValidator;
-import com.edu.domain.Lecture;
-import com.edu.domain.LectureDomain;
-import com.edu.domain.Member;
 import com.edu.domain.UserDomain;
 import com.edu.dto.LectureDto;
 import com.edu.service.CourseService;
@@ -16,9 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +62,7 @@ public class LectureController {
         }
 
         int courseNumber = lectureDto.getCosno();
-        String userId= lectureDto.getUserId();
+        String userId = lectureDto.getUserId();
 
         // 사용자
         UserDomain loginMember = memberService.getMemberById(userId);
@@ -123,15 +121,5 @@ public class LectureController {
 
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
-
-/*
-    // Controller에 직접 ExceptionHandler 선언
-    @ExceptionHandler(Exception.class)
-    public Object nullex(Exception e) {
-        System.err.println(e.getClass());
-        return "myService";
-    }
-    */
-
 
 }

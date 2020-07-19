@@ -2,7 +2,6 @@ package com.edu.domain;
 
 
 import lombok.*;
-import org.apache.ibatis.type.Alias;
 
 import javax.persistence.*;
 

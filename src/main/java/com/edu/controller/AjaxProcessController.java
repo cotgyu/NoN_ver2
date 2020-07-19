@@ -1,18 +1,16 @@
 package com.edu.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
-
+import com.edu.commons.EmailConfirm;
 import com.edu.domain.UserDomain;
+import com.edu.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.edu.commons.EmailConfirm;
-import com.edu.service.MemberService;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class AjaxProcessController {
@@ -65,7 +63,7 @@ public class AjaxProcessController {
 
 		// 발송된 비밀번호로 초기화
 		UserDomain member = memberService.getMemberById(id);
-		member.setPassword(authNum);
+		member.setPassword(passwordEncoder.encode(authNum));
 
 		memberService.resetPassword(member);
 

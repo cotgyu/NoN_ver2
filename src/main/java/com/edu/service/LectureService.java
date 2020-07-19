@@ -1,7 +1,6 @@
 package com.edu.service;
 
 import com.edu.domain.LectureDomain;
-import com.edu.domain.Member;
 import com.edu.domain.UserDomain;
 import com.edu.domain.UserLectureInfoDomain;
 import com.edu.repository.LectureRepository;

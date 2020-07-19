@@ -56,12 +56,6 @@
 					<iframe src="https://www.youtube.com/embed/${course.cosintrovideo}"
 						height="500" width="800" allowfullscreen="allowfullscreen"
 						name="fitvid0"></iframe>
-						
-					<!-- 기본비디오 
-					<video width="320" height="240" controls>
-					  <source src="/resources/courseInputVideo/RARBG.mp4" type="video/mp4">					
-					</video>
-					-->
 				</div>
 				<br>
 				${course.cosintro} 

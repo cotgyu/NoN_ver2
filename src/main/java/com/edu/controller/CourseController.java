@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
@@ -58,14 +56,8 @@ public class CourseController {
 		ItemRecommend IR = new ItemRecommend();		
 		List<String> recommendList = IR.getItemRecommendList(cosno, resourcesPath);
 		List<String> recommendCourseName = new ArrayList<>();
-		
-		Iterator iterator = recommendList.iterator();
-		while (iterator.hasNext()) {
-			String recommendCourseNumber = (String) iterator.next();
-		    int element = Integer.parseInt(recommendCourseNumber);
-		    recommendCourseName.add(courseService.findCosName(element));
-		}
 
+		recommendList.forEach( x -> recommendCourseName.add(courseService.findCosName(Integer.parseInt(x)) ));
 
 		//modelandview에 정보 저장 
 		mav = new ModelAndView();
@@ -253,7 +245,7 @@ public class CourseController {
 	  	int all = inputvideo.length();
 	  		
 	  	//&이 없는 영상일 경우
-	  	if(back==-1){
+	  	if(back == -1){
 	  		//watch?v= 뒷부분 부터 주소 끝부분까지 자르기
 	  		String video = inputvideo.substring(front+8, all);
 	  		//바뀐 영상이름으로 다시 저장
@@ -303,7 +295,7 @@ public class CourseController {
 		int all = inputvideo.length();
 		
 		//&이 없는 영상일 경우(indexof는 문자를 못찾으면 -1 반환)
-		if(back==-1){
+		if(back == -1){
 			//watch?v= 뒷부분 부터 주소 끝부분까지 자르기
 			String video = inputvideo.substring(front+8, all);
 			//바뀐 영상이름으로 다시 저장
@@ -385,7 +377,7 @@ public class CourseController {
 		int all = inputvideo.length();
 		  		
 		//&이 없는 영상일 경우(indexof는 문자를 못찾으면 -1 반환)
-		if(back==-1){
+		if(back == -1){
 			//watch?v= 뒷부분 부터 주소 끝부분까지 자르기
 		  	String video = inputvideo.substring(front+8, all);
 			//바뀐 영상이름으로 다시 저장
@@ -429,6 +421,7 @@ public class CourseController {
 		//코스번호를 가져오기 위한 코스 불러오기
 		List<CourseDomain> courseList = courseService.allFindCosList();
 		LectureDomain lecture = courseService.findLecture(lecno);
+
 		//modelandview에 정보 저장
 		mav = new ModelAndView();
 		mav.addObject("courselist",courseList);
@@ -523,6 +516,5 @@ public class CourseController {
 
 		return mav;
 	}
-			
 	
 }

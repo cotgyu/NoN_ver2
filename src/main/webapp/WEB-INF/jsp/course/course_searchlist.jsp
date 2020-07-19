@@ -10,70 +10,72 @@
 <script type="text/javascript">
 
 	function pagelist(page){
-	var keyword = document.getElementById("hiddenkeyword").value;
-	var searchOption = document.getElementById("hiddensearchOption").value;
-
-	window.scrollBy(0,0);
-	window.scrollTo(0,0);
-
-	$.ajax({
-		type : "get",
-		url : "/course/searchajaxlist?keyword="+keyword+"&curPage="+page+"&searchOption="+searchOption,
-		success : function(result) {
-			$("#ajaxlist").html(result);
-		}
-	});
-}
-//키워드 검색
-function searchlist() {
-		var keyword = document.getElementById("ajaxkeyword").value;
+		var keyword = document.getElementById("hiddenkeyword").value;
+		var searchOption = document.getElementById("hiddensearchOption").value;
 
 		window.scrollBy(0,0);
 		window.scrollTo(0,0);
 
 		$.ajax({
 			type : "get",
-			url : "/course/searchajaxlist?keyword="+keyword,
+			url : "/course/searchajaxlist?keyword="+keyword+"&curPage="+page+"&searchOption="+searchOption,
 			success : function(result) {
 				$("#ajaxlist").html(result);
 			}
 		});
-}
-//카테고리 검색
-function searchcategorylist(searchOption, category) {
-		var keyword = document.getElementById("ajaxkeyword").value;
+	}
 
-		window.scrollBy(0,0); 
-		window.scrollTo(0,0);
+	//키워드 검색
+    function searchlist() {
+        var keyword = document.getElementById("ajaxkeyword").value;
 
-		$.ajax({
-			type : "get",
-			url : "/course/searchajaxlist?keyword="+category+"&searchOption="+searchOption,
-			success : function(result) {
-				$("#ajaxlist").html(result);
-			}
-		});
-}
+        window.scrollBy(0,0);
+        window.scrollTo(0,0);
 
-$(document).ready(function() {
+        $.ajax({
+            type : "get",
+            url : "/course/searchajaxlist?keyword="+keyword,
+            success : function(result) {
+                $("#ajaxlist").html(result);
+            }
+        });
+    }
 
-	var keyword = document.getElementById("ajaxkeyword").value;
-	$.ajax({
-		type : "get",
-		url : "/course/searchajaxlist?keyword="+keyword,
-		success : function(result) {
-			$("#ajaxlist").html(result);
-		}
-	});
+    //카테고리 검색
+    function searchcategorylist(searchOption, category) {
+        var keyword = document.getElementById("ajaxkeyword").value;
 
-	//키워드 엔터 검색시 함수 실행
-	 $("#ajaxkeyword").keypress(function (e) {
+        window.scrollBy(0,0);
+        window.scrollTo(0,0);
 
-	        if (e.which == 13){
-	                   searchlist();  
-	        }
-	    });
-})
+        $.ajax({
+            type : "get",
+            url : "/course/searchajaxlist?keyword="+category+"&searchOption="+searchOption,
+            success : function(result) {
+                $("#ajaxlist").html(result);
+            }
+        });
+    }
+
+    $(document).ready(function() {
+
+        var keyword = document.getElementById("ajaxkeyword").value;
+        $.ajax({
+            type : "get",
+            url : "/course/searchajaxlist?keyword="+keyword,
+            success : function(result) {
+                $("#ajaxlist").html(result);
+            }
+        });
+
+        //키워드 엔터 검색시 함수 실행
+        $("#ajaxkeyword").keypress(function (e) {
+
+            if (e.which == 13){
+                searchlist();
+            }
+        });
+    })
 
 </script>
 <style>

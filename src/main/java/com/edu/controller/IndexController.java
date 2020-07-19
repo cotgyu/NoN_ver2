@@ -1,18 +1,16 @@
 package com.edu.controller;
 
 
-import java.io.File;
-import java.util.List;
-
 import com.edu.domain.CourseDomain;
+import com.edu.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.edu.service.CourseService;
-
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.List;
 
 @Controller
 public class IndexController {

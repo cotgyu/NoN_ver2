@@ -1,9 +1,7 @@
-//package com.example.demo.board.domain;
 package com.edu.domain;
 
-import org.apache.ibatis.type.Alias;
-
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 
 @Alias("CommentVO")
 public @Data class CommentVO {

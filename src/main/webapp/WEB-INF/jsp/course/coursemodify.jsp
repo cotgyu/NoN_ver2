@@ -16,13 +16,13 @@
 					obj.value="";
 					obj.readOnly=false;
 					obj.focus();
-				}
-			else{
+			} else {
 				obj.value=value;
 				obj.readOnly=true;
 				
-				}
-		}
+			}
+	}
+
 	function selectcoscategory2(value){
 		var obj = document.getElementById("coscategory2");
 		
@@ -30,13 +30,12 @@
 					obj.value="";
 					obj.readOnly=false;
 					obj.focus();
-				}
-			else{
+			} else {
 				obj.value=value;
 				obj.readOnly=true;
 				
-				}
-		}
+			}
+	}
 
 	
 </script>
