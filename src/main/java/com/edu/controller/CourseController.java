@@ -234,33 +234,16 @@ public class CourseController {
 	    //폴더에 저장되는 이름으로 코스사진 이름 변경 
 	    cos.setCospicture(savedName);
 	    
-	    //대표영상 추가시 입력한 유뷰트 주소
+	    //대표영상 추가시 입력한 유튜브 주소
 	  	String inputvideo = cos.getCosintrovideo();
-	  		
-	  	//영상 주소 속 watch?v= 부분 찾기
-	  	int front = inputvideo.indexOf("watch?v=");
-	  	//영상 주소 속 &부분 찾기
-	  	int back = inputvideo.indexOf("&");
-	  	//주소 길이 찾기
-	  	int all = inputvideo.length();
-	  		
-	  	//&이 없는 영상일 경우
-	  	if(back == -1){
-	  		//watch?v= 뒷부분 부터 주소 끝부분까지 자르기
-	  		String video = inputvideo.substring(front+8, all);
-	  		//바뀐 영상이름으로 다시 저장
-	  		cos.setCosintrovideo(video);
-	  		//수정된 lecture로 db에 입력
-	  		courseService.insertCourse(cos);	
-	  	}
-	  	//list에 있는 영상을 가져올 경우
-	  	else{
-	 		//watch?v= 뒷부분부터 & 전까지 자르기
-	  		String video = inputvideo.substring(front+8,back);
-	  		cos.setCosintrovideo(video);
-	  		courseService.insertCourse(cos);
-	  	}
-	    	    
+
+	  	// 재생에 필요한 주소
+		String resultLink = getYouTubeLink(inputvideo);
+
+		cos.setCosintrovideo(resultLink);
+
+		courseService.insertCourse(cos);
+
 		return "redirect:/course/list";
 	}
 	
@@ -286,31 +269,15 @@ public class CourseController {
 		
 		//강의 추가시 입력한 유뷰트 주소
 		String inputvideo = lecture.getLecvideo();
-		
-		//영상 주소 속 watch?v= 부분 찾기
-		int front = inputvideo.indexOf("watch?v=");
-		//영상 주소 속 &부분 찾기
-		int back = inputvideo.indexOf("&");
-		//주소 길이 찾기
-		int all = inputvideo.length();
-		
-		//&이 없는 영상일 경우(indexof는 문자를 못찾으면 -1 반환)
-		if(back == -1){
-			//watch?v= 뒷부분 부터 주소 끝부분까지 자르기
-			String video = inputvideo.substring(front+8, all);
-			//바뀐 영상이름으로 다시 저장
-			lecture.setLecvideo(video);
-			//수정된 lecture로 db에 입력
-			courseService.insertLecture(lecture);	
-		}
-		//list에 있는 영상을 가져올 경우
-		else{
-			//watch?v= 뒷부분부터 & 전까지 자르기
-			String video = inputvideo.substring(front+8,back);
-			lecture.setLecvideo(video);
-			courseService.insertLecture(lecture);
-		}
-		
+
+		// 재생에 필요한 주소
+		String resultLink = getYouTubeLink(inputvideo);
+
+		//바뀐 영상이름으로 다시 저장
+		lecture.setLecvideo(resultLink);
+		//수정된 lecture로 db에 입력
+		courseService.insertLecture(lecture);
+
 		return "redirect:/course/list";
 	}
 	//수정할 코스 선택 
@@ -368,31 +335,15 @@ public class CourseController {
 		    
 		//대표영상 추가시 입력한 유뷰트 주소
 		String inputvideo = cos.getCosintrovideo();
-		  		
-		//영상 주소 속 watch?v= 부분 찾기
-		int front = inputvideo.indexOf("watch?v=");
-		//영상 주소 속 &부분 찾기
-	  	int back = inputvideo.indexOf("&");
-		//주소 길이 찾기
-		int all = inputvideo.length();
-		  		
-		//&이 없는 영상일 경우(indexof는 문자를 못찾으면 -1 반환)
-		if(back == -1){
-			//watch?v= 뒷부분 부터 주소 끝부분까지 자르기
-		  	String video = inputvideo.substring(front+8, all);
-			//바뀐 영상이름으로 다시 저장
-	  		cos.setCosintrovideo(video);
-	  		//수정된 lecture로 db에 입력
-	  		courseService.updateCourse(cos);	
-	  	}
-	  	//list에 있는 영상을 가져올 경우
-	  	else{
-	 		//watch?v= 뒷부분부터 & 전까지 자르기
-	  		String video = inputvideo.substring(front+8,back);
-	  		cos.setCosintrovideo(video);
-	  		courseService.updateCourse(cos);
-	  	}
-		    	    
+
+		// 재생에 필요한 주소
+		String resultLink = getYouTubeLink(inputvideo);
+
+		//바뀐 영상이름으로 다시 저장
+		cos.setCosintrovideo(resultLink);
+		//수정된 lecture로 db에 입력
+		courseService.updateCourse(cos);
+
 		return "redirect:/course/list";
 	}
 	//수정할 강의 선택 
@@ -439,29 +390,14 @@ public class CourseController {
 		//강의 추가시 입력한 유뷰트 주소
 		String inputvideo = lecture.getLecvideo();
 
-		//영상 주소 속 watch?v= 부분 찾기
-		int front = inputvideo.indexOf("watch?v=");
-		//영상 주소 속 &부분 찾기
-		int back = inputvideo.indexOf("&");
-		//주소 길이 찾기
-		int all = inputvideo.length();
+		// 재생에 필요한 주소
+		String resultLink = getYouTubeLink(inputvideo);
 
-		//&이 없는 영상일 경우(indexof는 문자를 못찾으면 -1 반환)
-		if(back==-1){
-			//watch?v= 뒷부분 부터 주소 끝부분까지 자르기
-			String video = inputvideo.substring(front+8, all);
-			//바뀐 영상이름으로 다시 저장
-			lecture.setLecvideo(video);
-			//수정된 lecture로 db에 입력
-			courseService.updateLecture(lecture);
-		}
-		//list에 있는 영상을 가져올 경우
-		else{
-			//watch?v= 뒷부분부터 & 전까지 자르기
-			String video = inputvideo.substring(front+8,back);
-			lecture.setLecvideo(video);
-			courseService.updateLecture(lecture);
-		}
+		//바뀐 영상이름으로 다시 저장
+		lecture.setLecvideo(resultLink);
+
+		//수정된 lecture로 db에 입력
+		courseService.updateLecture(lecture);
 
 		return "redirect:/course/list";
 	}
@@ -515,6 +451,35 @@ public class CourseController {
 		mav.setViewName("/course/myCourse");
 
 		return mav;
+	}
+
+	/**
+	 * 재생에 필요한 유튜브 링크 구하기
+	 * @param video
+	 * @return
+	 */
+	public String getYouTubeLink(String video){
+		String resultLink = "";
+
+		//영상 주소 속 watch?v= 부분 찾기
+		int front = video.indexOf("watch?v=");
+		//영상 주소 속 &부분 찾기
+		int back = video.indexOf("&");
+		//주소 길이 찾기
+		int all = video.length();
+
+		//&이 없는 영상일 경우(indexof는 문자를 못찾으면 -1 반환)
+		if(back == -1){
+			//watch?v= 뒷부분 부터 주소 끝부분까지 자르기
+			resultLink = video.substring(front+8, all);
+		}
+		//list에 있는 영상을 가져올 경우
+		else{
+			//watch?v= 뒷부분부터 & 전까지 자르기
+			resultLink = video.substring(front+8,back);
+		}
+
+		return resultLink;
 	}
 	
 }
