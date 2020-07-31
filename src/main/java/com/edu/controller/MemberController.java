@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.social.google.connect.GoogleOAuth2Template;
 import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Parameters;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -230,6 +233,35 @@ public class MemberController {
 			session.setAttribute("loginId", loginMember.getId());
 			session.setAttribute("nickName", loginMember.getNickname());
 
+		}
+
+		return "member/socialLoginPopup";
+
+	}
+
+
+	@RequestMapping(value = "/login/googleSignIn")
+	public String googleLoginProcessNew(HttpServletRequest request, HttpSession session, Authentication authentication) throws Exception {
+
+		OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) authentication;
+		HashMap resultObject = (HashMap)oAuth2Authentication.getUserAuthentication().getDetails();
+
+
+		String userId = "google_"+resultObject.get("sub");
+
+		logger.info("구글 회원 체크 userId: " + userId);
+		boolean userCheck = memberService.checkUserByUserId(userId);
+
+		if (!userCheck) {
+			logger.info("기존의 구글 회원정보가 없으므로 회원가입 진행합니다.");
+
+			// 회원 등록
+			memberService.registerMember(resultObject, "GOOGLE");
+
+		} else {
+
+			//기존에 있는 회원이므로 바로 로그인 진행
+			logger.info("기존의 구글 회원정보가 존재합니다. userID: " + userId);
 		}
 
 		return "member/socialLoginPopup";

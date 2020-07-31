@@ -17,7 +17,7 @@
 <script type="text/javascript">
 
     function showGoogleLoginPopup(){
-        window.open('https://accounts.google.com/o/oauth2/auth?client_id=508414677719-clrhg6p9fa4e1f8r3hgin0fpm7fd18il.apps.googleusercontent.com&response_type=code&scope=profile&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Flogin%2FgoogleSignInCallback', "구글로그인", "width=500, height=600, left=600, top=200");
+        window.open('http://localhost:8080/google/googleSignInCallback', "구글로그인", "width=500, height=600, left=600, top=200");
     }
 
     function showGoogleKakaoPopup(){
@@ -106,7 +106,9 @@
 
 <sec:authorize access="isAuthenticated()">
 
-	<sec:authentication property="principal.Username" var="memberId"/>
+
+
+	<sec:authentication property="principal" var="memberId"/>
 
 </sec:authorize>
 
@@ -181,7 +183,7 @@
 
 			<div class="modal-footer">
 
-				<%--<button type="button" class="btn btn-info btn-md" data-dismiss="modal" onclick="showGoogleLoginPopup();">구글 로그인</button>--%>
+				<button type="button" class="btn btn-info btn-md" data-dismiss="modal" onclick="showGoogleLoginPopup();">구글 로그인</button>
 				<%--<button type="button" class="btn btn-danger btn-md" data-dismiss="modal" onclick="showGoogleKakaoPopup();">카카오 로그인</button>--%>
 			</div>
 		</div>

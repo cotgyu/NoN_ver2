@@ -82,8 +82,10 @@ public class MemberService implements UserDetailsService {
 		}
 
 		if (loginType.equals("GOOGLE")) {
-			member.setId("google_"+(String)userInfoMap.get("sub"));
+			member.setId("google_"+userInfoMap.get("sub"));
 			member.setNick((String)userInfoMap.get("name"));
+			member.setPass("google_"+userInfoMap.get("sub") + Math.random());
+
 
 		} else if (loginType.equals("KAKAO")) {
 			// 닉네임 받기
