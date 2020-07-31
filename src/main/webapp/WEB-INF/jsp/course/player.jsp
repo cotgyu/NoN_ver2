@@ -11,16 +11,12 @@
 <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
 <script type="text/javascript">
 
-    <sec:authorize access="isAuthenticated()">
-    	<sec:authentication property="principal.Username" var="memberId"/>
-    </sec:authorize>
-
 
     $(document).ready(function() {
 
         var checkLectureInfo = new Object();
 
-        checkLectureInfo.userId = '${memberId}';
+        checkLectureInfo.userId = '${sessionScope.member.id}';
         checkLectureInfo.cosno = ${course.cosno};
 
 		// 체크한 강의 표시
@@ -52,7 +48,7 @@
 	function checkedLecture(lecno) {
         var checkLectureInfo = new Object();
 
-        checkLectureInfo.userId = '${memberId}';
+        checkLectureInfo.userId = '${sessionScope.member.id}';
         checkLectureInfo.cosno = ${course.cosno};
         checkLectureInfo.lecno = lecno;
 

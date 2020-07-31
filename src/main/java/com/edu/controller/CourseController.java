@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.security.Principal;
@@ -32,7 +33,7 @@ public class CourseController {
 	
 	//cosno에 맞는 소개 페이지 관련
 	@RequestMapping(value = "/intro/{cosno}", method = RequestMethod.GET)
-	public ModelAndView courseIntro(ModelAndView mav, @PathVariable("cosno") int cosno, Principal principal, HttpServletRequest request){
+	public ModelAndView courseIntro(ModelAndView mav, @PathVariable("cosno") int cosno, Principal principal, HttpSession session, HttpServletRequest request){
 		
 		//cosno에 맞는 코스정보 불러오기
 		CourseDomain course = courseService.findCos(cosno);
@@ -44,7 +45,7 @@ public class CourseController {
 
 		if( principal != null ){
 			//세션에서 아이디 받아오기
-			String id = principal.getName();
+			String id = (String) session.getAttribute("loginId");
 
 			//수강여부 체크
 			checkstate = courseService.ajaxCheckSubscribe(id,cosno);
@@ -102,7 +103,7 @@ public class CourseController {
 
 	// 이어서 듣기
 	@RequestMapping(value = "/player/{cosno}", method = RequestMethod.GET)
-	public ModelAndView basicPlayer( ModelAndView mav, @PathVariable("cosno") int cosno , Principal principal) throws Exception{
+	public ModelAndView basicPlayer( ModelAndView mav, @PathVariable("cosno") int cosno , Principal principal, HttpSession session) throws Exception{
 		//modelandview에 정보 저장
 		mav = new ModelAndView();
 
@@ -113,7 +114,7 @@ public class CourseController {
 		}
 
 		// 사용자
-		String id = principal.getName();
+		String id = (String) session.getAttribute("loginId");
 
 		UserDomain loginMember = memberService.getMemberById(id);
 
@@ -404,12 +405,12 @@ public class CourseController {
 
 	//수강
 	@RequestMapping(value="/subscribe/{cosno}", method=RequestMethod.GET)
-	public String subscribeCourse(@PathVariable("cosno") int cosno, Principal principal){
+	public String subscribeCourse(@PathVariable("cosno") int cosno, Principal principal, HttpSession session){
 		if(principal == null){
 			return "redirect:/error";
 		}
 
-		String id = principal.getName();
+		String id = (String) session.getAttribute("loginId");
 
 		courseService.subscribe(id,cosno);
 
@@ -418,12 +419,12 @@ public class CourseController {
 
 	//수강취소
 	@RequestMapping(value="/subscribeCancel/{cosno}", method=RequestMethod.GET)
-	public String subscribeCancel(@PathVariable("cosno") int cosno, Principal principal){
+	public String subscribeCancel(@PathVariable("cosno") int cosno, Principal principal, HttpSession session){
 		if(principal == null){
 			return "redirect:/error";
 		}
 
-		String id = principal.getName();
+		String id = (String) session.getAttribute("loginId");
 
 		courseService.subscribeCancel(id,cosno);
 
@@ -433,14 +434,14 @@ public class CourseController {
 
 	//내 강좌
 	@RequestMapping(value = "/myCourse", method = RequestMethod.GET)
-	public ModelAndView myCourse( ModelAndView mav, Principal principal){
+	public ModelAndView myCourse( ModelAndView mav, Principal principal, HttpSession session){
 		if(principal == null){
 			mav.setViewName("/exception");
 
 			return mav;
 		}
 
-		String id = principal.getName();
+		String id = (String) session.getAttribute("loginId");
 
 		List<CourseDomain> course = courseService.myCourse(id);
 

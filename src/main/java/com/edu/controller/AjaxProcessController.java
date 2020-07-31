@@ -9,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,15 +92,25 @@ public class AjaxProcessController {
 	// 로그인 체크 후 로그인
 	@RequestMapping("/loginCheck.ajax")
 	@ResponseBody
-	public Boolean loginCheck(String id) throws Exception{
+	public Boolean loginCheck(String id, Principal principal, HttpSession session) throws Exception{
 		boolean checkMember = false;
 
-		UserDomain member = memberService.getMemberById(id);
-
-		if(member != null) {
-
-			checkMember = true;
+		if(principal == null){
+			return false;
 		}
+
+		if(principal.getName().equals(id)){
+			UserDomain member = memberService.getMemberById(id);
+
+			if(member != null) {
+				session.setAttribute("member", member);
+				session.setAttribute("loginId", member.getId());
+				session.setAttribute("nickName", member.getNickname());
+
+				checkMember = true;
+			}
+		}
+
 
 		return checkMember;
 	}

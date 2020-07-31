@@ -73,13 +73,9 @@ public class MemberController {
 
 	// 회원 수정창 이동
 	@RequestMapping(value="/memberUpdateForm")
-	public String memberUpdateForm(Model model, Principal principal) throws Exception{
+	public String memberUpdateForm(Model model, HttpSession session) throws Exception{
 
-		if(principal == null){
-			return "redirect:/error";
-		}
-
-		String loginId = principal.getName();
+		String loginId = (String)session.getAttribute("loginId");
 
 		//사용자 
 		UserDomain loginMember = memberService.getMemberById(loginId);
@@ -91,13 +87,9 @@ public class MemberController {
 
 	// 회원 수정
 	@RequestMapping("/memberUpdate")
-	public String memberUpdate(String u_nick, String u_email1, String u_email2,  Principal principal) throws Exception{
+	public String memberUpdate(String u_nick, String u_email1, String u_email2, HttpSession session) throws Exception{
 
-		if(principal == null){
-			return "redirect:/error";
-		}
-
-		String loginId = principal.getName();
+		String loginId = (String)session.getAttribute("loginId");
 
 		//사용자
 		UserDomain loginMember = memberService.getMemberById(loginId);
@@ -108,8 +100,12 @@ public class MemberController {
 		try {
 			memberService.updateMember(loginMember);
 		} catch (Exception e){
-
+			logger.error(e.getMessage());
 		}
+
+		// 회원 수정 후 세션에 반영
+		session.setAttribute("member", loginMember);
+		session.setAttribute("nickName", loginMember.getNickname());
 
 		return "redirect:/";
 	}
@@ -188,58 +184,6 @@ public class MemberController {
 		return "member/socialLoginPopup";
 	}
 
-
-	// 구글로그인
-	@RequestMapping(value = "/login/googleSignInCallback")
-	public String googleLoginProcess(HttpServletRequest request, HttpSession session) throws Exception {
-
-		// 로그인을 통해 받은 코드 값
-		String code = request.getParameter("code");
-		logger.info("구글 로그인 code: " + code);
-
-		SocialLogin socialLogin = new SocialLogin();
-
-		String ClientId = googleAuthInfo.getClientId();
-		String ClientSecret = googleAuthInfo.getClientSecret();
-		String redirect_uri = googleAuthInfo.getRedirectUri();
-
-		// 구글에서 받은 코드값을 다시 구글에 요청하여 계정 정보 받아오기
-		Map<String, String> result = socialLogin.getGoogleAccessToken(code, ClientId, ClientSecret, redirect_uri);
-
-		String userId = "google_"+result.get("sub");
-
-		logger.info("구글 회원 체크 userId: " + userId);
-		boolean userCheck = memberService.checkUserByUserId(userId);
-
-		if (!userCheck) {
-			logger.info("기존의 구글 회원정보가 없으므로 회원가입 진행합니다.");
-
-			// 회원 등록
-			memberService.registerMember(result, "GOOGLE");
-
-			UserDomain loginMember = memberService.getMemberById(userId);
-
-			session.setAttribute("member", loginMember);
-			session.setAttribute("loginId", loginMember.getId());
-			session.setAttribute("nickName", loginMember.getNickname());
-
-		} else {
-			UserDomain loginMember = memberService.getMemberById(userId);
-
-			//기존에 있는 회원이므로 바로 로그인 진행
-			logger.info("기존의 구글 회원정보가 존재합니다. userID: " + userId);
-
-			session.setAttribute("member", loginMember);
-			session.setAttribute("loginId", loginMember.getId());
-			session.setAttribute("nickName", loginMember.getNickname());
-
-		}
-
-		return "member/socialLoginPopup";
-
-	}
-
-
 	@RequestMapping(value = "/login/googleSignIn")
 	public String googleLoginProcessNew(HttpServletRequest request, HttpSession session, Authentication authentication) throws Exception {
 
@@ -258,10 +202,23 @@ public class MemberController {
 			// 회원 등록
 			memberService.registerMember(resultObject, "GOOGLE");
 
+
+			UserDomain loginMember = memberService.getMemberById(userId);
+
+			session.setAttribute("member", loginMember);
+			session.setAttribute("loginId", loginMember.getId());
+			session.setAttribute("nickName", loginMember.getNickname());
+
+
 		} else {
+			UserDomain loginMember = memberService.getMemberById(userId);
 
 			//기존에 있는 회원이므로 바로 로그인 진행
 			logger.info("기존의 구글 회원정보가 존재합니다. userID: " + userId);
+
+			session.setAttribute("member", loginMember);
+			session.setAttribute("loginId", loginMember.getId());
+			session.setAttribute("nickName", loginMember.getNickname());
 		}
 
 		return "member/socialLoginPopup";

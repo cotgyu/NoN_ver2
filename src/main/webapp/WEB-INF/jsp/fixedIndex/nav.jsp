@@ -104,13 +104,10 @@
 
 </script>
 
-<sec:authorize access="isAuthenticated()">
 
+<c:set var="member" value="${member}" scope="session"/>
+<c:set var="grade" value="${grade}" scope="session"/>
 
-
-	<sec:authentication property="principal" var="memberId"/>
-
-</sec:authorize>
 
 	  <!-- Navigation -->
 	  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -134,7 +131,7 @@
 
 				<sec:authorize access="isAuthenticated()">
 					<li class="nav-item">
-						<a class="nav-link" href="/memberUpdateForm">${memberId}</a>
+						<a class="nav-link" href="/memberUpdateForm">${member.nickname}</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/logout">logout</a>

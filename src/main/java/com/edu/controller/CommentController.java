@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class CommentController {
     
     @RequestMapping("/insert") //댓글 작성 
     @ResponseBody
-    private int mCommentServiceInsert(Principal principal, @RequestParam int cosno, @RequestParam int eva_count, @RequestParam String content) throws Exception{
+    private int mCommentServiceInsert(Principal principal, HttpSession session, @RequestParam int cosno, @RequestParam int eva_count, @RequestParam String content) throws Exception{
     	
         CommentVO comment = new CommentVO();
         comment.setCosno(cosno);
@@ -58,7 +59,7 @@ public class CommentController {
             return 0;
         }
 
-        String userId = principal.getName();
+        String userId = (String) session.getAttribute("loginId");
 
         UserDomain member = memberService.getMemberById(userId);
         comment.setWriter(member.getNickname());
