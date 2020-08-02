@@ -15,9 +15,6 @@ $('[name=commentInsertBtn]').click(function(){ //댓글 등록 버튼 클릭
 //댓글 목록 
 function commentList(){
 
-    <sec:authorize access="isAuthenticated()">
-        <sec:authentication property="principal.Username" var="memberId"/>
-    </sec:authorize>
 
     $.ajax({
         url : '/comment/list',
@@ -31,7 +28,7 @@ function commentList(){
                 
             	a += '<div style="border-bottom:2px solid darkgray; class="commentInfo'+value.cno+'">'+'댓글번호 : '+value.cno+' / 작성자 : '+value.writer+' / 날짜 : '+value.reg_date; //댓글 정보 new 2
 
-                 if(value.writer == "${memberId}"){
+                 if(value.writer == "<%=(String)session.getAttribute("nickName")%>"){
                     a += '<a onclick="commentUpdate('+value.cno+',\''+value.content+'\','+value.eva_count+');"> 수정 </a>'; //댓글 수정 new 2
                     a += '<a onclick="commentDelete('+value.cno+');"> 삭제 </a> '; //댓글 삭제
               	}

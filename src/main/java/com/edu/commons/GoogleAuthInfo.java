@@ -23,7 +23,7 @@ public class GoogleAuthInfo {
     @Value("${google.client.scope}")
     private String scope;
 
-    @Value("${google.client.redirectUri}")
+    @Value("${google.client.userAuthorizationUri}")
     private String redirectUri;
 
 

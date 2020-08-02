@@ -135,22 +135,62 @@ public class MemberController {
 
 		return "redirect:/";
 	}
-
+//
+//
+//	// 카카오 로그인
+//	@RequestMapping(value = "/login/kakaoOauth")
+//	public String kakaoLoginProcess(@RequestParam("code") String code, HttpSession session, HttpServletRequest request) throws Exception {
+//
+//		// AccessToken 받기
+//		JsonNode kakaoAccessToken = socialLogin.getKakaoAccessToken(code);
+//
+//		// 사용자 프로필 받기
+//		JsonNode kakaoProfile = socialLogin.getKakaoUserProfile(kakaoAccessToken.path("access_token").toString());
+//
+//
+//		ObjectMapper mapper = new ObjectMapper();
+//
+//		Map<String, Object> kakaoUserInfo = mapper.readValue(kakaoProfile.toString(), Map.class);
+//
+//		String id = "kakao_"+kakaoUserInfo.get("id").toString();
+//
+//		logger.info("카카오 회원 체크 userId: " + id);
+//		boolean userCheck = memberService.checkUserByUserId(id);
+//
+//		if (!userCheck) {
+//			logger.info("기존의 카카오 회원정보가 없으므로 회원가입 진행합니다.");
+//
+//			// 회원 등록
+//			memberService.registerMember(kakaoUserInfo, "KAKAO");
+//
+//			UserDomain loginMember = memberService.getMemberById(id);
+//
+//			session.setAttribute("member", loginMember);
+//			session.setAttribute("loginId", loginMember.getId());
+//			session.setAttribute("nickName", loginMember.getNickname());
+//
+//		} else {
+//			UserDomain loginMember = memberService.getMemberById(id);
+//
+//			//기존에 있는 회원이므로 바로 로그인 진행
+//			logger.info("기존의 카카오 회원정보가 존재합니다. userId: " + id);
+//
+//			session.setAttribute("member", loginMember);
+//			session.setAttribute("loginId", loginMember.getId());
+//			session.setAttribute("nickName", loginMember.getNickname());
+//
+//		}
+//
+//		return "member/socialLoginPopup";
+//	}
 
 	// 카카오 로그인
-	@RequestMapping(value = "/login/kakaoOauth")
-	public String kakaoLoginProcess(@RequestParam("code") String code, HttpSession session, HttpServletRequest request) throws Exception {
-
-		// AccessToken 받기
-		JsonNode kakaoAccessToken = socialLogin.getKakaoAccessToken(code);
-
-		// 사용자 프로필 받기
-		JsonNode kakaoProfile = socialLogin.getKakaoUserProfile(kakaoAccessToken.path("access_token").toString());
+	@RequestMapping(value = "/login/kakaoSignin")
+	public String kakaoLoginProcessNew(HttpSession session, HttpServletRequest request,  Authentication authentication) throws Exception {
 
 
-		ObjectMapper mapper = new ObjectMapper();
-
-		Map<String, Object> kakaoUserInfo = mapper.readValue(kakaoProfile.toString(), Map.class);
+		OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) authentication;
+		HashMap kakaoUserInfo = (HashMap)oAuth2Authentication.getUserAuthentication().getDetails();
 
 		String id = "kakao_"+kakaoUserInfo.get("id").toString();
 
@@ -185,7 +225,7 @@ public class MemberController {
 	}
 
 	@RequestMapping(value = "/login/googleSignIn")
-	public String googleLoginProcessNew(HttpServletRequest request, HttpSession session, Authentication authentication) throws Exception {
+	public String googleLoginProcess(HttpServletRequest request, HttpSession session, Authentication authentication) throws Exception {
 
 		OAuth2Authentication oAuth2Authentication = (OAuth2Authentication) authentication;
 		HashMap resultObject = (HashMap)oAuth2Authentication.getUserAuthentication().getDetails();

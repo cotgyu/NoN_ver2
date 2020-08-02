@@ -20,8 +20,8 @@
         window.open('http://localhost:8080/google/googleSignInCallback', "구글로그인", "width=500, height=600, left=600, top=200");
     }
 
-    function showGoogleKakaoPopup(){
-        window.open('https://kauth.kakao.com/oauth/authorize?client_id=4c6dceb5eb1855fff0a634bdb04459aa&redirect_uri=http://localhost:8080/login/kakaoOauth&response_type=code', "카카오로그인", "width=500, height=600, left=600, top=200");
+    function 	showGoogleKakaoPopup(){
+        window.open('http://localhost:8080/login/kakao/oauth', "카카오로그인", "width=500, height=600, left=600, top=200");
     }
 
 
@@ -181,7 +181,7 @@
 			<div class="modal-footer">
 
 				<button type="button" class="btn btn-info btn-md" data-dismiss="modal" onclick="showGoogleLoginPopup();">구글 로그인</button>
-				<%--<button type="button" class="btn btn-danger btn-md" data-dismiss="modal" onclick="showGoogleKakaoPopup();">카카오 로그인</button>--%>
+				<button type="button" class="btn btn-danger btn-md" data-dismiss="modal" onclick="showGoogleKakaoPopup();">카카오 로그인</button>
 			</div>
 		</div>
 
