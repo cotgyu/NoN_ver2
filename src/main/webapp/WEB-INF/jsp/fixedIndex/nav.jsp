@@ -17,11 +17,11 @@
 <script type="text/javascript">
 
     function showGoogleLoginPopup(){
-        window.open('http://localhost:8080/google/googleSignInCallback', "구글로그인", "width=500, height=600, left=600, top=200");
+        window.open('/google/googleSignInCallback', "구글로그인", "width=500, height=600, left=600, top=200");
     }
 
     function 	showGoogleKakaoPopup(){
-        window.open('http://localhost:8080/login/kakao/oauth', "카카오로그인", "width=500, height=600, left=600, top=200");
+        window.open('/login/kakao/oauth', "카카오로그인", "width=500, height=600, left=600, top=200");
     }
 
 

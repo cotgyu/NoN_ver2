@@ -86,7 +86,6 @@ public class MemberService implements UserDetailsService {
 			member.setNick((String)userInfoMap.get("name"));
 			member.setPass("google_"+userInfoMap.get("sub") + Math.random());
 
-
 		} else if (loginType.equals("KAKAO")) {
 			// 닉네임 받기
 			Map KakaoProfile = (Map)userInfoMap.get("properties");
@@ -94,11 +93,13 @@ public class MemberService implements UserDetailsService {
 
 			member.setId("kakao_"+userInfoMap.get("id").toString());
 			member.setNick(nickName);
+			member.setPass("kakao_"+userInfoMap.get("sub") + Math.random());
 
 		}
 
 		memberRepository.save(UserDomain.builder()
 				.id(member.getId())
+				.password(passwordEncoder.encode(member.getPass()))
 				.nickName(member.getNick())
 				.email(member.getEmail())
 				.loginType(member.getLogintype())
