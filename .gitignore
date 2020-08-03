@@ -32,7 +32,7 @@ nbdist/
 /bin/
 
 ### 인증정보 제외
-/src/main/resources/socialInfo.properties
+src/main/resources/socialInfo.properties
 
 ### querydsl
 generated
