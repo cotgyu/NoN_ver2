@@ -22,6 +22,7 @@
   - Mybatis -> JPA + Querydsl 
   - 강의 추천 알고리즘 유사도 변경 : TanimotoCoefficientSimilarity -> EuclideanDistanceSimilarity
   - Spring Security 적용 ( + 구글, 카카오 OAuth 로그인 ) 
+  - 예외처리 핸들러 생성 
   - 테스트 코드 생성
   - 기타 기능들 개선
 
